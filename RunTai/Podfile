@@ -1,0 +1,25 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+
+pod 'RegexKitLite-NoWarning', '1.1.0'
+pod 'TPKeyboardAvoiding', '1.2.4'
+pod 'BlocksKit', '2.2.5'
+pod 'ReactiveCocoa', '2.3.1'
+pod 'NYXImagesKit', '2.3'
+pod 'UIImage+BlurredFrame', '0.0.4'
+pod 'POP+MCAnimate', '2.0.1'
+pod 'PPiAwesomeButton'
+pod 'APParallaxHeader'
+pod 'SDCAlertView', '2.5.2'
+pod 'UMengSocial', '4.2.3'
+pod 'UMengAnalytics', '3.5.10'
+
+pod 'AVOSCloud'
+
+# 如果使用实时通信功能，可以添加：
+pod 'AVOSCloudIM'
+
+# 如果使用崩溃收集功能，可以添加：
+pod 'AVOSCloudCrashReporting'
+
+pod 'MJRefresh'

@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "IntroductionViewController.h"
+#import "FunctionIntroManager.h"
+#import "RootTabViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
+    //设置导航条样式
+    [self customizeInterface];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [self setupIntroductionViewController];
+    [self.window makeKeyAndVisible];
+    [FunctionIntroManager showIntroPage];
+
     return YES;
 }
 
@@ -122,6 +135,39 @@
             abort();
         }
     }
+}
+
+#pragma mark - Methods Private
+- (void)setupLoginViewController{
+    
+}
+
+- (void)setupIntroductionViewController{
+    IntroductionViewController *introductionVC = [[IntroductionViewController alloc] init];
+    [self.window setRootViewController:introductionVC];
+}
+
+- (void)setupTabViewController{
+    RootTabViewController *rootVC = [[RootTabViewController alloc] init];
+    rootVC.tabBar.translucent = YES;
+    [self.window setRootViewController:rootVC];
+}
+
+- (void)customizeInterface {
+    //设置Nav的背景色和title色
+    
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
+    [navigationBarAppearance setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"0xffffff"]] forBarMetrics:UIBarMetricsDefault];
+    [navigationBarAppearance setTintColor:[UIColor blackColor]];//返回按钮的箭头颜色
+    NSDictionary *textAttributes = @{
+                                     NSFontAttributeName: [UIFont boldSystemFontOfSize:kNavTitleFontSize],
+                                     NSForegroundColorAttributeName: [UIColor blackColor],
+                                     };
+    [navigationBarAppearance setTitleTextAttributes:textAttributes];
+    
+    [[UITextField appearance] setTintColor:[UIColor colorWithHexString:@"0x3bbc79"]];//设置UITextField的光标绿颜色
+    [[UITextView appearance] setTintColor:[UIColor colorWithHexString:@"0x3bbc79"]];//设置UITextView的光标绿颜色
+    [[UISearchBar appearance] setBackgroundImage:[UIImage imageWithColor:kColorTableSectionBg] forBarPosition:0 barMetrics:UIBarMetricsDefault];
 }
 
 @end

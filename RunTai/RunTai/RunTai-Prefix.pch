@@ -1,0 +1,85 @@
+//
+//  RunTai-Prefix.pch
+//  RunTai
+//
+//  Created by Joel Chen on 16/3/14.
+//  Copyright © 2016年 AJhin. All rights reserved.
+//
+
+#ifndef RunTai_Prefix_pch
+#define RunTai_Prefix_pch
+
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import <AVOSCloud/AVOSCloud.h>
+#import <AVOSCloud/AVObject+Subclass.h>
+#import "BaseNavigationController.h"
+
+#import "UIImage+Common.h"
+#import "UIColor+expanded.h"
+#import <Masonry/Masonry.h>
+#import "NSDate+Common.h"
+#import "NSDate+Helper.h"
+#import "NSDate+convenience.h"
+#import "UIImage+Extension.h"
+#import "UIView+Common.h"
+
+#endif
+
+//LeanCloud appkey
+#define ApplicationID @"DAnhL7gnMRhoEifbTM4xII29-gzGzoHsz"
+#define ClientKey @"qve4MDHl08KyHvR6CjhHvqpB"
+
+//版本号
+#define kVersion_Coding [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+#define kVersionBuild_Coding [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
+
+//常用变量
+#define DebugLog(s, ...) NSLog(@"%s(%d): %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#define kTipAlert(_S_, ...)     [[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:(_S_), ##__VA_ARGS__] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil] show]
+
+#define kKeyWindow [UIApplication sharedApplication].keyWindow
+
+#define kHigher_iOS_6_1 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+#define kHigher_iOS_6_1_DIS(_X_) ([[NSNumber numberWithBool:kHigher_iOS_6_1] intValue] * _X_)
+#define kNotHigher_iOS_6_1_DIS(_X_) (-([[NSNumber numberWithBool:kHigher_iOS_6_1] intValue]-1) * _X_)
+
+#define kDevice_Is_iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define kScreen_Bounds [UIScreen mainScreen].bounds
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
+#define kPaddingLeftWidth 10.0
+#define kLoginPaddingLeftWidth 18.0
+#define kMySegmentControl_Height 44.0
+#define kMySegmentControlIcon_Height 70.0
+
+#define kScaleFrom_iPhone5_Desgin(_X_) (_X_ * (kScreen_Width/320))
+
+#define kNavTitleFontSize 18
+#define kBadgeTipStr @"badgeTip"
+#define kColorTableSectionBg [UIColor colorWithHexString:@"0xeeeeee"]
+
+//是否为iOS7
+#define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
+//是否为iOS8及以上系统
+#define iOS8 ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
+//导航栏标题字体大小
+#define NavigationFont [UIFont boldSystemFontOfSize:16]
+//首页标题字体大小
+#define NotesTitleFont [UIFont boldSystemFontOfSize:16]
+//首页标题字体大小
+#define NotesIntroFont [UIFont systemFontOfSize:14]
+//颜色
+#define Color(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+//公用颜色
+#define CommonColor [UIColor colorWithRed:254/255.0  green:129/255.0 blue:0 alpha:1.0]
+//设置一个全局tableview的背景颜色
+#define GlobleTableViewBackgroundColor Color(239,239,239)
+
+#endif /* RunTai_Prefix_pch */

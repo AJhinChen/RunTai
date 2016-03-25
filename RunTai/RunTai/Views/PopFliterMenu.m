@@ -11,6 +11,7 @@
 #import "XHRealTimeBlur.h"
 #import "pop.h"
 #import "RunTai_NetAPIManager.h"
+#import "Login.h"
 
 @interface PopFliterMenu()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *items;
@@ -36,24 +37,28 @@
 - (void)refreshMenuDate:(void (^)(ProjectCount *pCount))block
 {
     __weak typeof(self) weakSelf = self;
-    [[RunTai_NetAPIManager sharedManager] request_ProjectsCatergoryAndCounts_WithAll:^(ProjectCount *data, NSError *error){
-        if (!error) {
-            [weakSelf.pCount configWithProjects:data];
-            [weakSelf updateDateSource:weakSelf.pCount];
-            [weakSelf.tableview reloadData];
-            block(data);
-        }else{
-            NSString * errorCode = error.userInfo[@"code"];
-            switch (errorCode.intValue) {
-                case 28:
-                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
-                    break;
-                default:
-                    [NSObject showHudTipStr:@"获取笔录总数失败,请重试!"];
-                    break;
+    if ([Login isLogin]) {
+        [[RunTai_NetAPIManager sharedManager] request_ProjectsCatergoryAndCounts_WithAll:^(ProjectCount *data, NSError *error){
+            if (!error) {
+                [weakSelf.pCount configWithProjects:data];
+                [weakSelf updateDateSource:weakSelf.pCount];
+                [weakSelf.tableview reloadData];
+                block(data);
+            }else{
+                NSString * errorCode = error.userInfo[@"code"];
+                switch (errorCode.intValue) {
+                    case 28:
+                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                        break;
+                    default:
+                        [NSObject showHudTipStr:@"获取笔录总数失败,请重试!"];
+                        break;
+                }
             }
-        }
-    }];
+        }];
+    }else{
+        block(nil);
+    }
 }
 
 // 设置属性

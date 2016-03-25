@@ -339,7 +339,7 @@
                     [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
                     break;
                 default:
-                    [NSObject showHudTipStr:@"没有最新笔录"];
+                    [NSObject showHudTipStr:@"没有更多笔录"];
                     break;
             }
             [self.myTableView.mj_header endRefreshing];

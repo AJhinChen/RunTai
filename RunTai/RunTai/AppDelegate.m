@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import "IntroductionViewController.h"
-#import "FunctionIntroManager.h"
 #import "RootTabViewController.h"
+#import "WXApiManager.h"
+#import "Login.h"
 
 @interface AppDelegate ()
 
@@ -25,12 +26,29 @@
     //设置导航条样式
     [self customizeInterface];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    [self setupIntroductionViewController];
+    
+    if ([Login isLogin]) {
+        [Login doLogin:[AVUser currentUser]];
+        [self setupTabViewController];
+    }else{
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        [self setupIntroductionViewController];
+    }
     [self.window makeKeyAndVisible];
-    [FunctionIntroManager showIntroPage];
-
+    
+    //向微信注册
+    [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecorate"];
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return  [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
+
+#pragma mark URL Schemes
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

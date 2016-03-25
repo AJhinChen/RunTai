@@ -27,25 +27,24 @@
 - (instancetype)init
 {
     if ((self = [super init])) {
-        self.numberOfPages = 7;
+        self.numberOfPages = 6;
         
         
         _iconsDict = [@{
-                        @"0_image" : @"intro_icon_6",
-                        @"1_image" : @"intro_icon_0",
-                        @"2_image" : @"intro_icon_1",
-                        @"3_image" : @"intro_icon_2",
-                        @"4_image" : @"intro_icon_3",
-                        @"5_image" : @"intro_icon_4",
-                        @"6_image" : @"intro_icon_5",
+                        @"0_image" : @"intro_icon_0",
+                        @"1_image" : @"intro_icon_1",
+                        @"2_image" : @"intro_icon_2",
+                        @"3_image" : @"intro_icon_3",
+                        @"4_image" : @"intro_icon_4",
+                        @"5_image" : @"intro_icon_5",
                         } mutableCopy];
         _tipsDict = [@{
-                       @"1_image" : @"intro_tip_0",
-                       @"2_image" : @"intro_tip_1",
-                       @"3_image" : @"intro_tip_2",
-                       @"4_image" : @"intro_tip_3",
-                       @"5_image" : @"intro_tip_4",
-                       @"6_image" : @"intro_tip_5",
+                       @"0_image" : @"intro_tip_0",
+                       @"1_image" : @"intro_tip_1",
+                       @"2_image" : @"intro_tip_2",
+                       @"3_image" : @"intro_tip_3",
+                       @"4_image" : @"intro_tip_4",
+                       @"5_image" : @"intro_tip_5",
                        } mutableCopy];
         
 //        _iconsDict = [NSMutableDictionary new];
@@ -262,19 +261,11 @@
         UIView *iconView = [self.iconsDict objectForKey:viewKey];
         UIView *tipView = [self.tipsDict objectForKey:viewKey];
         if (iconView) {
-            if (index == 0) {
-                [self keepView:iconView onPages:@[@(index +1), @(index)] atTimes:@[@(index - 1), @(index)]];
-                
-                [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(kScreen_Height/8);
-                }];
-            }else{
-                [self keepView:iconView onPage:index];
-                
-                [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerY.mas_equalTo(-kScreen_Height/5);
-                }];
-            }
+            [self keepView:iconView onPage:index];
+            
+            [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.mas_equalTo(-kScreen_Height/5);
+            }];
             IFTTTAlphaAnimation *iconAlphaAnimation = [IFTTTAlphaAnimation animationWithView:iconView];
             [iconAlphaAnimation addKeyframeForTime:index -0.5 alpha:0.f];
             [iconAlphaAnimation addKeyframeForTime:index alpha:1.f];
@@ -301,12 +292,14 @@
 #pragma mark Action
 - (void)registerBtnClicked{
     RegisterViewController *vc = [[RegisterViewController alloc]init];
+    vc.methodType = RegisterMethodLogin;
     UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)loginBtnClicked{
     LoginViewController *vc = [[LoginViewController alloc] init];
+    vc.showDismissButton = YES;
     UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }

@@ -6,8 +6,15 @@
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface RegisterViewController : UIViewController
+typedef NS_ENUM(NSInteger, RegisterMethodType) {
+    RegisterMethodLogin = 0,
+    RegisterMethodOrder
+};
+
+@interface RegisterViewController : BaseViewController
+
+@property (assign, nonatomic) RegisterMethodType methodType;
 
 @end

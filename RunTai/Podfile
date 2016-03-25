@@ -13,7 +13,7 @@ pod 'BlocksKit', '2.2.5'
 # 使用功能：
 pod 'ReactiveCocoa', '2.3.1'
 
-# 使用功能：
+# 使用图片处理功能：
 pod 'NYXImagesKit', '2.3'
 
 # 使用功能：
@@ -48,3 +48,9 @@ pod 'JazzHands', '2.0.0'
 
 # 使用自适应适配功能：
 pod 'Masonry', '0.5.3'
+
+# 使用富文本功能：
+pod 'TTTAttributedLabel', '1.10.1'
+
+# 使用提示框功能：
+pod 'MBProgressHUD', '0.9'

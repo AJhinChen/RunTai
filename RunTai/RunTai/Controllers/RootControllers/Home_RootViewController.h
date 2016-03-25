@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+#import "Projects.h"
 @interface Home_RootViewController : BaseViewController
+
+@property (strong, nonatomic) NSArray *segmentItems;
 
 @end

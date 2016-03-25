@@ -19,6 +19,7 @@ PODS:
   - FontAwesome+iOS (0.1.4)
   - JazzHands (2.0.0)
   - Masonry (0.5.3)
+  - MBProgressHUD (0.9)
   - MJRefresh (3.1.0)
   - NYXImagesKit (2.3)
   - pop (1.0.9)
@@ -60,6 +61,7 @@ PODS:
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
   - TPKeyboardAvoiding (1.2.4)
+  - TTTAttributedLabel (1.10.1)
   - UIImage+BlurredFrame (0.0.4)
   - UMengAnalytics (3.5.10)
   - UMengSocial (4.2.3)
@@ -70,6 +72,7 @@ DEPENDENCIES:
   - BlocksKit (= 2.2.5)
   - JazzHands (= 2.0.0)
   - Masonry (= 0.5.3)
+  - MBProgressHUD (= 0.9)
   - MJRefresh
   - NYXImagesKit (= 2.3)
   - POP+MCAnimate (= 2.0.1)
@@ -78,6 +81,7 @@ DEPENDENCIES:
   - RegexKitLite-NoWarning (= 1.1.0)
   - SDCAlertView (= 2.5.2)
   - TPKeyboardAvoiding (= 1.2.4)
+  - TTTAttributedLabel (= 1.10.1)
   - UIImage+BlurredFrame (= 0.0.4)
   - UMengAnalytics (= 3.5.10)
   - UMengSocial (= 4.2.3)
@@ -89,6 +93,7 @@ SPEC CHECKSUMS:
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   JazzHands: 00002e9b1284e7fc1ac6555012e81b8942477242
   Masonry: 9f515466afe48632562342a40a1c224071a1a022
+  MBProgressHUD: d8e7ea388dc1549a42e0d219067cf5f2c898fb66
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
@@ -100,6 +105,7 @@ SPEC CHECKSUMS:
   SDCAlertView: f9706c18f456ea87909f8f199704cd28e582ff27
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
   TPKeyboardAvoiding: 0a40dfbb0af7c8bdae1dd457496dccfd217d85f6
+  TTTAttributedLabel: c8f3801a6463b9c9b82b0c84c465fdda9751892a
   UIImage+BlurredFrame: ad2f7195c6947ea3117c7d202f75a51958d5061a
   UMengAnalytics: 092c24aef47b6ac3c76ad51543f91156a8d7b645
   UMengSocial: 85882abe5b20aa38ad558ece71360e16b5d50909

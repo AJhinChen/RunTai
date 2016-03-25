@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProjectCount.h"
 
 @interface PopFliterMenu : UIView
 @property (assign) BOOL showStatus;
@@ -18,5 +19,5 @@
 - (void)showMenuAtView:(UIView *)containerView;
 //取消视图
 - (void)dismissMenu;
-- (void)refreshMenuDate;
+- (void)refreshMenuDate:(void (^)(ProjectCount *pCount))block;
 @end

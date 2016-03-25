@@ -10,7 +10,7 @@
 
 @interface NotesCell()
 
-@property (strong, nonatomic) UIImageView *backgroundImg ,*iconImg ,*watchedImg;
+@property (strong, nonatomic) UIImageView *backgroundImg ,*iconImg ,*watchedImg, *userSexIconView;
 
 @property (strong, nonatomic) UILabel *userLabel ,*titleLabel ,*introLabel ,*statusLabel ,*watchedLabel;
 
@@ -18,9 +18,9 @@
 
 @implementation NotesCell
 
-+ (instancetype)cellWithTableView:(UITableView *)tablView {
++ (instancetype)cellWithTableView:(UITableView *)tableView {
     
-    NotesCell *cell = [tablView dequeueReusableCellWithIdentifier:kCellIdentifier_Notes];
+    NotesCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Notes];
     if (!cell) {
         cell = [[NotesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier_Notes];
     }
@@ -41,20 +41,12 @@
     return self;
     
 }
-- (void)setupDetailView {
 
-    CGFloat cellWidth = kScreen_Width - kPaddingLeftWidth*2;
-    CGFloat cellHeight = [NotesCell cellHeight];
-    CGFloat paddingToLeft = 9;
-    CGFloat paddingToBottom = 8;
-    
-    //backgroundImg
-    UIImage *backgroundImage = [UIImage imageNamed:@"IMG_NotesDemo"];
+- (void)setupDetailView {
     
     self.backgroundImg = ({
         UIImageView *imgView = [[UIImageView alloc] init];
-        imgView.image = backgroundImage;
-        
+        imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.layer.masksToBounds = YES;
         imgView.layer.cornerRadius = 8;
         imgView.layer.borderWidth = 1.0;
@@ -64,16 +56,10 @@
     
     [self.contentView addSubview:self.backgroundImg];
     
-    [self.backgroundImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(cellWidth, cellHeight));
-        make.left.equalTo(self.contentView.mas_left).offset(paddingToLeft);
-    }];
-    
     //titleLabel
     
     self.titleLabel = ({
         UILabel *title = [[UILabel alloc] init];
-        title.text=@"[南京 金城丽景] 品质北欧简约风";
         title.textColor = [UIColor whiteColor];
         title.font = NotesTitleFont;
         title.textAlignment=NSTextAlignmentLeft;
@@ -85,44 +71,27 @@
 //    CGRect rect=[self.titleLabel.text boundingRectWithSize:CGSizeMake(cellWidth-paddingToLeft, INT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.titleLabel.font,NSFontAttributeName, nil] context:nil];
     [self.contentView addSubview:self.titleLabel];
     
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
-        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
-        make.top.equalTo(self.backgroundImg.mas_top).offset(paddingToBottom);
-    }];
-    
     //introLabel
     
     self.introLabel = ({
-        UILabel *title = [[UILabel alloc] init];
-        title.text=@"130㎡/三居/北欧简约/报价:16.7万";
-        title.textColor = [UIColor whiteColor];
-        title.font = NotesIntroFont;
-        title.textAlignment=NSTextAlignmentLeft;
-        title.backgroundColor=[UIColor clearColor];
+        UILabel *intro = [[UILabel alloc] init];
+        intro.textColor = [UIColor whiteColor];
+        intro.font = NotesIntroFont;
+        intro.textAlignment=NSTextAlignmentLeft;
+        intro.backgroundColor=[UIColor clearColor];
         
-        title;
+        intro;
     });
     
     [self.contentView addSubview:self.introLabel];
     
-    [self.introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
-        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
-        make.top.equalTo(self.titleLabel.mas_bottom).offset(paddingToBottom/2);
-    }];
-    
-    //iconImg
-    UIImage *iconImage = [UIImage imageNamed:@"avatar_default_big"];
-    
     self.iconImg = ({
         UIImageView *imgView = [[UIImageView alloc] init];
-        imgView.image = iconImage;
         
         imgView.layer.masksToBounds = YES;
         imgView.layer.cornerRadius = 12.5;
         imgView.layer.borderColor = [UIColor whiteColor].CGColor;
-        imgView.layer.borderWidth = 2.0f;
+        imgView.layer.borderWidth = 1.0f;
         imgView.autoresizingMask = UIViewAutoresizingNone;
         
         imgView;
@@ -130,19 +99,12 @@
     
     [self.contentView addSubview:self.iconImg];
     
-    [self.iconImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(25, 25));
-        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
-    }];
-    
     //userLabel
     
     self.userLabel = ({
         UILabel *user = [[UILabel alloc] init];
-        user.text=@"业主:蒋先生";
         user.textColor = [UIColor whiteColor];
-        user.font = NotesIntroFont;
+        user.font = NotesCommonFont;
         user.textAlignment=NSTextAlignmentLeft;
         user.backgroundColor=[UIColor clearColor];
         
@@ -151,32 +113,19 @@
     
     [self.contentView addSubview:self.userLabel];
     
-    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(80, 25));
-        make.left.equalTo(self.iconImg.mas_right).offset(paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
-    }];
-    
     //watchedLabel
     
     self.watchedLabel = ({
         UILabel *watched = [[UILabel alloc] init];
-        watched.text=@"134";
         watched.textColor = [UIColor whiteColor];
-        watched.font = NotesIntroFont;
-        watched.textAlignment=NSTextAlignmentRight;
+        watched.font = NotesCommonFont;
+        watched.textAlignment=NSTextAlignmentCenter;
         watched.backgroundColor=[UIColor clearColor];
         
         watched;
     });
     
     [self.contentView addSubview:self.watchedLabel];
-    
-    [self.watchedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(25, 25));
-        make.right.equalTo(self.backgroundImg.mas_right).offset(-paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
-    }];
     
     //watchedImg
     UIImage *watchedImage = [UIImage imageNamed:@"compose_photo_video_highlighted"];
@@ -193,20 +142,13 @@
     });
 
     [self.contentView addSubview:self.watchedImg];
-    
-    [self.watchedImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(19, 19));
-        make.right.equalTo(self.watchedLabel.mas_left).offset(-paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft-3);
-    }];
 
     //statusLabel
     
     self.statusLabel = ({
         UILabel *user = [[UILabel alloc] init];
-        user.text=@"正在施工中..";
         user.textColor = [UIColor whiteColor];
-        user.font = NotesIntroFont;
+        user.font = NotesCommonFont;
         user.textAlignment=NSTextAlignmentLeft;
         user.backgroundColor=[UIColor clearColor];
         
@@ -215,12 +157,87 @@
     
     [self.contentView addSubview:self.statusLabel];
     
-    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(80, 25));
-        make.right.equalTo(self.watchedImg.mas_left).offset(-paddingToLeft);
+    if (!_userSexIconView) {
+        _userSexIconView = [[UIImageView alloc] init];
+        [self.contentView addSubview:_userSexIconView];
+    }
+    
+}
+
+- (void)setCurPro:(Project *)curPro{
+    [_backgroundImg sd_setImageWithURL:[curPro.background urlImageWithCodePathResizeToView:_backgroundImg] placeholderImage:kPlaceholderBackground];
+    self.titleLabel.text = curPro.full_name;
+    self.introLabel.text = curPro.name;
+    [_iconImg sd_setImageWithURL:[curPro.owner.avatar urlImageWithCodePathResizeToView:_iconImg] placeholderImage:kPlaceholderUserIcon];
+    self.userLabel.text = curPro.owner.name;
+    self.watchedLabel.text = [NSString stringWithFormat:@"%d",curPro.watch_count.intValue];
+    self.statusLabel.text = [Project getProcessingName:curPro.processing.intValue];
+    [_userSexIconView setImage:[UIImage imageNamed:[curPro.owner.gender isEqualToString:@"先生"]?@"n_sex_man_icon":@"n_sex_woman_icon"]];
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+//    CGFloat userWidth = [_userLabel.text getWidthWithFont:NotesCommonFont constrainedToSize:CGSizeMake(CGFLOAT_MAX, 25)];
+    
+    CGFloat cellWidth = kScreen_Width - kPaddingLeftWidth*2;
+    CGFloat cellHeight = [NotesCell cellHeight];
+    CGFloat paddingToLeft = 9;
+    CGFloat paddingToBottom = 8;
+    
+    [self.backgroundImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(cellWidth, cellHeight));
+        make.left.equalTo(self.contentView.mas_left).offset(paddingToLeft);
+    }];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
+        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
+        make.top.equalTo(self.backgroundImg.mas_top).offset(paddingToBottom);
+    }];
+    
+    [self.introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
+        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(paddingToBottom/2);
+    }];
+    
+    [self.iconImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(25, 25));
+        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
         make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
     }];
     
+    CGFloat userSexIconViewWidth = (14);
+    [_userSexIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(userSexIconViewWidth, userSexIconViewWidth));
+        make.left.equalTo(_iconImg.mas_right).offset(paddingToLeft);
+        make.centerY.equalTo(_iconImg);
+    }];
+    
+    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(90, 25));
+        make.left.equalTo(self.userSexIconView.mas_right).offset(paddingToLeft);
+        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+    }];
+    
+    [self.watchedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(40, 25));
+        make.right.equalTo(self.backgroundImg.mas_right).offset(-paddingToLeft);
+        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+    }];
+    
+    [self.watchedImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(19, 19));
+        make.right.equalTo(self.watchedLabel.mas_left).offset(-3);
+        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft-3);
+    }];
+    
+    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(60, 25));
+        make.right.equalTo(self.watchedImg.mas_left).offset(-paddingToLeft);
+        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+    }];
 }
 
 + (CGFloat)cellHeight{

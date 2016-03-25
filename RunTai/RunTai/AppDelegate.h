@@ -22,6 +22,9 @@
 
 - (void)setupTabViewController;
 
+- (void)setupLoginViewController;
+
+- (void)setupIntroductionViewController;
 
 @end
 

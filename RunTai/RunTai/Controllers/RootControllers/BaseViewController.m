@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 #import "RootTabViewController.h"
+#import "AppDelegate.h"
+#import "Login.h"
 
 @interface BaseViewController ()
 
@@ -78,6 +80,12 @@
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:viewController action:@selector(dismissModalViewControllerAnimated:)];
     }
     [[self presentingVC] presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark Login
+- (void)loginOutToLoginVC{
+    [Login doLogout];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) setupIntroductionViewController];
 }
 
 /*

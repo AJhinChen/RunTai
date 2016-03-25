@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Project.h"
 
 #define kCellIdentifier_Notes @"NotesCell"
 
-
 @interface NotesCell : UITableViewCell
 
-+ (instancetype)cellWithTableView:(UITableView *)tablView;
+@property (nonatomic, strong) Project *curPro;
+
++ (instancetype)cellWithTableView:(UITableView *)tableView;
 
 + (CGFloat)cellHeight;
 

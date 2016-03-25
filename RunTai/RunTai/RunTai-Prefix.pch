@@ -14,6 +14,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloud/AVObject+Subclass.h>
 #import "BaseNavigationController.h"
@@ -26,8 +27,40 @@
 #import "NSDate+convenience.h"
 #import "UIImage+Extension.h"
 #import "UIView+Common.h"
+#import "UITableView+Common.h"
+#import "UIImageView+WebCache.h"
+#import "NSString+Common.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import <ReactiveCocoa/RACEXTScope.h>
+#import <BlocksKit/BlocksKit+UIKit.h>
+#import "UIBarButtonItem+Common.h"
+#import "UIButton+Bootstrap.h"
+#import "UITTTAttributedLabel.h"
+#import "NSObject+Common.h"
+#import "NSURL+Common.h"
+#import "UIButton+Common.h"
+#import "objc/runtime.h"
 
 #endif
+
+//友盟统计
+#define kUmeng_AppKey @"56eab7a4e0f55abe03001054"
+#define kUmeng_Event_Request_Notification @"Request_Notification"
+#define kUmeng_Event_Request_RootList @"Request_RootList"
+#define kUmeng_Event_Request_Get @"Request_Get"
+#define kUmeng_Event_Request_ActionOfServer @"Request_ActionOfServer"
+#define kUmeng_Event_Request_ActionOfLocal @"Request_ActionOfLocal"
+
+//Social Data
+#define kSocial_WX_ID @"wx66159095d91df6a9"
+#define kSocial_WX_Secret @"fd56e99979f84af485f82dc329891109"
+#define BUFFER_SIZE 1024 * 100
+#define kSocial_QQ_ID  @""
+#define kSocial_QQ_Secret @""
+#define kSocial_EN_Key @""
+#define kSocial_EN_Secret @""
+#define kSocial_Sina_RedirectURL @""
+#define kSocial_Sina_OfficailAccount @""
 
 //LeanCloud appkey
 #define ApplicationID @"DAnhL7gnMRhoEifbTM4xII29-gzGzoHsz"
@@ -61,10 +94,12 @@
 
 #define kScaleFrom_iPhone5_Desgin(_X_) (_X_ * (kScreen_Width/320))
 
+#define kBackButtonFontSize 16
 #define kNavTitleFontSize 18
 #define kBadgeTipStr @"badgeTip"
 #define kColorTableSectionBg [UIColor colorWithHexString:@"0xeeeeee"]
-
+//导航栏颜色
+#define kColorNavigationBar [UIColor colorWithHexString:@"0xffffff"]
 //是否为iOS7
 #define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
 //是否为iOS8及以上系统
@@ -73,13 +108,35 @@
 #define NavigationFont [UIFont boldSystemFontOfSize:16]
 //首页标题字体大小
 #define NotesTitleFont [UIFont boldSystemFontOfSize:16]
-//首页标题字体大小
-#define NotesIntroFont [UIFont systemFontOfSize:14]
+//首页副标题字体大小
+#define NotesIntroFont [UIFont boldSystemFontOfSize:14]
+//首页底部字体大小
+#define NotesCommonFont [UIFont systemFontOfSize:14]
 //颜色
 #define Color(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define kColorTableBG [UIColor colorWithHexString:@"0xfafafa"]
 //公用颜色
 #define CommonColor [UIColor colorWithRed:254/255.0  green:129/255.0 blue:0 alpha:1.0]
 //设置一个全局tableview的背景颜色
 #define GlobleTableViewBackgroundColor Color(239,239,239)
+//默认头像
+#define kPlaceholderUserIcon [UIImage imageNamed:@"avatar_default_big"]
+//默认背景
+#define kPlaceholderBackground [UIImage imageNamed:@"MIDAUTUMNIMAGE"]
+
+//链接颜色
+#define kLinkAttributes     @{(__bridge NSString *)kCTUnderlineStyleAttributeName : [NSNumber numberWithBool:NO],(NSString *)kCTForegroundColorAttributeName : (__bridge id)[UIColor colorWithHexString:@"0x3bbd79"].CGColor}
+#define kLinkAttributesActive       @{(NSString *)kCTUnderlineStyleAttributeName : [NSNumber numberWithBool:NO],(NSString *)kCTForegroundColorAttributeName : (__bridge id)[[UIColor colorWithHexString:@"0x1b9d59"] CGColor]}
 
 #endif /* RunTai_Prefix_pch */
+#define ESWeak(var, weakVar) __weak __typeof(&*var) weakVar = var
+#define ESStrong_DoNotCheckNil(weakVar, _var) __typeof(&*weakVar) _var = weakVar
+#define ESStrong(weakVar, _var) ESStrong_DoNotCheckNil(weakVar, _var); if (!_var) return;
+
+#define ESWeak_(var) ESWeak(var, weak_##var);
+#define ESStrong_(var) ESStrong(weak_##var, _##var);
+
+/** defines a weak `self` named `__weakSelf` */
+#define ESWeakSelf      ESWeak(self, __weakSelf);
+/** defines a strong `self` named `_self` from `__weakSelf` */
+#define ESStrongSelf    ESStrong(__weakSelf, _self);

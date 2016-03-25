@@ -10,11 +10,13 @@
 #import "PopFliterMenu.h"
 #import "XHRealTimeBlur.h"
 #import "pop.h"
+#import "RunTai_NetAPIManager.h"
 
 @interface PopFliterMenu()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, strong) XHRealTimeBlur *realTimeBlur;
 @property (nonatomic, strong) UITableView *tableview;
+@property (nonatomic, strong) ProjectCount *pCount;
 @end
 
 @implementation PopFliterMenu
@@ -23,16 +25,35 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.items = @[@{@"all":@""},@{@"created":@""},@{@"watched":@""}].mutableCopy;
+        self.items = @[@{@"all":@""},@{@"aaa":@"0"},@{@"created":@""},@{@"aaa":@"0"},@{@"watched":@""}].mutableCopy;
+        self.pCount=[ProjectCount new];
         self.showStatus=FALSE;
         [self setup];
     }
     return self;
 }
 
-- (void)refreshMenuDate
+- (void)refreshMenuDate:(void (^)(ProjectCount *pCount))block
 {
-    
+    __weak typeof(self) weakSelf = self;
+    [[RunTai_NetAPIManager sharedManager] request_ProjectsCatergoryAndCounts_WithAll:^(ProjectCount *data, NSError *error){
+        if (!error) {
+            [weakSelf.pCount configWithProjects:data];
+            [weakSelf updateDateSource:weakSelf.pCount];
+            [weakSelf.tableview reloadData];
+            block(data);
+        }else{
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                default:
+                    [NSObject showHudTipStr:@"获取笔录总数失败,请重试!"];
+                    break;
+            }
+        }
+    }];
 }
 
 // 设置属性
@@ -117,11 +138,11 @@
     NSString *keyStr=[[aDic allKeys] firstObject];
     NSMutableString *convertStr=[NSMutableString new];
     if ([keyStr isEqualToString:@"all"]) {
-        [convertStr appendString:@"全部项目"];
+        [convertStr appendString:@"全部笔录"];
     }else if ([keyStr isEqualToString:@"created"]) {
-        [convertStr appendString:@"我创建的"];
-    }else if ([keyStr isEqualToString:@"stared"]) {
-        [convertStr appendString:@"我收藏的"];
+        [convertStr appendString:@"我的订单"];
+    }else if ([keyStr isEqualToString:@"watched"]) {
+        [convertStr appendString:@"我的收藏"];
     }else
     {
         NSLog(@"-------------error type:%@",keyStr);
@@ -133,10 +154,10 @@
 }
 
 //更新数据源
-//-(void)updateDateSource:(ProjectCount*)pCount
-//{
-//    _items = @[@{@"all":[pCount.all stringValue]},@{@"created":[pCount.created stringValue]},@{@"joined":[pCount.joined  stringValue]},@{@"watched":[pCount.watched stringValue]},@{@"stared":[pCount.stared stringValue]}].mutableCopy;
-//}
+-(void)updateDateSource:(ProjectCount*)pCount
+{
+    _items = @[@{@"all":[pCount.all stringValue]},@{@"aaa":@"0"},@{@"created":[pCount.created stringValue]},@{@"aaa":@"0"},@{@"watched":[pCount.watched stringValue]}].mutableCopy;
+}
 
 
 //转化为Projects类对应类型
@@ -169,24 +190,11 @@
 #pragma mark -- uitableviewdelegate & datasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return kfirstRowNum;
-            break;
-        case 1:
-            return 2+1;
-            break;
-        case 2:
-            return 1+1;
-            break;
-        default:
-            return 0;
-            break;
-    }
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -196,67 +204,28 @@
     UILabel *titleLab=[[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 50)];
     titleLab.font=[UIFont systemFontOfSize:15];
     [cell.contentView addSubview:titleLab];
-    if (indexPath.section==0) {
-        titleLab.textColor=(indexPath.row==_selectNum)?[UIColor colorWithHexString:@"0x3BBD79"]:[UIColor colorWithHexString:@"0x222222"];
-        titleLab.text=[self formatTitleStr:[_items objectAtIndex:indexPath.row]];
-    }else if (indexPath.section==1) {
-        if(indexPath.row==0){
-            [titleLab removeFromSuperview];
-            UIView *seperatorLine=[[UIView alloc] initWithFrame:CGRectMake(20, 15, self.bounds.size.width-40, 0.5)];
-            seperatorLine.backgroundColor=[UIColor colorWithHexString:@"0xcccccc"];
-            [cell.contentView addSubview:seperatorLine];
-            cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        }else{
-            titleLab.textColor=(indexPath.row+kfirstRowNum==_selectNum)?[UIColor colorWithHexString:@"0x3BBD79"]:[UIColor colorWithHexString:@"0x222222"];
-            titleLab.text=[self formatTitleStr:[_items objectAtIndex:3+indexPath.row-1]];
-        }
-    }else
-    {
-        if(indexPath.row==0){
-            [titleLab removeFromSuperview];
-            UIView *seperatorLine=[[UIView alloc] initWithFrame:CGRectMake(20, 15, self.bounds.size.width-40, 0.5)];
-            seperatorLine.backgroundColor=[UIColor colorWithHexString:@"0xcccccc"];
-            [cell.contentView addSubview:seperatorLine];
-            cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        }else{
-            [titleLab setX:45];
-            titleLab.textColor=[UIColor colorWithHexString:@"0x727f8d"];
-            titleLab.text=@"项目广场";
-            UIImageView *projectSquareIcon=[[UIImageView alloc] initWithFrame:CGRectMake(20, 25-8, 16, 16)];
-            projectSquareIcon.image=[UIImage imageNamed:@"fliter_square"];
-            [cell.contentView addSubview:projectSquareIcon];
-        }
+    if (indexPath.section%2==0) {
+        titleLab.textColor=(indexPath.section==_selectNum)?[UIColor colorWithHexString:@"0xb0271d"]:[UIColor colorWithHexString:@"0x222222"];
+        titleLab.text=[self formatTitleStr:[_items objectAtIndex:indexPath.section]];
+    }else{
+        [titleLab removeFromSuperview];
+        UIView *seperatorLine=[[UIView alloc] initWithFrame:CGRectMake(20, 15, self.bounds.size.width-40, 0.5)];
+        seperatorLine.backgroundColor=[UIColor colorWithHexString:@"0xcccccc"];
+        [cell.contentView addSubview:seperatorLine];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ((indexPath.row==0)&&(indexPath.section==1))||((indexPath.row==0)&&(indexPath.section==2))?30.5:50;
+    return ((indexPath.section%2)?30.5:50);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==0) {
-        _selectNum=indexPath.row;
-        [self dismissMenu];
-//        _clickBlock([self convertToProjectType]);
-    }else if (indexPath.section==1) {
-        if(indexPath.row==0){
-            _closeBlock();
-            return;
-        }
-        _selectNum=indexPath.row+kfirstRowNum-1;
-        [self dismissMenu];
-//        _clickBlock([self convertToProjectType]);
-    }else
-    {
-        if(indexPath.row==0){
-            _closeBlock();
-            return;
-        }
-        _clickBlock(1000);
-        _closeBlock();
-    }
+    _selectNum=indexPath.section;
+    [self dismissMenu];
+    _clickBlock(_selectNum);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

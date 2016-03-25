@@ -9,6 +9,7 @@
 #import "RootTabViewController.h"
 #import "Home_RootViewController.h"
 #import "Gallery_RootViewController.h"
+#import "Architecture_RootViewController.h"
 #import "Me_RootViewController.h"
 #import "RDVTabBarItem.h"
 #import "BaseNavigationController.h"
@@ -55,6 +56,9 @@
     Gallery_RootViewController *message = [[Gallery_RootViewController alloc] init];
     [self addOneChildVc:message title:@"图库" imageName:@"tabbar_photo" selectedImageName:@"tabbar_photo_selected"];
     
+    Architecture_RootViewController *arch = [[Architecture_RootViewController alloc] init];
+    [self addOneChildVc:arch title:@"架构" imageName:@"tabbar_arch" selectedImageName:@"tabbar_arch_selected"];
+    
     Me_RootViewController *profile = [[Me_RootViewController alloc] init];
     [self addOneChildVc:profile title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
 }
@@ -87,7 +91,7 @@
     childVc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -2);
     
     //设置tabbar字体
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor orangeColor], NSForegroundColorAttributeName,[UIFont systemFontOfSize:12],NSFontAttributeName,nil] forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"0xb0271d"], NSForegroundColorAttributeName,[UIFont systemFontOfSize:12],NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     //设置选中图标
     UIImage *selectedImage = [UIImage imageNamed:selectedImageName];

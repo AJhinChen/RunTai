@@ -6,8 +6,11 @@
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+#import "Login.h"
+#import "TPKeyboardAvoidingTableView.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
+@property (assign, nonatomic) BOOL showDismissButton;
 
 @end

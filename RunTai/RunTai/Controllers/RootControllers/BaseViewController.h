@@ -12,5 +12,6 @@
 
 + (UIViewController *)presentingVC;
 + (void)presentVC:(UIViewController *)viewController;
+- (void)loginOutToLoginVC;
 
 @end

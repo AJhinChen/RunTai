@@ -11,5 +11,6 @@
 @interface Home_RootViewController : BaseViewController
 
 @property (strong, nonatomic) NSArray *segmentItems;
+@property (nonatomic, strong) Projects *myProjects;
 
 @end

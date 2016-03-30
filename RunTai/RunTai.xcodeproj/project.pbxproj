@@ -96,6 +96,28 @@
 		CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */; };
 		CEB573B51CA4DF820020198A /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573B41CA4DF820020198A /* AddressManager.m */; };
 		CEB573B71CA4DF910020198A /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = CEB573B61CA4DF910020198A /* address.json */; };
+		CEB573D11CA56B500020198A /* 7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C11CA56B500020198A /* 7.jpg */; };
+		CEB573D21CA56B500020198A /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C21CA56B500020198A /* 8.jpg */; };
+		CEB573D31CA56B500020198A /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C31CA56B500020198A /* 9.jpg */; };
+		CEB573D41CA56B500020198A /* 唐丰苑 2号1102  衣帽间.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C41CA56B500020198A /* 唐丰苑 2号1102  衣帽间.jpg */; };
+		CEB573D51CA56B500020198A /* 唐丰苑 2号1102  餐厅 酒柜.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C51CA56B500020198A /* 唐丰苑 2号1102  餐厅 酒柜.jpg */; };
+		CEB573D61CA56B500020198A /* 客卫.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C61CA56B500020198A /* 客卫.jpg */; };
+		CEB573D71CA56B500020198A /* 客厅 沙发背景 彩绘玻璃.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C71CA56B500020198A /* 客厅 沙发背景 彩绘玻璃.jpg */; };
+		CEB573D91CA56B500020198A /* 次卧室 床头背景2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEB573C91CA56B500020198A /* 次卧室 床头背景2x.jpg */; };
+		CEB573DC1CA90FA10020198A /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573DB1CA90FA10020198A /* Note.m */; };
+		CEB573E41CAA194B0020198A /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573DE1CAA194B0020198A /* 1.png */; };
+		CEB573E51CAA194B0020198A /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573DF1CAA194B0020198A /* 2.png */; };
+		CEB573E61CAA194B0020198A /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573E01CAA194B0020198A /* 3.png */; };
+		CEB573E71CAA194B0020198A /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573E11CAA194B0020198A /* 4.png */; };
+		CEB573E81CAA194B0020198A /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573E21CAA194B0020198A /* 5.png */; };
+		CEB573E91CAA194B0020198A /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573E31CAA194B0020198A /* 6.png */; };
+		CEB573ED1CAA1ADF0020198A /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573EA1CAA1ADF0020198A /* 7.png */; };
+		CEB573EE1CAA1ADF0020198A /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573EB1CAA1ADF0020198A /* 8.png */; };
+		CEB573EF1CAA1ADF0020198A /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573EC1CAA1ADF0020198A /* 9.png */; };
+		CEB573F61CABC1550020198A /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573F21CABC1540020198A /* DOPDropDownMenu.m */; };
+		CEB573F71CABC1550020198A /* icon_chose_arrow_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573F31CABC1540020198A /* icon_chose_arrow_nor@2x.png */; };
+		CEB573F81CABC1550020198A /* icon_chose_arrow_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573F41CABC1540020198A /* icon_chose_arrow_sel@2x.png */; };
+		CEB573F91CABC1550020198A /* icon_chose_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB573F51CABC1540020198A /* icon_chose_bottom@2x.png */; };
 		CED1CCB11C9F8E1F007ED5FD /* Input_OnlyText_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1CCB01C9F8E1F007ED5FD /* Input_OnlyText_Cell.m */; };
 		CED1CCB41C9F8F46007ED5FD /* PhoneCodeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1CCB31C9F8F46007ED5FD /* PhoneCodeButton.m */; };
 		CED1CCB71C9F9618007ED5FD /* EaseInputTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1CCB61C9F9618007ED5FD /* EaseInputTipsView.m */; };
@@ -160,22 +182,6 @@
 		CED1CD771C9FEB85007ED5FD /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1CD661C9FEB85007ED5FD /* UIWebView+AFNetworking.m */; };
 		CEDF67911C9BEB31006D6D26 /* GalleryRiverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDF67901C9BEB31006D6D26 /* GalleryRiverCell.m */; };
 		CEDF67941C9BEBCF006D6D26 /* GalleryDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDF67931C9BEBCF006D6D26 /* GalleryDrawView.m */; };
-		CEDF67A61C9BED61006D6D26 /* 12555447569970.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67961C9BED61006D6D26 /* 12555447569970.jpg */; };
-		CEDF67A71C9BED61006D6D26 /* 12588117147181.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67971C9BED61006D6D26 /* 12588117147181.jpg */; };
-		CEDF67A81C9BED61006D6D26 /* 12606972219149.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67981C9BED61006D6D26 /* 12606972219149.jpg */; };
-		CEDF67A91C9BED61006D6D26 /* 12619628321247.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67991C9BED61006D6D26 /* 12619628321247.jpg */; };
-		CEDF67AA1C9BED61006D6D26 /* 12676704406275.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679A1C9BED61006D6D26 /* 12676704406275.jpg */; };
-		CEDF67AB1C9BED61006D6D26 /* 12696914514425.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679B1C9BED61006D6D26 /* 12696914514425.jpg */; };
-		CEDF67AC1C9BED61006D6D26 /* 12818604132489.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679C1C9BED61006D6D26 /* 12818604132489.jpg */; };
-		CEDF67AD1C9BED61006D6D26 /* 12836700577019.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679D1C9BED61006D6D26 /* 12836700577019.jpg */; };
-		CEDF67AE1C9BED61006D6D26 /* 12838644058453.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679E1C9BED61006D6D26 /* 12838644058453.jpg */; };
-		CEDF67AF1C9BED61006D6D26 /* 12862043202376.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF679F1C9BED61006D6D26 /* 12862043202376.jpg */; };
-		CEDF67B01C9BED61006D6D26 /* 12896469932036.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A01C9BED61006D6D26 /* 12896469932036.jpg */; };
-		CEDF67B11C9BED61006D6D26 /* 12902550778729.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A11C9BED61006D6D26 /* 12902550778729.jpg */; };
-		CEDF67B21C9BED61006D6D26 /* 12902551051357.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A21C9BED61006D6D26 /* 12902551051357.jpg */; };
-		CEDF67B31C9BED61006D6D26 /* 12937032143215.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A31C9BED61006D6D26 /* 12937032143215.jpg */; };
-		CEDF67B41C9BED61006D6D26 /* 1364210605418.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A41C9BED61006D6D26 /* 1364210605418.jpg */; };
-		CEDF67B51C9BED61006D6D26 /* 1364210626758.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEDF67A51C9BED61006D6D26 /* 1364210626758.jpg */; };
 		CEDF67B81C9CF6E8006D6D26 /* SettingMineInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDF67B71C9CF6E8006D6D26 /* SettingMineInfoViewController.m */; };
 		CEDF67BB1C9CF8A6006D6D26 /* TitleValueMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDF67BA1C9CF8A6006D6D26 /* TitleValueMoreCell.m */; };
 		CEDF67BE1C9CF8BA006D6D26 /* TitleRImageMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDF67BD1C9CF8BA006D6D26 /* TitleRImageMoreCell.m */; };
@@ -373,6 +379,30 @@
 		CEB573B31CA4DF820020198A /* AddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressManager.h; sourceTree = "<group>"; };
 		CEB573B41CA4DF820020198A /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManager.m; sourceTree = "<group>"; };
 		CEB573B61CA4DF910020198A /* address.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
+		CEB573C11CA56B500020198A /* 7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpg; sourceTree = "<group>"; };
+		CEB573C21CA56B500020198A /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
+		CEB573C31CA56B500020198A /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
+		CEB573C41CA56B500020198A /* 唐丰苑 2号1102  衣帽间.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "唐丰苑 2号1102  衣帽间.jpg"; sourceTree = "<group>"; };
+		CEB573C51CA56B500020198A /* 唐丰苑 2号1102  餐厅 酒柜.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "唐丰苑 2号1102  餐厅 酒柜.jpg"; sourceTree = "<group>"; };
+		CEB573C61CA56B500020198A /* 客卫.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "客卫.jpg"; sourceTree = "<group>"; };
+		CEB573C71CA56B500020198A /* 客厅 沙发背景 彩绘玻璃.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "客厅 沙发背景 彩绘玻璃.jpg"; sourceTree = "<group>"; };
+		CEB573C91CA56B500020198A /* 次卧室 床头背景2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "次卧室 床头背景2x.jpg"; sourceTree = "<group>"; };
+		CEB573DA1CA90FA10020198A /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		CEB573DB1CA90FA10020198A /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		CEB573DE1CAA194B0020198A /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		CEB573DF1CAA194B0020198A /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		CEB573E01CAA194B0020198A /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		CEB573E11CAA194B0020198A /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		CEB573E21CAA194B0020198A /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		CEB573E31CAA194B0020198A /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		CEB573EA1CAA1ADF0020198A /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
+		CEB573EB1CAA1ADF0020198A /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
+		CEB573EC1CAA1ADF0020198A /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
+		CEB573F11CABC1540020198A /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
+		CEB573F21CABC1540020198A /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
+		CEB573F31CABC1540020198A /* icon_chose_arrow_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_nor@2x.png"; sourceTree = "<group>"; };
+		CEB573F41CABC1540020198A /* icon_chose_arrow_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_sel@2x.png"; sourceTree = "<group>"; };
+		CEB573F51CABC1540020198A /* icon_chose_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_bottom@2x.png"; sourceTree = "<group>"; };
 		CED1CCAF1C9F8E1F007ED5FD /* Input_OnlyText_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input_OnlyText_Cell.h; sourceTree = "<group>"; };
 		CED1CCB01C9F8E1F007ED5FD /* Input_OnlyText_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Input_OnlyText_Cell.m; sourceTree = "<group>"; };
 		CED1CCB21C9F8F46007ED5FD /* PhoneCodeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneCodeButton.h; sourceTree = "<group>"; };
@@ -490,22 +520,6 @@
 		CEDF67901C9BEB31006D6D26 /* GalleryRiverCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GalleryRiverCell.m; path = RunTai/Cells/GalleryRiverCell.m; sourceTree = SOURCE_ROOT; };
 		CEDF67921C9BEBCF006D6D26 /* GalleryDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryDrawView.h; sourceTree = "<group>"; };
 		CEDF67931C9BEBCF006D6D26 /* GalleryDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryDrawView.m; sourceTree = "<group>"; };
-		CEDF67961C9BED61006D6D26 /* 12555447569970.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12555447569970.jpg; sourceTree = "<group>"; };
-		CEDF67971C9BED61006D6D26 /* 12588117147181.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12588117147181.jpg; sourceTree = "<group>"; };
-		CEDF67981C9BED61006D6D26 /* 12606972219149.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12606972219149.jpg; sourceTree = "<group>"; };
-		CEDF67991C9BED61006D6D26 /* 12619628321247.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12619628321247.jpg; sourceTree = "<group>"; };
-		CEDF679A1C9BED61006D6D26 /* 12676704406275.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12676704406275.jpg; sourceTree = "<group>"; };
-		CEDF679B1C9BED61006D6D26 /* 12696914514425.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12696914514425.jpg; sourceTree = "<group>"; };
-		CEDF679C1C9BED61006D6D26 /* 12818604132489.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12818604132489.jpg; sourceTree = "<group>"; };
-		CEDF679D1C9BED61006D6D26 /* 12836700577019.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12836700577019.jpg; sourceTree = "<group>"; };
-		CEDF679E1C9BED61006D6D26 /* 12838644058453.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12838644058453.jpg; sourceTree = "<group>"; };
-		CEDF679F1C9BED61006D6D26 /* 12862043202376.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12862043202376.jpg; sourceTree = "<group>"; };
-		CEDF67A01C9BED61006D6D26 /* 12896469932036.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12896469932036.jpg; sourceTree = "<group>"; };
-		CEDF67A11C9BED61006D6D26 /* 12902550778729.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12902550778729.jpg; sourceTree = "<group>"; };
-		CEDF67A21C9BED61006D6D26 /* 12902551051357.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12902551051357.jpg; sourceTree = "<group>"; };
-		CEDF67A31C9BED61006D6D26 /* 12937032143215.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 12937032143215.jpg; sourceTree = "<group>"; };
-		CEDF67A41C9BED61006D6D26 /* 1364210605418.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1364210605418.jpg; sourceTree = "<group>"; };
-		CEDF67A51C9BED61006D6D26 /* 1364210626758.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1364210626758.jpg; sourceTree = "<group>"; };
 		CEDF67B61C9CF6E8006D6D26 /* SettingMineInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMineInfoViewController.h; sourceTree = "<group>"; };
 		CEDF67B71C9CF6E8006D6D26 /* SettingMineInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMineInfoViewController.m; sourceTree = "<group>"; };
 		CEDF67B91C9CF8A6006D6D26 /* TitleValueMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleValueMoreCell.h; sourceTree = "<group>"; };
@@ -658,6 +672,7 @@
 		CE13C4FE1C96ED9900AFC539 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CEB573F01CABC1540020198A /* DOPDropDownMenu - Enhanced */,
 				CED1CD3C1C9FEB85007ED5FD /* AFNetworking */,
 				CED1CD061C9FC62C007ED5FD /* MJPhotoBrowser */,
 				CED1CCFC1C9FA4CF007ED5FD /* LoadingView */,
@@ -949,6 +964,8 @@
 				CE0CCFF41CA395F70015FD0A /* Projects.m */,
 				CE0CCFF61CA397340015FD0A /* Project.h */,
 				CE0CCFF71CA397340015FD0A /* Project.m */,
+				CEB573DA1CA90FA10020198A /* Note.h */,
+				CEB573DB1CA90FA10020198A /* Note.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1028,6 +1045,49 @@
 				CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */,
 			);
 			path = ArchitectureControllers;
+			sourceTree = "<group>";
+		};
+		CEB573C01CA56B500020198A /* 三房新中式唐丰苑精装 */ = {
+			isa = PBXGroup;
+			children = (
+				CEB573C11CA56B500020198A /* 7.jpg */,
+				CEB573C21CA56B500020198A /* 8.jpg */,
+				CEB573C31CA56B500020198A /* 9.jpg */,
+				CEB573C41CA56B500020198A /* 唐丰苑 2号1102  衣帽间.jpg */,
+				CEB573C51CA56B500020198A /* 唐丰苑 2号1102  餐厅 酒柜.jpg */,
+				CEB573C61CA56B500020198A /* 客卫.jpg */,
+				CEB573C71CA56B500020198A /* 客厅 沙发背景 彩绘玻璃.jpg */,
+				CEB573C91CA56B500020198A /* 次卧室 床头背景2x.jpg */,
+			);
+			path = "三房新中式唐丰苑精装";
+			sourceTree = "<group>";
+		};
+		CEB573DD1CAA194B0020198A /* 创新西路333弄64号1001室效果图 */ = {
+			isa = PBXGroup;
+			children = (
+				CEB573EA1CAA1ADF0020198A /* 7.png */,
+				CEB573EB1CAA1ADF0020198A /* 8.png */,
+				CEB573EC1CAA1ADF0020198A /* 9.png */,
+				CEB573DE1CAA194B0020198A /* 1.png */,
+				CEB573DF1CAA194B0020198A /* 2.png */,
+				CEB573E01CAA194B0020198A /* 3.png */,
+				CEB573E11CAA194B0020198A /* 4.png */,
+				CEB573E21CAA194B0020198A /* 5.png */,
+				CEB573E31CAA194B0020198A /* 6.png */,
+			);
+			path = "创新西路333弄64号1001室效果图";
+			sourceTree = "<group>";
+		};
+		CEB573F01CABC1540020198A /* DOPDropDownMenu - Enhanced */ = {
+			isa = PBXGroup;
+			children = (
+				CEB573F11CABC1540020198A /* DOPDropDownMenu.h */,
+				CEB573F21CABC1540020198A /* DOPDropDownMenu.m */,
+				CEB573F31CABC1540020198A /* icon_chose_arrow_nor@2x.png */,
+				CEB573F41CABC1540020198A /* icon_chose_arrow_sel@2x.png */,
+				CEB573F51CABC1540020198A /* icon_chose_bottom@2x.png */,
+			);
+			path = "DOPDropDownMenu - Enhanced";
 			sourceTree = "<group>";
 		};
 		CED1CCC81C9FA043007ED5FD /* SVWebViewController */ = {
@@ -1234,22 +1294,8 @@
 		CEDF67951C9BED61006D6D26 /* 艺术 */ = {
 			isa = PBXGroup;
 			children = (
-				CEDF67961C9BED61006D6D26 /* 12555447569970.jpg */,
-				CEDF67971C9BED61006D6D26 /* 12588117147181.jpg */,
-				CEDF67981C9BED61006D6D26 /* 12606972219149.jpg */,
-				CEDF67991C9BED61006D6D26 /* 12619628321247.jpg */,
-				CEDF679A1C9BED61006D6D26 /* 12676704406275.jpg */,
-				CEDF679B1C9BED61006D6D26 /* 12696914514425.jpg */,
-				CEDF679C1C9BED61006D6D26 /* 12818604132489.jpg */,
-				CEDF679D1C9BED61006D6D26 /* 12836700577019.jpg */,
-				CEDF679E1C9BED61006D6D26 /* 12838644058453.jpg */,
-				CEDF679F1C9BED61006D6D26 /* 12862043202376.jpg */,
-				CEDF67A01C9BED61006D6D26 /* 12896469932036.jpg */,
-				CEDF67A11C9BED61006D6D26 /* 12902550778729.jpg */,
-				CEDF67A21C9BED61006D6D26 /* 12902551051357.jpg */,
-				CEDF67A31C9BED61006D6D26 /* 12937032143215.jpg */,
-				CEDF67A41C9BED61006D6D26 /* 1364210605418.jpg */,
-				CEDF67A51C9BED61006D6D26 /* 1364210626758.jpg */,
+				CEB573DD1CAA194B0020198A /* 创新西路333弄64号1001室效果图 */,
+				CEB573C01CA56B500020198A /* 三房新中式唐丰苑精装 */,
 			);
 			path = "艺术";
 			sourceTree = "<group>";
@@ -1357,42 +1403,46 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB573E71CAA194B0020198A /* 4.png in Resources */,
+				CEB573D91CA56B500020198A /* 次卧室 床头背景2x.jpg in Resources */,
 				CE2AED2B1C96F4B50039CB5A /* README.textile in Resources */,
 				CED1CCED1C9FA043007ED5FD /* SVWebViewControllerActivityReport-iPad@2x.png in Resources */,
-				CEDF67A81C9BED61006D6D26 /* 12606972219149.jpg in Resources */,
 				CED1CCE91C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
+				CEB573E81CAA194B0020198A /* 5.png in Resources */,
+				CEB573D31CA56B500020198A /* 9.jpg in Resources */,
 				CED1CCF31C9FA043007ED5FD /* SVWebViewControllerActivitySafari@2x.png in Resources */,
 				CE13C4DA1C96A01400AFC539 /* Assets.xcassets in Resources */,
 				CE13C4E51C96A14A00AFC539 /* Podfile in Resources */,
-				CEDF67B51C9BED61006D6D26 /* 1364210626758.jpg in Resources */,
+				CEB573E51CAA194B0020198A /* 2.png in Resources */,
 				CE2AED8E1C996F1E0039CB5A /* Launch Screen.storyboard in Resources */,
-				CEDF67AC1C9BED61006D6D26 /* 12818604132489.jpg in Resources */,
-				CEDF67A71C9BED61006D6D26 /* 12588117147181.jpg in Resources */,
+				CEB573E41CAA194B0020198A /* 1.png in Resources */,
+				CEB573E61CAA194B0020198A /* 3.png in Resources */,
+				CEB573E91CAA194B0020198A /* 6.png in Resources */,
+				CEB573EF1CAA1ADF0020198A /* 9.png in Resources */,
 				CEB573B71CA4DF910020198A /* address.json in Resources */,
+				CEB573D51CA56B500020198A /* 唐丰苑 2号1102  餐厅 酒柜.jpg in Resources */,
 				CE2AED821C97EF1E0039CB5A /* IMG_NotesDemo.png in Resources */,
-				CEDF67B31C9BED61006D6D26 /* 12937032143215.jpg in Resources */,
-				CEDF67AD1C9BED61006D6D26 /* 12836700577019.jpg in Resources */,
-				CEDF67AF1C9BED61006D6D26 /* 12862043202376.jpg in Resources */,
-				CEDF67B11C9BED61006D6D26 /* 12902550778729.jpg in Resources */,
-				CEDF67B01C9BED61006D6D26 /* 12896469932036.jpg in Resources */,
-				CEDF67A61C9BED61006D6D26 /* 12555447569970.jpg in Resources */,
-				CEDF67AB1C9BED61006D6D26 /* 12696914514425.jpg in Resources */,
+				CEB573D71CA56B500020198A /* 客厅 沙发背景 彩绘玻璃.jpg in Resources */,
 				CED1CD031C9FA4CF007ED5FD /* angle-mask@2x.png in Resources */,
 				CED1CCE51C9FA043007ED5FD /* SVWebViewController.strings in Resources */,
 				CED1CCEA1C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */,
+				CEB573D61CA56B500020198A /* 客卫.jpg in Resources */,
 				CED1CCE71C9FA043007ED5FD /* SVWebViewController.bundle in Resources */,
 				CED1CCEF1C9FA043007ED5FD /* SVWebViewControllerActivityReport@2x.png in Resources */,
-				CEDF67B21C9BED61006D6D26 /* 12902551051357.jpg in Resources */,
 				CE2AEE161C9AF8BB0039CB5A /* read_me.txt in Resources */,
-				CEDF67AA1C9BED61006D6D26 /* 12676704406275.jpg in Resources */,
-				CEDF67B41C9BED61006D6D26 /* 1364210605418.jpg in Resources */,
-				CEDF67AE1C9BED61006D6D26 /* 12838644058453.jpg in Resources */,
+				CEB573D41CA56B500020198A /* 唐丰苑 2号1102  衣帽间.jpg in Resources */,
+				CEB573ED1CAA1ADF0020198A /* 7.png in Resources */,
 				CED1CD021C9FA4CF007ED5FD /* angle-mask.png in Resources */,
+				CEB573D21CA56B500020198A /* 8.jpg in Resources */,
+				CEB573F81CABC1550020198A /* icon_chose_arrow_sel@2x.png in Resources */,
+				CEB573F71CABC1550020198A /* icon_chose_arrow_nor@2x.png in Resources */,
+				CEB573D11CA56B500020198A /* 7.jpg in Resources */,
 				CED1CD1C1C9FC62C007ED5FD /* MJPhotoBrowser.bundle in Resources */,
+				CEB573EE1CAA1ADF0020198A /* 8.png in Resources */,
 				CED1CCF01C9FA043007ED5FD /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
+				CEB573F91CABC1550020198A /* icon_chose_bottom@2x.png in Resources */,
 				CED1CCEC1C9FA043007ED5FD /* SVWebViewControllerActivityChrome@2x.png in Resources */,
 				CED1CCF11C9FA043007ED5FD /* SVWebViewControllerActivitySafari-iPad@2x.png in Resources */,
-				CEDF67A91C9BED61006D6D26 /* 12619628321247.jpg in Resources */,
 				CED1CD041C9FA4CF007ED5FD /* angle-mask@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1562,6 +1612,7 @@
 				CED1CD6C1C9FEB85007ED5FD /* AFNetworkReachabilityManager.m in Sources */,
 				CE2AED4A1C97AEE50039CB5A /* Me_RootViewController.m in Sources */,
 				CED1CD291C9FE1B2007ED5FD /* Login.m in Sources */,
+				CEB573DC1CA90FA10020198A /* Note.m in Sources */,
 				CE2AEDC01C997F9E0039CB5A /* UIImage+WebP.m in Sources */,
 				CE2AED251C96F46B0039CB5A /* NSDate+Common.m in Sources */,
 				CE13C50D1C96EFB100AFC539 /* LoginViewController.m in Sources */,
@@ -1600,6 +1651,7 @@
 				CEDF67D91C9CFDBD006D6D26 /* ActionSheetDatePicker.m in Sources */,
 				CED1CD261C9FCD80007ED5FD /* GenderButton.m in Sources */,
 				CE4F485E1CA227DD00FBB678 /* RunTai_NetAPIManager.m in Sources */,
+				CEB573F61CABC1550020198A /* DOPDropDownMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

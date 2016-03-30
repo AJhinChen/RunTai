@@ -65,7 +65,7 @@
     }
     //添加9个图片到界面中
     if (photoPaths) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             float X = arc4random()%((int)self.view.bounds.size.width - IMAGEWIDTH);
             float Y = arc4random()%((int)self.view.bounds.size.height - IMAGEHEIGHT - 10);
             float W = IMAGEWIDTH;

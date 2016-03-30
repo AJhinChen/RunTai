@@ -222,7 +222,7 @@
     }];
     
     [self.watchedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(40, 25));
+        make.size.mas_equalTo(CGSizeMake(45, 25));
         make.right.equalTo(self.backgroundImg.mas_right).offset(-paddingToLeft);
         make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
     }];

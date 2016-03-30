@@ -13,10 +13,17 @@
 #import <APParallaxHeader/UIScrollView+APParallaxHeader.h>
 #import "MJPhotoBrowser.h"
 #import "NoteViewController.h"
+#import "RunTai_NetAPIManager.h"
+#import "Projects.h"
+#import "MJRefresh.h"
 
 @interface StaffInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) UITableView *myTableView;
 @property (strong, nonatomic) EaseUserHeaderView *headerView;
+
+@property (strong, nonatomic) NSMutableArray *dataList;
+@property (strong, nonatomic) NSMutableArray *loadedObjects;
+@property (nonatomic, strong) Projects *myProjects;
 
 @end
 
@@ -25,7 +32,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"业务员1号";
+    self.title = self.responsible.name;
+    if (!self.myProjects) {
+        self.myProjects = [[Projects alloc]init];
+    }
+    if (!_dataList) {
+        _dataList = [[NSMutableArray alloc] initWithCapacity:2];
+    }
+    if (!_loadedObjects) {
+        _loadedObjects = [[NSMutableArray alloc] initWithCapacity:2];
+    }
     //    添加myTableView
     _myTableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -43,11 +59,7 @@
         tableView;
     });
     __weak typeof(self) weakSelf = self;
-    User *user = [User new];
-    user.phone = @"12312";
-    user.name = @"业务员1号";
-    user.gender = [NSNumber numberWithInt:0];
-    _headerView = [EaseUserHeaderView userHeaderViewWithUser:user image:[UIImage imageNamed:@"MIDAUTUMNIMAGE.jpg"]];
+    _headerView = [EaseUserHeaderView userHeaderViewWithUser:self.responsible image:[UIImage imageNamed:@"MIDAUTUMNIMAGE"]];
     _headerView.userIconClicked = ^(){
         [weakSelf userIconClicked];
     };
@@ -58,6 +70,8 @@
         [weakSelf followsCountBtnClicked];
     };
     [_myTableView addParallaxWithView:_headerView andHeight:CGRectGetHeight(_headerView.frame)];
+    
+    [self setupRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -70,6 +84,24 @@
     _myTableView.dataSource = nil;
 }
 
+- (void)setupRefresh {
+    
+    // 5.添加上拉加载更多控件
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreProjects)];
+    // 设置文字
+    [footer setTitle:@"加载中 ..." forState:MJRefreshStateRefreshing];
+    [footer setTitle:@"全部加载完毕" forState:MJRefreshStateNoMoreData];
+    
+    // 设置字体
+    footer.stateLabel.font = [UIFont systemFontOfSize:13];
+    
+    // 设置颜色
+    footer.stateLabel.textColor = Color(113, 113, 113);
+    self.myTableView.mj_footer = footer;
+    // 马上进入刷新状态
+    [self.myTableView.mj_footer beginRefreshing];
+}
+
 #pragma mark Table M
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
@@ -79,7 +111,7 @@
     if (section == 0) {
         row = 3;
     }else{
-        row = 14;
+        row = [self.dataList count];
     }
     return row;
 }
@@ -90,13 +122,13 @@
         UserInfoTextCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_UserInfoTextCell forIndexPath:indexPath];
         switch (indexPath.row) {
             case 0:
-                [cell setTitle:@"所在地" value:@"南京"];
+                [cell setTitle:@"所在地" value:self.responsible.location];
                 break;
             case 1:
-                [cell setTitle:@"职称" value:@"部门经理"];
+                [cell setTitle:@"职称" value:self.responsible.professional];
                 break;
             default:
-                [cell setTitle:@"联系方式" value:@"15919161012"];
+                [cell setTitle:@"联系方式" value:self.responsible.phone];
                 break;
         }
         [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
@@ -104,7 +136,27 @@
     }else{
         DirectorCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Director forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setTitle:@"楼盘业主:[南京 金城丽景]蒋先生" subtitle:@"户型报价:130㎡/三居/北欧简约/16.7万" value:@"avatar_default_big"];
+        Project *curPro = [[Project alloc]init];
+        if ([self.dataList count]>0) {
+            curPro = self.dataList[indexPath.row];
+        }
+        NSArray *components = [curPro.full_name componentsSeparatedByString:@" "];
+        NSString *address = @"";
+        switch ([components count]) {
+            case 1:
+                address = components[0];
+                break;
+            case 2:
+                address = components[1];
+                break;
+            case 3:
+                address = components[2];
+                break;
+                
+            default:
+                break;
+        }
+        [cell setTitle:[NSString stringWithFormat:@"楼盘业主:[%@%@%@",address,curPro.owner.name,curPro.owner.gender] subtitle:[NSString stringWithFormat:@"户型报价:%@",curPro.name] value:curPro.owner.avatar];
         [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
         return cell;
     }
@@ -164,6 +216,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section==1) {
         NoteViewController *vc = [[NoteViewController alloc] init];
+        vc.curPro = self.dataList[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -179,12 +232,39 @@
 - (void)userIconClicked{
     //        显示大图
     MJPhoto *photo = [[MJPhoto alloc] init];
-//    photo.url = [_curUser.avatar urlWithCodePath];
+    photo.url = [NSURL URLWithString:self.responsible.avatar];
     
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     browser.currentPhotoIndex = 0;
     browser.photos = [NSArray arrayWithObject:photo];
     [browser show];
+}
+
+- (void)loadMoreProjects{
+    
+    typeof(self) __weak weakSelf= self;
+    [[RunTai_NetAPIManager sharedManager] request_Projects_WithUser:self.responsible loaded:self.loadedObjects block:^(NSArray *objects, NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
+        if ([objects count]>0) {
+            _myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
+            // 将新数据插入到旧数据的最后边
+            [self.dataList addObjectsFromArray:_myProjects.list];
+            [self.loadedObjects addObjectsFromArray:_myProjects.loadedObjectIDs];
+            [weakSelf.myTableView reloadData];
+        }else{
+            // 变为没有更多数据的状态
+            [self.myTableView.mj_footer endRefreshingWithNoMoreData];
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                default:
+//                    [NSObject showHudTipStr:@"没有更多笔录"];
+                    break;
+            }
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

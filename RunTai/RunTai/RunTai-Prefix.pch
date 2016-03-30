@@ -105,7 +105,7 @@
 //是否为iOS8及以上系统
 #define iOS8 ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
 //导航栏标题字体大小
-#define NavigationFont [UIFont boldSystemFontOfSize:16]
+#define NavigationFont [UIFont boldSystemFontOfSize:kNavTitleFontSize]
 //首页标题字体大小
 #define NotesTitleFont [UIFont boldSystemFontOfSize:16]
 //首页副标题字体大小

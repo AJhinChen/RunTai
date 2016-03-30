@@ -14,7 +14,7 @@
 #import "RDVTabBarItem.h"
 #import "BaseNavigationController.h"
 
-@interface RootTabViewController ()
+@interface RootTabViewController ()<UITabBarControllerDelegate>
 
 @end
 
@@ -33,7 +33,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //    [self setupViewControllers];
+
+    self.delegate = self;
     
     //1.添加所有的自控制器
     [self addAllChildVcs];

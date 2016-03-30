@@ -41,9 +41,6 @@
         case  ProjectsTypeCreated:
             typeStr = @"created";
             break;
-        case  ProjectsTypeTaProject:
-            typeStr = @"project";
-            break;
         case  ProjectsTypeWatched:
             typeStr = @"watched";
             break;
@@ -60,9 +57,9 @@
     for (AVObject *object in objects) {
         Project *project = [[Project alloc]init];
         AVFile *backgroundFile = [object objectForKey:@"background"];
+        project.objectId = object.objectId;
         project.background = backgroundFile.url;
         project.name = [object objectForKey:@"name"];
-        project.responsible = [Login transfer:[object objectForKey:@"responsible"]];
         project.full_name = [object objectForKey:@"full_name"];
         project.description_mine = [object objectForKey:@"description_mine"];
         project.id = [NSNumber numberWithInt:object.objectId.intValue];
@@ -71,13 +68,14 @@
         project.processing = [object objectForKey:@"processing"];
         project.stared = [object objectForKey:@"stared"];
         project.watch_count = [object objectForKey:@"watch_count"];
-        project.watched = [object objectForKey:@"watched"];
         project.isStaring = [object objectForKey:@"isStaring"];
         project.isWatching = [object objectForKey:@"isWatching"];
         project.isLoadingMember = [object objectForKey:@"isLoadingMember"];
         project.created_at = [object objectForKey:@"created_at"];
         project.updated_at = [object objectForKey:@"updated_at"];
         project.owner=[Login transfer:[object objectForKey:@"owner"]];
+        project.responsible = [Login transfer:[object objectForKey:@"responsible"]];
+        project.list = [object objectForKey:@"notes"];
         [pros.list addObject:project];
         [pros.loadedObjectIDs addObject:object.objectId];
     }

@@ -14,6 +14,9 @@
 #import "WXApiManager.h"
 #import "PopMenu.h"
 #import "StaffInfoViewController.h"
+#import "RunTai_NetAPIManager.h"
+#import "Note.h"
+#import "Login.h"
 
 static NSString *kAPPContentTitle = @"[润泰装饰]我的装修笔录";
 static NSString *kAPPContentDescription = @"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
@@ -36,9 +39,13 @@ const CGFloat BackGroupHeight = 250;
     UILabel *titleLabel;
     
     UILabel *introLabel;
+    UIButton *collectBtn;
 }
 @property (nonatomic) enum WXScene currentScene;
 @property (nonatomic, strong) PopMenu *myPopMenu;
+@property (nonatomic, strong) Project *myProject;
+
+@property (strong, nonatomic) NSMutableArray *dataList;
 
 @end
 
@@ -50,6 +57,13 @@ const CGFloat BackGroupHeight = 250;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets=NO;
+    
+    if (!_dataList) {
+        _dataList = [[NSMutableArray alloc] initWithCapacity:2];
+    }
+    if (!_myProject){
+        _myProject = [[Project alloc]init];
+    }
     //    添加myTableView
     myTableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -99,6 +113,8 @@ const CGFloat BackGroupHeight = 250;
     // Do any additional setup after loading the view.
     [self setupUI];
     
+    [self loadNewNote];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -134,7 +150,8 @@ const CGFloat BackGroupHeight = 250;
     //
     imageBG=[[UIImageView alloc]init];
     imageBG.frame=CGRectMake(0, -BackGroupHeight, kScreen_Width, BackGroupHeight);
-    imageBG.image=[UIImage imageNamed:@"IMG_NotesDemo"];
+    [imageBG sd_setImageWithURL:[_curPro.background urlImageWithCodePathResizeToView:imageBG] placeholderImage:kPlaceholderBackground];
+    imageBG.contentMode = UIViewContentModeScaleToFill;
     
     [myTableView addSubview:imageBG];
     //
@@ -152,10 +169,10 @@ const CGFloat BackGroupHeight = 250;
     
     nameLabel = ({
         UILabel *title = [[UILabel alloc] init];
-        title.text=@"[南京 金城丽景] 品质北欧简约风";
+        title.text=self.curPro.full_name;//@"[南京 金城丽景] 品质北欧简约风";
         title.textColor = [UIColor whiteColor];
         title.font = NotesTitleFont;
-        title.textAlignment=NSTextAlignmentCenter;
+        title.textAlignment=NSTextAlignmentLeft;
         title.backgroundColor=[UIColor clearColor];
         
         title;
@@ -165,8 +182,8 @@ const CGFloat BackGroupHeight = 250;
     
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(paddingWidth, 20));
-        make.left.equalTo(BGView.mas_left).offset(paddingToLeft);
-        make.top.equalTo(BGView.mas_top).offset(BackGroupHeight/2);
+        make.left.equalTo(BGView.mas_left).offset(paddingToBottom);
+        make.bottom.equalTo(BGView.mas_bottom).offset(-paddingToBottom*2);
     }];
     
     
@@ -174,10 +191,10 @@ const CGFloat BackGroupHeight = 250;
     
     introLabel = ({
         UILabel *intro = [[UILabel alloc] init];
-        intro.text=@"130㎡/三居/北欧简约/报价:16.7万";
+        intro.text=self.curPro.name;
         intro.textColor = [UIColor whiteColor];
         intro.font = NotesIntroFont;
-        intro.textAlignment=NSTextAlignmentCenter;
+        intro.textAlignment=NSTextAlignmentLeft;
         intro.backgroundColor=[UIColor clearColor];
         
         intro;
@@ -187,20 +204,31 @@ const CGFloat BackGroupHeight = 250;
     
     [introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(paddingWidth, 20));
-        make.left.equalTo(BGView.mas_left).offset(paddingToLeft);
-        make.top.equalTo(nameLabel.mas_bottom).offset(paddingToBottom);
+        make.left.equalTo(BGView.mas_left).offset(paddingToBottom);
+        make.top.equalTo(nameLabel.mas_bottom).offset(paddingToLeft);
     }];
     
-    
-    titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 30)];
+    titleLabel=[[UILabel alloc]init];
     titleLabel.textColor=[UIColor blackColor];
-    titleLabel.text=@"[南京 金城丽景]蒋先生";
+    titleLabel.text=self.curPro.owner.name;
+    titleLabel.font=NavigationFont;
     titleLabel.textAlignment=NSTextAlignmentCenter;
+    CGFloat titleWidth = [titleLabel.text getWidthWithFont:NavigationFont constrainedToSize:CGSizeMake(CGFLOAT_MAX, 25)];
+    titleLabel.frame = CGRectMake(0, 0, titleWidth, 25);
     
     self.navigationItem.titleView=titleLabel;
     titleLabel.alpha=0;
     
-    self.navigationItem.rightBarButtonItems = @[[self BarButtonItemWithBackgroudImageName:@"share_Nav" highBackgroudImageName:@"share_Nav" target:self action:@selector(shareClicked)],[self BarButtonItemWithBackgroudImageName:@"composer_rating_icon" highBackgroudImageName:@"composer_rating_icon_highlighted" target:self action:@selector(collectClicked)]];
+    collectBtn = [[UIButton alloc]init];
+    [collectBtn setBackgroundImage:[UIImage imageWithName:@"composer_rating_icon"] forState:UIControlStateNormal];
+    [collectBtn setBackgroundImage:[UIImage imageWithName:@"composer_rating_icon_highlighted"] forState:UIControlStateSelected];
+    [collectBtn addTarget:self action:@selector(collectClicked:) forControlEvents:UIControlEventTouchUpInside];
+    collectBtn.size = collectBtn.currentBackgroundImage.size;
+    UIBarButtonItem *collect = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
+    
+    
+    
+    self.navigationItem.rightBarButtonItems = @[[self BarButtonItemWithBackgroudImageName:@"share_Nav" highBackgroudImageName:@"share_Nav" target:self action:@selector(shareClicked)],collect];
 }
 
 - (UIBarButtonItem *)BarButtonItemWithBackgroudImageName:(NSString *)backgroudImage highBackgroudImageName:(NSString *)highBackgroudImageName target:(id)target action:(SEL)action
@@ -230,9 +258,31 @@ const CGFloat BackGroupHeight = 250;
     }
 }
 
--(void)collectClicked
+-(void)collectClicked:(UIButton *)btn
 {
-    
+    btn.selected = !btn.selected;
+    if (btn.selected) {
+        [NSObject showLoadingView:@"收藏中.."];
+    }else{
+        [NSObject showLoadingView:@"取消收藏中.."];
+    }
+    [[RunTai_NetAPIManager sharedManager]request_CollectNote_WithProject:_curPro.objectId block:^(BOOL succeeded, NSError *error) {
+        [NSObject hideLoadingView];
+        if (error) {
+            if (btn.selected) {
+                [NSObject showHudTipStr:@"收藏失败"];
+            }else{
+                [NSObject showHudTipStr:@"取消收藏失败"];
+            }
+            btn.selected = !btn.selected;
+        }else{
+            if (btn.selected) {
+                [NSObject showHudTipStr:@"收藏成功"];
+            }else{
+                [NSObject showHudTipStr:@"取消收藏成功"];
+            }
+        }
+    }];
 }
 
 
@@ -280,7 +330,7 @@ const CGFloat BackGroupHeight = 250;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 6;
+    return [self.dataList count]+2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -291,10 +341,6 @@ const CGFloat BackGroupHeight = 250;
         case 1:
             return 2;
             break;
-        case 2:
-            return 6-3;
-            break;
-            
         default:
             return 1;
             break;
@@ -306,13 +352,14 @@ const CGFloat BackGroupHeight = 250;
     if (indexPath.section == 0) {
         DirectorCell *cell = [DirectorCell cellWithTableView:tableView];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setTitle:@"监察:业务员1号" subtitle:@"职称:资深项目组成员" value:@"avatar_default_big"];
+        [cell setTitle:[NSString stringWithFormat:@"监察:%@",self.curPro.responsible.name] subtitle:[NSString stringWithFormat:@"职称:%@",self.curPro.responsible.professional] value:@"avatar_default_big"];
         return cell;
     }else if (indexPath.section == 1){
         ListsCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_ListsCell forIndexPath:indexPath];
+        NSArray *components = [self.curPro.name componentsSeparatedByString:@"/"];
         switch (indexPath.row) {
             case 0:
-                [cell setImageStr:@"list_icon_pre" andTitle:@"报价清单: 23.7万"];
+                [cell setImageStr:@"list_icon_pre" andTitle:[NSString stringWithFormat:@"报价清单: %@",components[0]]];
                 break;
             case 1:
                 [cell setImageStr:@"list_icon_end" andTitle:@"实际清单: 16.7万"];
@@ -325,6 +372,9 @@ const CGFloat BackGroupHeight = 250;
         return cell;
     }else{
         LoggingCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_LoggingCell forIndexPath:indexPath];
+        if ([self.dataList count]>0) {
+            cell.note = self.dataList[indexPath.section-2];
+        }
         return cell;
     }
 }
@@ -335,7 +385,11 @@ const CGFloat BackGroupHeight = 250;
     }else if(indexPath.section==1){
         return 44.0;
     }else{
-        return [LoggingCell cellHeight];
+        if ([self.dataList count]>0) {
+            return [LoggingCell cellHeightWithObj:self.dataList[indexPath.section-2]];
+        }else{
+            return 44;
+        }
     }
 }
 
@@ -349,6 +403,7 @@ const CGFloat BackGroupHeight = 250;
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *header = [[UIView alloc]init];
     if (section >= 2) {
+        Note *note = self.dataList[section-2];
         header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 45.0)];
         
         UIView *body = [[UIView alloc]initWithFrame:CGRectMake(0, 1, kScreen_Width, 44.0)];
@@ -356,7 +411,7 @@ const CGFloat BackGroupHeight = 250;
         
         UILabel *intro = [[UILabel alloc]initWithFrame:CGRectMake(kPaddingLeftWidth, kPaddingLeftWidth, 70, 44-kPaddingLeftWidth*2)];
         
-        intro.text=@"前期设计";
+        intro.text=[Project getProcessingName:note.noteType];
         intro.textColor = [UIColor whiteColor];
         intro.font = NotesIntroFont;
         intro.textAlignment=NSTextAlignmentCenter;
@@ -366,7 +421,7 @@ const CGFloat BackGroupHeight = 250;
         
         UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(kPaddingLeftWidth*2+80, kPaddingLeftWidth, kScreen_Width-(kPaddingLeftWidth*2+80)*2, 44-kPaddingLeftWidth*2)];
         
-        title.text=@"2016年2月14日";
+        title.text=[NSDate stringFromDate:note.updatedAt];
         title.textColor = [UIColor colorWithHexString:@"0x222222"];
         title.font = NotesIntroFont;
         title.textAlignment=NSTextAlignmentCenter;
@@ -380,9 +435,6 @@ const CGFloat BackGroupHeight = 250;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section==5) {
-        return kPaddingLeftWidth;
-    }
     return 0;
 }
 
@@ -396,6 +448,7 @@ const CGFloat BackGroupHeight = 250;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section==0) {
         StaffInfoViewController *vc = [[StaffInfoViewController alloc]init];
+        vc.responsible = self.curPro.responsible;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -467,6 +520,44 @@ const CGFloat BackGroupHeight = 250;
     return theImage;
 }
 
+#pragma mark - 加载数据
+/**
+ *  加载最新的数据
+ */
+- (void)loadNewNote{
+    if ([Login isLogin]) {
+        User *curUser = [Login curLoginUser];
+        if ([curUser.watched containsObject:[AVQuery getObjectOfClass:@"Project" objectId:_curPro.objectId]]) {
+            collectBtn.selected = YES;
+        }
+    }
+    
+    typeof(self) __weak weakSelf= self;
+    [[RunTai_NetAPIManager sharedManager] request_Notes_WithNotes:_curPro.list block:^(NSArray *objects, NSError *error) {
+        if ([objects count]>0) {
+            _myProject = [weakSelf.myProject configWithObjects:objects type:self.curPro.processing.integerValue];
+            // 将新数据插入到旧数据的最后边
+            [weakSelf.dataList addObjectsFromArray:_myProject.list];
+            [myTableView reloadData];
+        }else{
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                default:
+                    [NSObject showHudTipStr:@"没有相关笔录"];
+                    break;
+            }
+        }
+    }];
+    [[RunTai_NetAPIManager sharedManager] request_WatchNote_WithProject:_curPro.objectId block:^(AVObject *object, NSError *error) {
+        if (!error) {
+            _curPro.watch_count = [object objectForKey:@"watch_count"];
+        }
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -476,6 +567,15 @@ const CGFloat BackGroupHeight = 250;
 {
     myTableView.delegate = nil;
     myTableView.dataSource = nil;
+    self.myPopMenu = nil;
+    self.myProject = nil;
+    myTableView = nil;
+    imageBG = nil;
+    BGView = nil;
+    nameLabel = nil;
+    titleLabel = nil;
+    introLabel = nil;
+    collectBtn = nil;
 }
 
 /*

@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+#import "User.h"
 @interface StaffInfoViewController : BaseViewController
+
+@property (strong, nonatomic) User *responsible;
 
 @end

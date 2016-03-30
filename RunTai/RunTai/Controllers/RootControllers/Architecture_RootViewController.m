@@ -9,12 +9,16 @@
 #import "Architecture_RootViewController.h"
 #import "DirectorCell.h"
 #import "StaffInfoViewController.h"
+#import "RunTai_NetAPIManager.h"
+#import "Login.h"
 
 @interface Architecture_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *myTableView;
 
 @property (assign, nonatomic) NSInteger type;/**< segment */
+
+@property (strong, nonatomic) NSMutableArray *dataList;
 
 @end
 
@@ -23,6 +27,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if (!_dataList) {
+        _dataList = [[NSMutableArray alloc] initWithCapacity:2];
+    }
     _myTableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
@@ -40,6 +47,7 @@
         tableView;
     });
     [self setNav];
+    [self loadStaffs];
     _type = 0;
 }
 
@@ -64,6 +72,18 @@
     self.navigationItem.titleView = segmentCtr;
 }
 
+- (void)loadStaffs{
+    typeof(self) __weak weakSelf= self;
+    [[RunTai_NetAPIManager sharedManager] request_LoadStaffs:_type?@"上海":@"南京" :^(NSArray *objects, NSError *error) {
+        if ([objects count]>0) {
+            for (AVUser *user in objects) {
+                [weakSelf.dataList addObject:[Login transfer:user]];
+            }
+            [weakSelf.myTableView reloadData];
+        }
+    }];
+}
+
 //响应事件
 -(void)OnTapSegmentCtr:(UISegmentedControl *)seg{
     NSInteger index = seg.selectedSegmentIndex;
@@ -72,30 +92,23 @@
     }else{
         _type = 1;
     }
-    [self.myTableView reloadData];
+    [self.dataList removeAllObjects];
+    [self loadStaffs];
 }
 
 #pragma mark Table M
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (_type==0) {
-        return 10;
-    }
-    return 5;
+    return self.dataList.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_type==0) {
-        DirectorCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Director forIndexPath:indexPath];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setTitle:@"监察:业务员1号" subtitle:@"职称:资深项目组成员" value:@"avatar_default_big"];
-        return cell;
-    }
     DirectorCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Director forIndexPath:indexPath];
-    [cell setTitle:@"监察:业务员1号" subtitle:@"职称:资深项目组成员" value:@"avatar_default_big"];
+    User *curUser = self.dataList[indexPath.section];
+    [cell setTitle:[NSString stringWithFormat:@"监察:%@",curUser.name] subtitle:[NSString stringWithFormat:@"职称:%@",curUser.professional] value:curUser.avatar];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -164,7 +177,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     StaffInfoViewController *vc = [[StaffInfoViewController alloc]init];
+    vc.responsible = self.dataList[indexPath.section];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)dealloc
+{
+    _myTableView.delegate = nil;
+    _myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.dataList = nil;
 }
 
 /*

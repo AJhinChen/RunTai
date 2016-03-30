@@ -17,11 +17,10 @@
 #import "ProjectCount.h"
 
 @interface Home_RootViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
-@property (nonatomic, strong) Projects *myProjects;
 @property (strong, nonatomic) NSMutableDictionary *myProjectsDict;
 @property (strong, nonatomic) UISearchBar *mySearchBar;
 @property (strong, nonatomic) UITableView *myTableView;
-@property (strong, nonatomic) NSMutableArray *queryingArray, *addedArray, *searchedArray;
+@property (strong, nonatomic) NSMutableArray *searchedArray;
 
 @property (nonatomic, strong) PopFliterMenu *myFliterMenu;
 @property (nonatomic,assign) NSInteger selectNum;  //筛选状态
@@ -40,13 +39,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (!self.myProjects.type) {
+    if (!self.myProjects) {
         self.myProjects = [[Projects alloc]init];
         self.myProjects.type = ProjectsTypeAll;
     }
     switch (self.myProjects.type) {
         case ProjectsTypeAll:
             self.title = @"全部笔录";
+            [self setupNavBtn];
             break;
         case ProjectsTypeCreated:
             self.title = @"我的订单";
@@ -56,6 +56,7 @@
             break;
         default:
             self.title = @"全部笔录";
+            [self setupNavBtn];
             break;
     }
     if (!_dataList) {
@@ -70,7 +71,6 @@
     _myProjectsDict = [[NSMutableDictionary alloc] initWithCapacity:_segmentItems.count];
     // Do any additional setup after loading the view.
     
-    _queryingArray = [NSMutableArray array];
     _searchedArray = [NSMutableArray array];
     _myTableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -107,67 +107,7 @@
         }else{
             weakSelf.selectNum=pageIndex;
             weakSelf.myProjects.type = weakSelf.selectNum/2;
-            switch (weakSelf.myProjects.type) {
-                case ProjectsTypeAll:
-                    weakSelf.title = @"全部笔录";
-                    weakSelf.myTableView.mj_header.hidden = NO;
-                    weakSelf.myTableView.mj_footer.hidden = NO;
-                    [weakSelf.dataList removeAllObjects];
-                    [weakSelf.loadedObjects removeAllObjects];
-                    [weakSelf.myTableView reloadData];
-                    [weakSelf.myTableView.mj_header beginRefreshing];
-                    return;
-                    break;
-                case ProjectsTypeCreated:
-                    weakSelf.title = @"我的订单";
-                    if (weakSelf.pCount.created.intValue == 0) {
-                        weakSelf.myTableView.mj_header.hidden = YES;
-                        weakSelf.myTableView.mj_footer.hidden = YES;
-                        [weakSelf.dataList removeAllObjects];
-                        [weakSelf.loadedObjects removeAllObjects];
-                        [weakSelf.myTableView reloadData];
-                        return;
-                    }
-                    break;
-                case ProjectsTypeWatched:
-                    weakSelf.title = @"我收藏的";
-                    if (weakSelf.pCount.watched.intValue == 0) {
-                        weakSelf.myTableView.mj_header.hidden = YES;
-                        weakSelf.myTableView.mj_footer.hidden = YES;
-                        [weakSelf.dataList removeAllObjects];
-                        [weakSelf.loadedObjects removeAllObjects];
-                        [weakSelf.myTableView reloadData];
-                        return;
-                    }
-                    break;
-                default:
-                    weakSelf.title = @"全部笔录";
-                    break;
-            }
-            [[RunTai_NetAPIManager sharedManager]request_Projects_WithType:weakSelf.myProjects.type block:^(NSArray *objects, NSError *error) {
-                weakSelf.myTableView.mj_header.hidden = YES;
-                weakSelf.myTableView.mj_footer.hidden = YES;
-                [weakSelf.dataList removeAllObjects];
-                [weakSelf.loadedObjects removeAllObjects];
-            if ([objects count]>0) {
-                weakSelf.myProjects = [weakSelf.myProjects configWithObjects:objects type:weakSelf.myProjects.type];
-                // 将新数据插入到旧数据的最后边
-                [weakSelf.dataList addObjectsFromArray:weakSelf.myProjects.list];
-                [weakSelf.loadedObjects addObjectsFromArray:weakSelf.myProjects.loadedObjectIDs];
-                [weakSelf.myTableView reloadData];
-            }else{
-                [weakSelf.myTableView reloadData];
-                NSString * errorCode = error.userInfo[@"code"];
-                switch (errorCode.intValue) {
-                    case 28:
-                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
-                        break;
-                    default:
-                        [NSObject showHudTipStr:@"获取笔录失败，请重试"];
-                        break;
-                }
-            }
-            }];
+            [weakSelf myFliterMenuAction];
         }
     };
     
@@ -175,18 +115,16 @@
         [weakSelf closeFliter];
     };
     
-    [self setupNavBtn];
-    
     [self setupOrderBtn];
-    
     [self setupRefresh];
+    [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
+        self.pCount = pCount;
+        [self myFliterMenuAction];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
-        self.pCount = pCount;
-    }];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -244,6 +182,81 @@
     }];
 }
 
+- (void)myFliterMenuAction{
+    switch (self.myProjects.type) {
+        case ProjectsTypeAll:
+            self.title = @"全部笔录";
+            if (!self.myTableView.tableHeaderView) {
+                self.myTableView.tableHeaderView = self.mySearchBar;
+            }
+            self.myTableView.mj_header.hidden = NO;
+            self.myTableView.mj_footer.hidden = NO;
+            [self.dataList removeAllObjects];
+            [self.loadedObjects removeAllObjects];
+            [self.myTableView reloadData];
+            [self.myTableView.mj_header beginRefreshing];
+            return;
+            break;
+        case ProjectsTypeCreated:
+            self.title = @"我的订单";
+            [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+            self.myTableView.tableHeaderView = nil;
+            if (self.pCount.created.intValue == 0) {
+                self.myTableView.mj_header.hidden = YES;
+                self.myTableView.mj_footer.hidden = YES;
+                [self.dataList removeAllObjects];
+                [self.loadedObjects removeAllObjects];
+                [self.myTableView reloadData];
+                return;
+            }
+            break;
+        case ProjectsTypeWatched:
+            self.title = @"我收藏的";
+            [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+            self.myTableView.tableHeaderView = nil;
+            //                    if (!self.myTableView.tableHeaderView) {
+            //                        self.myTableView.tableHeaderView = self.mySearchBar;
+            //                    }
+            if (self.pCount.watched.intValue == 0) {
+                self.myTableView.mj_header.hidden = YES;
+                self.myTableView.mj_footer.hidden = YES;
+                [self.dataList removeAllObjects];
+                [self.loadedObjects removeAllObjects];
+                [self.myTableView reloadData];
+                return;
+            }
+            break;
+        default:
+            self.title = @"全部笔录";
+            break;
+    }
+    __weak typeof(self) weakSelf = self;
+    [[RunTai_NetAPIManager sharedManager]request_Projects_WithType:self.myProjects.type block:^(NSArray *objects, NSError *error) {
+        weakSelf.myTableView.mj_header.hidden = YES;
+        weakSelf.myTableView.mj_footer.hidden = YES;
+        [weakSelf.dataList removeAllObjects];
+        [weakSelf.loadedObjects removeAllObjects];
+        if ([objects count]>0) {
+            weakSelf.myProjects = [weakSelf.myProjects configWithObjects:objects type:weakSelf.myProjects.type];
+            // 将新数据插入到旧数据的最后边
+            [weakSelf.dataList addObjectsFromArray:weakSelf.myProjects.list];
+            [weakSelf.loadedObjects addObjectsFromArray:weakSelf.myProjects.loadedObjectIDs];
+            [weakSelf.myTableView reloadData];
+        }else{
+            [weakSelf.myTableView reloadData];
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                default:
+                    [NSObject showHudTipStr:@"获取笔录失败，请重试"];
+                    break;
+            }
+        }
+    }];
+}
+
 - (void)setupRefresh {
     
     // 1.添加下拉刷新
@@ -262,8 +275,6 @@
     header.stateLabel.textColor = Color(113, 113, 113);
     // 设置header
     self.myTableView.mj_header = header;
-    // 马上进入刷新状态
-    [self.myTableView.mj_header beginRefreshing];
     
     // 5.添加上拉加载更多控件
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreProjects)];
@@ -395,7 +406,9 @@
 #pragma mark Table M
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
+    if ([self.searchedArray count]>0) {
+        return _searchedArray.count;
+    }
     return self.dataList.count;
 }
 
@@ -405,7 +418,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NotesCell *cell = [NotesCell cellWithTableView:tableView];
-    cell.curPro = self.dataList[indexPath.section];
+    if ([_searchedArray count]>0) {
+        cell.curPro = _searchedArray[indexPath.section];
+    }else{
+        cell.curPro = self.dataList[indexPath.section];
+    }
     return cell;
 }
 
@@ -415,8 +432,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    [self goToUserInfo:[_searchedArray objectAtIndex:indexPath.row]];
+    [_mySearchBar resignFirstResponder];
     NoteViewController *vc = [[NoteViewController alloc] init];
+    Project *curPro = [[Project alloc]init];
+    
+    if ([_searchedArray count]>0) {
+        curPro = _searchedArray[indexPath.section];
+//        [self createNotes:_searchedArray[indexPath.section]];
+    }else{
+        curPro = self.dataList[indexPath.section];
+//        [self createNotes:self.dataList[indexPath.section]];
+    }
+    if (curPro.processing.intValue==0) {
+        return;
+    }
+    vc.curPro = curPro;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -467,12 +497,59 @@
 - (void)searchUserWithStr:(NSString *)string{
     NSString *strippedStr = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (strippedStr.length > 0) {
-        
+        __weak typeof(self) weakSelf = self;
+        switch (self.myProjects.type) {
+            case ProjectsTypeAll:{
+                [[RunTai_NetAPIManager sharedManager] request_SearchProjectOrUser_WithString:string block:^(NSArray *objects, NSError *error) {
+                    if ([objects count]>0) {
+                        weakSelf.myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
+                        weakSelf.searchedArray = weakSelf.myProjects.list;
+                        [weakSelf.myTableView reloadData];
+                    }else{
+                        [weakSelf.searchedArray removeAllObjects];
+                        [weakSelf.myTableView reloadData];
+                    }
+                }];
+            }
+                break;
+            case ProjectsTypeWatched:{
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains[cd] %@",string];
+                NSArray *filteredArray = [weakSelf.dataList filteredArrayUsingPredicate:predicate];
+                if ([filteredArray count]>0) {
+                    weakSelf.myProjects = [weakSelf.myProjects configWithObjects:filteredArray type:weakSelf.myProjects.type];
+                    weakSelf.searchedArray = weakSelf.myProjects.list;
+                    [weakSelf.myTableView reloadData];
+                }else{
+                    [weakSelf.searchedArray removeAllObjects];
+                    [weakSelf.myTableView reloadData];
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
     }else{
         [_searchedArray removeAllObjects];
         [_myTableView reloadData];
     }
     
+}
+
+- (void)createNotes:(Project *)curPro{
+    [NSObject showLoadingView:@"创建中.."];
+    NSMutableArray *pic_urls = [NSMutableArray arrayWithCapacity:9];
+    for (int i = 0; i<1; i++) {
+        UIImage *pic = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+2]];
+        [pic_urls addObject:pic];
+    }
+    
+    [[RunTai_NetAPIManager sharedManager]request_CreateNote_WithProject:curPro text:@"我和老公都很喜欢简欧风格，让福圣鑫的设计师按我们的想法出的设计图，第一张是我从网上找出图，背景墙铺设壁纸，第二张是我们让设计师出的图，背景墙铺设磁砖，大家看看哪种效果更好呢？给点意见吧" photos:pic_urls type:1 block:^(BOOL succeeded, NSError *error) {
+        [NSObject hideLoadingView];
+        if (succeeded) {
+            [NSObject showHudTipStr:@"创建笔录成功"];
+        }
+    }];
 }
 
 
@@ -481,6 +558,16 @@
     _myTableView.delegate = nil;
     _myTableView.dataSource = nil;
     _mySearchBar.delegate = nil;
+    self.myFliterMenu = nil;
+    self.myProjectsDict = nil;
+    self.mySearchBar = nil;
+    self.myTableView = nil;
+    self.searchedArray = nil;
+    self.leftNavBtn = nil;
+    self.orderBtn = nil;
+    self.dataList = nil;
+    self.loadedObjects = nil;
+    self.pCount = nil;
 }
 /*
 #pragma mark - Navigation

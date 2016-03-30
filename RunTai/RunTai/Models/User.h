@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface User : NSObject<NSCoding>
-@property (readwrite, nonatomic, strong) NSString *avatar, *gender, *name, *status, *global_key, *location, *address, *objectId;
+@property (readwrite, nonatomic, strong) NSString *avatar, *gender, *name, *status, *global_key, *location, *address, *objectId, *professional;
 @property (readwrite, nonatomic, strong) NSString *curPassword, *resetPassword, *resetPasswordConfirm, *phone, *introduction;
 @property (readwrite, nonatomic, strong) NSMutableArray *watched;
 

@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "Project.h"
 
 @interface NoteViewController : BaseViewController
+
+@property (strong, nonatomic) Project *curPro;
 
 @end

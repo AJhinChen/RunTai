@@ -7,22 +7,25 @@
 //
 
 #import "Project.h"
+#import "Login.h"
 
 @implementation Project
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _isStaring = _isWatching = _isLoadingMember = _isLoadingDetail = NO;
+        if (!self.list) {
+            self.list = [[NSMutableArray alloc] initWithCapacity:2];
+        }
     }
     return self;
 }
 
 -(id)copyWithZone:(NSZone*)zone {
     Project *project = [[[self class] allocWithZone:zone] init];
+    project.objectId = [_objectId copy];
     project.background = [_background copy];
     project.name = [_name copy];
-    project.responsible = [_responsible copy];
     project.full_name = [_full_name copy];
     project.description_mine = [_description_mine copy];
     project.id = [_id copy];
@@ -31,34 +34,14 @@
     project.processing = [_processing copy];
     project.stared = [_stared copy];
     project.watch_count = [_watch_count copy];
-    project.watched = [_watched copy];
     project.isStaring = _isStaring;
     project.isWatching = _isWatching;
     project.isLoadingMember = _isLoadingMember;
     project.created_at = [_created_at copy];
     project.updated_at = [_updated_at copy];
     project.owner=[_owner copy];
+    project.responsible = [_responsible copy];
     return project;
-}
-
-
-- (void)setFull_name:(NSString *)full_name{
-    _full_name = full_name;
-    NSArray *components = [_full_name componentsSeparatedByString:@"/"];
-    if (components.count == 2) {
-        if (!_responsible) {
-            _responsible = components[0];
-        }
-        if (_name) {
-            _name = components[1];
-        }
-    }
-}
-
-+(Project *)project_All{
-    Project *pro = [[Project alloc] init];
-    pro.id = [NSNumber numberWithInteger:-1];
-    return pro;
 }
 
 +(NSString*)getProcessingName:(int)num{
@@ -94,6 +77,32 @@
             return @"上门服务";
             break;
     }
+}
+
+- (Project *)configWithObjects:(NSArray *)objects type:(ProjectType)type{
+    Project *pro = [[Project alloc]init];
+    pro.proType = type;
+    for (AVObject *object in objects) {
+        Note *note = [[Note alloc]init];
+        note.objectId = object.objectId;
+        note.text = [object objectForKey:@"text"];
+        
+        NSArray *picFiles = [object objectForKey:@"pic_urls"];
+        
+        NSMutableArray *picUrls = [NSMutableArray array];
+        
+        for (AVFile *file in picFiles) {
+            
+            [picUrls addObject:file.url];
+            
+        }
+        note.pic_urls = picUrls;
+        note.updatedAt = [object objectForKey:@"updatedAt"];
+        NSString *type = [object objectForKey:@"type"];
+        note.noteType = type.integerValue;
+        [pro.list addObject:note];
+    }
+    return pro;
 }
 
 @end

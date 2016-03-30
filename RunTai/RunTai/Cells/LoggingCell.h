@@ -8,9 +8,12 @@
 #define kCellIdentifier_LoggingCell @"LoggingCell"
 
 #import <UIKit/UIKit.h>
+#import "Note.h"
 
 @interface LoggingCell : UITableViewCell
 
-+ (CGFloat)cellHeight;
+@property (strong, nonatomic) Note *note;
+
++ (CGFloat)cellHeightWithObj:(Note *)obj;
 
 @end

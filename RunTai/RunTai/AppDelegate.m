@@ -178,7 +178,7 @@
     [navigationBarAppearance setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"0xffffff"]] forBarMetrics:UIBarMetricsDefault];
     [navigationBarAppearance setTintColor:[UIColor blackColor]];//返回按钮的箭头颜色
     NSDictionary *textAttributes = @{
-                                     NSFontAttributeName: [UIFont boldSystemFontOfSize:kNavTitleFontSize],
+                                     NSFontAttributeName: NavigationFont,
                                      NSForegroundColorAttributeName: [UIColor blackColor],
                                      };
     [navigationBarAppearance setTitleTextAttributes:textAttributes];

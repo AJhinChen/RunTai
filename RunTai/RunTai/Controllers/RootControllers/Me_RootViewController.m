@@ -14,6 +14,8 @@
 #import "LoginViewController.h"
 #import "Login.h"
 #import "User.h"
+#import "Home_RootViewController.h"
+#import "Projects.h"
 
 @interface Me_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -175,6 +177,29 @@
         SettingMineInfoViewController *vc = [[SettingMineInfoViewController alloc]init];
         vc.curUser = self.curUser;
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.section == 1){
+        Projects *curPro = [[Projects alloc]init];
+        switch (indexPath.row) {
+            case 0:{
+                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
+                curPro.type = ProjectsTypeCreated;
+                vc.myProjects = curPro;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 1:{
+                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
+                curPro.type = ProjectsTypeWatched;
+                vc.myProjects = curPro;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }else{
+        
     }
 }
 

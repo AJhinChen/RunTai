@@ -335,6 +335,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc{
+    self.myTableView.delegate = nil;
+    self.myTableView.dataSource = nil;
+    self.myLogin = nil;
+    self.myTableView = nil;
+    self.bottomView = nil;
+    self.loginBtn = nil;
+    self.activityIndicator = nil;
+    self.bgBlurredView = nil;
+    self.inputTipsView = nil;
+    self.dismissButton = nil;
+}
+
 /*
 #pragma mark - Navigation
 

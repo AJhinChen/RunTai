@@ -44,15 +44,40 @@
     return self;
 }
 
-- (void)setupDetailView {
+- (void)setNote:(Note *)note{
+    self.introLabel.text = note.text;
+    self.photosView.picUrls = note.pic_urls;
     
     CGFloat cellWidth = kScreen_Width - kPaddingLeftWidth*2;
-    CGFloat cellHeight = [LoggingCell cellHeight];
+    CGFloat cellHeight = [LoggingCell cellHeightWithObj:note];
     CGFloat paddingToBottom = 8;
+    int count = (int)[note.pic_urls count];
+    CGSize photoSize = [LoggingPhotosView sizeWithPhotosCount:count];
+    CGFloat introHeight = cellHeight - photoSize.height - paddingToBottom*3 + 0.5;
+    
+    
+    [self.introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(cellWidth, introHeight));
+        make.left.equalTo(self.contentView.mas_left).offset(paddingToBottom);
+        make.top.equalTo(self.contentView.mas_top).offset(paddingToBottom);
+    }];
+    
+    [self.photosView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(photoSize);
+        make.left.equalTo(self.contentView.mas_left).offset(paddingToBottom);
+        make.top.equalTo(self.introLabel.mas_bottom).offset(paddingToBottom);
+    }];
+    
+//    [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(kScreen_Width, 0.5));
+//        make.bottom.equalTo(self.contentView.mas_bottom).offset(0);
+//    }];
+}
+
+- (void)setupDetailView {
     
     self.introLabel = ({
         UILabel *intro = [[UILabel alloc] init];
-        intro.text=@"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
         intro.textColor = [UIColor colorWithHexString:@"0x222222"];
         intro.numberOfLines = 0;
         intro.font = NotesCommonFont;
@@ -64,40 +89,22 @@
     
     [self.contentView addSubview:self.introLabel];
     
-    [self.introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(cellWidth, cellHeight-kScreen_Width));
-        make.left.equalTo(self.contentView.mas_left).offset(paddingToBottom);
-        make.top.equalTo(self.contentView.mas_top).offset(paddingToBottom);
-    }];
-    
     //photosView
     
     self.photosView = ({
         LoggingPhotosView *photosView = [[LoggingPhotosView alloc] init];
-        photosView.picUrls = @[@"",@"",@"",@"",@"",@"",@"",@"",@""];
         self.photosView = photosView;
     });
     
     [self.contentView addSubview:self.photosView];
     
-    [self.photosView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo([LoggingPhotosView sizeWithPhotosCount:9]);
-        make.left.equalTo(self.contentView.mas_left).offset(paddingToBottom);
-        make.top.equalTo(self.introLabel.mas_bottom).offset(paddingToBottom);
-    }];
-    
 //    self.line = ({
 //        UIView *line = [[UIView alloc]init];
-//        line.backgroundColor = [UIColor lightTextColor];
+//        line.backgroundColor = [UIColor lightGrayColor];
 //        line;
 //    });
-    
+//    
 //    [self.contentView addSubview:self.line];
-    
-//    [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(kScreen_Width, 1));
-//        make.top.equalTo(self.photosView.mas_bottom).offset(paddingToBottom+1);
-//    }];
 }
 
 - (void)statusPhotoOnTap:(UITapGestureRecognizer *)recognizer {
@@ -106,10 +113,10 @@
     
     // 2.设置图片浏览器显示的所有图片
     NSMutableArray *photos = [NSMutableArray array];
-    int count = 9;//(int)self.picUrls.count;
+    int count = (int)[self.note.pic_urls count];
     for (int i = 0; i <count; i++){
         Photo *pic = [[Photo alloc] init];
-        pic.original_pic = @"";//self.picUrls[i];
+        pic.original_pic = self.note.pic_urls[i];
         
         MJPhoto *photo = [[MJPhoto alloc] init];
         photo.url = [NSURL URLWithString:pic.original_pic];
@@ -128,12 +135,10 @@
     [browser show];
 }
 
-+ (CGFloat)cellHeight{
-    UILabel *intro = [[UILabel alloc] init];
-    intro.text=@"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
-    intro.font = NotesIntroFont;
-    CGRect rect=[intro.text boundingRectWithSize:CGSizeMake(kScreen_Width - kPaddingLeftWidth*2, INT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:intro.font,NSFontAttributeName, nil] context:nil];
-    return rect.size.height+kScreen_Width+kPaddingLeftWidth*2;
++ (CGFloat)cellHeightWithObj:(Note *)obj{
+    CGRect rect=[obj.text boundingRectWithSize:CGSizeMake(kScreen_Width - 8*2, INT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:NotesCommonFont,NSFontAttributeName, nil] context:nil];
+    CGSize photoSize = [LoggingPhotosView sizeWithPhotosCount:(int)obj.pic_urls.count];
+    return rect.size.height+photoSize.height+8*3;
 }
 
 @end

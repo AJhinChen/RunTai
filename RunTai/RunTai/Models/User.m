@@ -42,7 +42,7 @@
     
     [encoder encodeObject:self.is_phone_validated forKey:@"is_phone_validated"];
     
-//    [encoder encodeObject:self.watched forKey:@"watched"];
+    [encoder encodeObject:self.professional forKey:@"professional"];
     
 }
 
@@ -80,7 +80,7 @@
         
         self.is_phone_validated =[decoder decodeObjectForKey:@"is_phone_validated"];
         
-//        self.watched =[decoder decodeObjectForKey:@"watched"];
+        self.professional =[decoder decodeObjectForKey:@"professional"];
         
     }
     
@@ -105,6 +105,7 @@
     user.gender = [_gender copy];
     user.tweets_count = [_tweets_count copy];
     user.is_phone_validated = [_is_phone_validated copy];
+    user.professional = [_professional copy];
     user.watched = [NSMutableArray array];
     return user;
 }

@@ -119,6 +119,8 @@ static User *curLoginUser;
         
         curUser.watched = [user objectForKey:@"watched"];
         
+        curUser.professional = [user objectForKey:@"professional"];
+        
     }
     
     return curUser;

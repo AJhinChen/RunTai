@@ -36,7 +36,7 @@
         //cell设置
         self.backgroundColor = [UIColor whiteColor];
         self.opaque = YES;
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
     return self;
     
@@ -132,7 +132,7 @@
 - (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle value:(NSString *)value{
     self.nameLabel.text = title;
     self.introLabel.text = subtitle;
-    self.iconImg.image = [UIImage imageNamed:value];
+    [self.iconImg sd_setImageWithURL:[value urlImageWithCodePathResizeToView:_iconImg] placeholderImage:kPlaceholderUserIcon];
 }
 
 + (CGFloat)cellHeight{

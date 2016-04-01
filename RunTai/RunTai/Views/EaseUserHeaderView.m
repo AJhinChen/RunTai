@@ -215,7 +215,7 @@
     _userLabel.text = _curUser.name;
     [_userLabel sizeToFit];
     
-    [_fansCountBtn setAttributedTitle:[self getStringWithTitle:@"粉丝" andValue:@"2"] forState:UIControlStateNormal];
-    [_followsCountBtn setAttributedTitle:[self getStringWithTitle:@"关注" andValue:@"2"] forState:UIControlStateNormal];
+//    [_fansCountBtn setAttributedTitle:[self getStringWithTitle:@"粉丝" andValue:@""] forState:UIControlStateNormal];
+//    [_followsCountBtn setAttributedTitle:[self getStringWithTitle:@"关注" andValue:@""] forState:UIControlStateNormal];
 }
 @end

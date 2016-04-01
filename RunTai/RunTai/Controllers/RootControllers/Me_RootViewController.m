@@ -36,7 +36,7 @@
     [super viewDidLoad];
     self.title = @"我";
     // Do any additional setup after loading the view.
-    self.automaticallyAdjustsScrollViewInsets=NO;
+//    self.automaticallyAdjustsScrollViewInsets=NO;
     //    添加myTableView
     _myTableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -44,7 +44,7 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.contentInset=UIEdgeInsetsMake(kPaddingLeftWidth, 0, 0, 0);
+        tableView.contentInset=UIEdgeInsetsMake(kPaddingLeftWidth, 0, kPaddingLeftWidth, 0);
         [tableView registerClass:[ListsCell class] forCellReuseIdentifier:kCellIdentifier_ListsCell];
         [tableView registerClass:[UserInfoCell class] forCellReuseIdentifier:kCellIdentifier_UserInfoCell];
         [tableView registerClass:[UserDescriptionCell class] forCellReuseIdentifier:kCellIdentifier_UserDescriptionCell];

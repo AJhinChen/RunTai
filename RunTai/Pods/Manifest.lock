@@ -60,6 +60,7 @@ PODS:
     - RBBAnimation (~> 0.3)
     - SDCAutoLayout (~> 2.0)
   - SDCAutoLayout (2.0.3)
+  - SWTableViewCell (0.3.7)
   - TPKeyboardAvoiding (1.2.4)
   - TTTAttributedLabel (1.10.1)
   - UIImage+BlurredFrame (0.0.4)
@@ -80,6 +81,7 @@ DEPENDENCIES:
   - ReactiveCocoa (= 2.3.1)
   - RegexKitLite-NoWarning (= 1.1.0)
   - SDCAlertView (= 2.5.2)
+  - SWTableViewCell (~> 0.3.7)
   - TPKeyboardAvoiding (= 1.2.4)
   - TTTAttributedLabel (= 1.10.1)
   - UIImage+BlurredFrame (= 0.0.4)
@@ -104,6 +106,7 @@ SPEC CHECKSUMS:
   RegexKitLite-NoWarning: 365d208f8187997e33d9de8baeddfc00728596d8
   SDCAlertView: f9706c18f456ea87909f8f199704cd28e582ff27
   SDCAutoLayout: e6885bb39ab8e2ec2ff84d158f38035f025f7420
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TPKeyboardAvoiding: 0a40dfbb0af7c8bdae1dd457496dccfd217d85f6
   TTTAttributedLabel: c8f3801a6463b9c9b82b0c84c465fdda9751892a
   UIImage+BlurredFrame: ad2f7195c6947ea3117c7d202f75a51958d5061a

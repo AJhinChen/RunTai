@@ -18,7 +18,6 @@
 		CE13C4F01C96E52E00AFC539 /* UIImage+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4EF1C96E52E00AFC539 /* UIImage+Common.m */; };
 		CE13C4F31C96E54300AFC539 /* UIColor+expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4F21C96E54300AFC539 /* UIColor+expanded.m */; };
 		CE13C5021C96ED9900AFC539 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C5011C96ED9900AFC539 /* SMPageControl.m */; };
-		CE13C50C1C96EFB100AFC539 /* IntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C5061C96EFB000AFC539 /* IntroductionViewController.m */; };
 		CE13C50D1C96EFB100AFC539 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C5081C96EFB100AFC539 /* LoginViewController.m */; };
 		CE13C50E1C96EFB100AFC539 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C50A1C96EFB100AFC539 /* RegisterViewController.m */; };
 		CE2AED1B1C96F3FB0039CB5A /* EAIntroPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED181C96F3FB0039CB5A /* EAIntroPage.m */; };
@@ -207,8 +206,6 @@
 		CE13C4F21C96E54300AFC539 /* UIColor+expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+expanded.m"; sourceTree = "<group>"; };
 		CE13C5001C96ED9900AFC539 /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
 		CE13C5011C96ED9900AFC539 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
-		CE13C5051C96EFB000AFC539 /* IntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroductionViewController.h; sourceTree = "<group>"; };
-		CE13C5061C96EFB000AFC539 /* IntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroductionViewController.m; sourceTree = "<group>"; };
 		CE13C5071C96EFB000AFC539 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		CE13C5081C96EFB100AFC539 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		CE13C5091C96EFB100AFC539 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -686,8 +683,6 @@
 		CE13C5041C96EFB000AFC539 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				CE13C5051C96EFB000AFC539 /* IntroductionViewController.h */,
-				CE13C5061C96EFB000AFC539 /* IntroductionViewController.m */,
 				CE13C5071C96EFB000AFC539 /* LoginViewController.h */,
 				CE13C5081C96EFB100AFC539 /* LoginViewController.m */,
 				CE13C5091C96EFB100AFC539 /* RegisterViewController.h */,
@@ -1414,7 +1409,6 @@
 				CE2AED341C97AD8D0039CB5A /* RootTabViewController.m in Sources */,
 				CED1CD1F1C9FC62C007ED5FD /* MJPhotoProgressView.m in Sources */,
 				CED1CD221C9FC62C007ED5FD /* SDWebImageManager+MJ.m in Sources */,
-				CE13C50C1C96EFB100AFC539 /* IntroductionViewController.m in Sources */,
 				CE2AED311C97AD7C0039CB5A /* BaseViewController.m in Sources */,
 				CE2AED851C98FE310039CB5A /* Architecture_RootViewController.m in Sources */,
 				CE2AED801C97EA7C0039CB5A /* NotesCell.m in Sources */,

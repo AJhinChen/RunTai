@@ -10,14 +10,12 @@
 #import "Input_OnlyText_Cell.h"
 #import "EaseInputTipsView.h"
 #import "CannotLoginViewController.h"
-#import "RegisterViewController.h"
 #import "AppDelegate.h"
 
 @interface LoginViewController ()
 @property (nonatomic, strong) Login *myLogin;
 
 @property (strong, nonatomic) TPKeyboardAvoidingTableView *myTableView;
-@property (strong, nonatomic) UIView *bottomView;
 @property (strong, nonatomic) UIButton *loginBtn;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UIImageView *iconUserView, *bgBlurredView;
@@ -61,7 +59,6 @@
     
     self.myTableView.tableHeaderView = [self customHeaderView];
     self.myTableView.tableFooterView=[self customFooterView];
-    [self configBottomView];
     [self showdismissButton:self.showDismissButton];
 }
 
@@ -269,10 +266,14 @@
         weakSelf.loginBtn.enabled = YES;
         [weakSelf.activityIndicator stopAnimating];
         if (user) {
-            [Login doLogin:user];
-            [Login setPreUserPhone:self.myLogin.phone];//记住登录账号
-            [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
-            [NSObject showHudTipStr:@"登录成功"];
+            if (((NSString *)[user objectForKey:@"authority"]).intValue>0) {
+                [Login doLogin:user];
+                [Login setPreUserPhone:self.myLogin.phone];//记住登录账号
+                [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
+                [NSObject showHudTipStr:@"登录成功"];
+            }else{
+                [NSObject showHudTipStr:@"权限限制，请用商户端帐号登录"];
+            }
         }else{
             NSString * errorCode = error.userInfo[@"code"];
             switch (errorCode.intValue) {
@@ -300,36 +301,6 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)goRegisterVC:(id)sender {
-    RegisterViewController *vc = [[RegisterViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-#pragma mark BottomView
-- (void)configBottomView{
-    if (!_bottomView) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreen_Height - 55, kScreen_Width, 55)];
-        _bottomView.backgroundColor = [UIColor clearColor];
-        UIButton *registerBtn = ({
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-            [button setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor colorWithWhite:0.5 alpha:0.5] forState:UIControlStateHighlighted];
-            
-            [button setTitle:@"去注册" forState:UIControlStateNormal];
-            [_bottomView addSubview:button];
-            [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.size.mas_equalTo(CGSizeMake(100, 30));
-                make.centerX.equalTo(_bottomView);
-                make.top.equalTo(_bottomView);
-            }];
-            button;
-        });
-        [registerBtn addTarget:self action:@selector(goRegisterVC:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_bottomView];
-    }
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -344,7 +315,6 @@
     self.myTableView.dataSource = nil;
     self.myLogin = nil;
     self.myTableView = nil;
-    self.bottomView = nil;
     self.loginBtn = nil;
     self.activityIndicator = nil;
     self.bgBlurredView = nil;

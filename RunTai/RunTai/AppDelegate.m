@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "IntroductionViewController.h"
 #import "RootTabViewController.h"
 #import "WXApiManager.h"
 #import "Login.h"
@@ -220,11 +219,6 @@
     LoginViewController *vc = [[LoginViewController alloc]init];
     vc.showDismissButton = NO;
     [self.window setRootViewController:vc];
-}
-
-- (void)setupIntroductionViewController{
-    IntroductionViewController *introductionVC = [[IntroductionViewController alloc] init];
-    [self.window setRootViewController:introductionVC];
 }
 
 - (void)setupTabViewController{

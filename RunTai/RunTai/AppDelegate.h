@@ -24,7 +24,5 @@
 
 - (void)setupLoginViewController;
 
-- (void)setupIntroductionViewController;
-
 @end
 

@@ -47,6 +47,11 @@
     }];
 }
 
+- (void)request_DeleteProject_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block{
+    AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
+    [object deleteInBackgroundWithBlock:block];
+}
+
 - (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     [query whereKey:@"owner" equalTo:[AVUser currentUser]];
@@ -110,7 +115,7 @@
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query includeKey:@"owner"];
     [query includeKey:@"responsible"];
-    [query addDescendingOrder:@"watch_count"];
+    [query orderByDescending:@"updatedAt"];
     query.limit = 10;
     [query findObjectsInBackgroundWithBlock:block];
 }
@@ -173,7 +178,7 @@
             [querysArr addObject:query];
             break;
         case ProjectsTypeCreated:
-            [query whereKey:@"owner" equalTo:[AVUser currentUser]];
+            [query whereKey:@"responsible" equalTo:[AVUser currentUser]];
             [query orderByDescending:@"updatedAt"];
             [querysArr addObject:query];
             break;

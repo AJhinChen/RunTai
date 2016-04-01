@@ -85,7 +85,7 @@
 #pragma mark Login
 - (void)loginOutToLoginVC{
     [Login doLogout];
-    [((AppDelegate *)[UIApplication sharedApplication].delegate) setupIntroductionViewController];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) setupLoginViewController];
 }
 
 /*

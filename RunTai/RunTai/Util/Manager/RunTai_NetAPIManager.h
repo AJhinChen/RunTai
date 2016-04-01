@@ -29,6 +29,8 @@
 
 - (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block;
 
+- (void)request_DeleteProject_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block;
+
 - (void)request_Projects_WithUser:(User *)user loaded:(NSArray *)loaded block:(AVArrayResultBlock)block;
 
 - (void)request_Projects_WithLoadMore:(NSArray *)loaded block:(AVArrayResultBlock)block;

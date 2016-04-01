@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '011393F681BBD62FC92A1BF5'
+               BlueprintIdentifier = 'F08CBD12090FE69A2EC92DFD'
                BlueprintName = 'NYXImagesKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libNYXImagesKit.a'>

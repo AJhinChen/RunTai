@@ -220,7 +220,7 @@
         if (succeeded) {
             [Login setPreUserPhone:self.phone];//记住登录账号
             if (_methodType == CannotLoginMethodLogin) {
-                [((AppDelegate *)[UIApplication sharedApplication].delegate) setupIntroductionViewController];
+                [self.navigationController popViewControllerAnimated:YES];
             }
             [NSObject showHudTipStr:@"重置密码成功"];
         } else {

@@ -16,7 +16,7 @@
 #import "RunTai_NetAPIManager.h"
 #import "ProjectCount.h"
 
-@interface Home_RootViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface Home_RootViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSMutableDictionary *myProjectsDict;
 @property (strong, nonatomic) UISearchBar *mySearchBar;
 @property (strong, nonatomic) UITableView *myTableView;
@@ -31,6 +31,8 @@
 @property (strong, nonatomic) NSMutableArray *loadedObjects;
 
 @property (strong, nonatomic) ProjectCount *pCount;
+
+@property (assign, nonatomic) NSIndexPath *cellIndexPath;
 
 @end
 
@@ -430,12 +432,55 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NotesCell *cell = [NotesCell cellWithTableView:tableView];
+    Project *curPro = [[Project alloc]init];
     if ([_searchedArray count]>0) {
-        cell.curPro = _searchedArray[indexPath.section];
+        curPro = _searchedArray[indexPath.section];
     }else{
-        cell.curPro = self.dataList[indexPath.section];
+        curPro = self.dataList[indexPath.section];
+    }
+    cell.curPro = curPro;
+    cell.leftUtilityButtons = [self leftButtons];
+    cell.delegate = self;
+    if (curPro.processing.intValue==0) {
+        AVUser *curUser = [AVUser currentUser];
+        if ([[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
+            cell.rightUtilityButtons = [self rightButtons];
+        }
     }
     return cell;
+}
+
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"ios7-telephone"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"compose"]];
+//    [leftUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
+//                                                icon:[UIImage imageNamed:@"cross.png"]];
+//    [leftUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+//                                                icon:[UIImage imageNamed:@"list.png"]];
+    
+    return leftUtilityButtons;
+}
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+//    [rightUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithHexString:@"0x3bbc79"]
+//                                                title:@"抢单"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"删除"];
+    
+    return rightUtilityButtons;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -483,6 +528,68 @@
     UIView *footer = [[UIView alloc]init];
     footer.backgroundColor = [UIColor clearColor];
     return footer;
+}
+
+#pragma mark - SWTableViewDelegate
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:{
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"电话联系" message:[NSString stringWithFormat:@"您确认要电话联系客户吗？"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认",nil];
+            alertView.tag = 111;
+            [alertView show];
+        }
+            break;
+        case 1:
+            NSLog(@"clock button was pressed");
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    self.cellIndexPath = [self.myTableView indexPathForCell:cell];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"订单删除警告" message:[NSString stringWithFormat:@"您确认要删除该订单吗？"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认删除",nil];
+    alertView.tag = 999;
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (alertView.tag) {
+        case 111:
+            if(buttonIndex!=alertView.cancelButtonIndex){
+                
+            }
+            break;
+        case 999:
+            if(buttonIndex!=alertView.cancelButtonIndex){
+                [NSObject showLoadingView:@"订单删除中.."];
+                Project *curPro = self.dataList[self.cellIndexPath.section];
+                [[RunTai_NetAPIManager sharedManager]request_DeleteProject_WithProject:curPro.objectId block:^(BOOL succeeded, NSError *error) {
+                    [NSObject hideLoadingView];
+                    if (succeeded) {
+                        [self.dataList removeObjectAtIndex:self.cellIndexPath.section];
+                        [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:self.cellIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+                        [NSObject showHudTipStr:@"删除成功"];
+                    }else{
+                        NSString * errorCode = error.userInfo[@"code"];
+                        switch (errorCode.intValue) {
+                            case 28:
+                                [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                                break;
+                            default:
+                                [NSObject showHudTipStr:@"删除失败"];
+                                break;
+                        }
+                    }
+                }];
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark ScrollView Delegate

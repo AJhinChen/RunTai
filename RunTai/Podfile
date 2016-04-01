@@ -54,3 +54,6 @@ pod 'TTTAttributedLabel', '1.10.1'
 
 # 使用提示框功能：
 pod 'MBProgressHUD', '0.9'
+
+# 使用侧滑菜单功能：
+pod 'SWTableViewCell', '~> 0.3.7'

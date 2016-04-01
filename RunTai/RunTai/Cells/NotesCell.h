@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Project.h"
+#import <SWTableViewCell.h>
 
 #define kCellIdentifier_Notes @"NotesCell"
 
-@interface NotesCell : UITableViewCell
+@interface NotesCell : SWTableViewCell
 
 @property (nonatomic, strong) Project *curPro;
 

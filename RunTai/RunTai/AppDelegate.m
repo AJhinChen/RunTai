@@ -13,6 +13,7 @@
 #import "Login.h"
 #import "NoteViewController.h"
 #import "Home_RootViewController.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -34,7 +35,7 @@
         [self setupTabViewController];
     }else{
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        [self setupIntroductionViewController];
+        [self setupLoginViewController];
     }
     [self.window makeKeyAndVisible];
     
@@ -216,7 +217,9 @@
 
 #pragma mark - Methods Private
 - (void)setupLoginViewController{
-    
+    LoginViewController *vc = [[LoginViewController alloc]init];
+    vc.showDismissButton = NO;
+    [self.window setRootViewController:vc];
 }
 
 - (void)setupIntroductionViewController{

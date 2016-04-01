@@ -12,6 +12,7 @@
 #define kLoginUserInfo @"user_info"
 #define kLoginStatus @"login_status"
 #define kLoginPreUserPhone @"pre_user_phone"
+#define kLoginUserIcon @"user_icon"
 
 #define UserFilepath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"account.arch"]
 
@@ -41,6 +42,11 @@ static User *curLoginUser;
 + (NSString *)preUserPhone{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:kLoginPreUserPhone];
+}
+
++ (NSString *)preUserIcon{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:kLoginUserIcon];
 }
 
 + (BOOL)isLogin{
@@ -79,6 +85,7 @@ static User *curLoginUser;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[NSNumber numberWithBool:YES] forKey:kLoginStatus];
         [defaults setObject:data forKey:kLoginUserInfo];
+        [defaults setObject:curLoginUser.avatar forKey:kLoginUserIcon];
         [defaults synchronize];
     }else{
         [Login doLogout];

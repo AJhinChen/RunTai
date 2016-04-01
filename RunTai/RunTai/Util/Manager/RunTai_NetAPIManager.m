@@ -48,18 +48,53 @@
 }
 
 - (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block{
-    AVObject *project = [AVObject objectWithClassName:@"Project"];
-    AVUser *curUser = [AVQuery getUserObjectWithId:user.objectId];
-    [project setObject:curUser forKey:@"owner"];
-    [project setObject:[NSString stringWithFormat:@"[%@ %@]",user.location,user.address] forKey:@"full_name"];
-    [project setObject:[NSNumber numberWithInt:0] forKey:@"processing"];
-    [project setObject:[NSNumber numberWithInt:0] forKey:@"watch_count"];
-    [project saveInBackgroundWithBlock:block];
+    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
+    [query whereKey:@"owner" equalTo:[AVUser currentUser]];
+    [query whereKey:@"processing" equalTo:@0];
+    [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
+        if (!error) {
+            // 查询成功，输出计数
+            if (number>0) {
+                error = [NSError errorWithDomain:@"" code:999 userInfo:[NSDictionary dictionaryWithObject:@"999" forKey:@"code"]];
+                block(NO,error);
+            }else{
+                AVObject *project = [AVObject objectWithClassName:@"Project"];
+                AVUser *curUser = [AVQuery getUserObjectWithId:user.objectId];
+                if (!curUser) {
+                    block(NO,nil);
+                    return;
+                }
+                [project setObject:curUser forKey:@"owner"];
+                [project setObject:[NSString stringWithFormat:@"[%@ %@]",user.location,user.address] forKey:@"full_name"];
+                [project setObject:[NSNumber numberWithInt:0] forKey:@"processing"];
+                [project setObject:[NSNumber numberWithInt:0] forKey:@"watch_count"];
+                [project saveInBackgroundWithBlock:block];
+            }
+        } else {
+            // 查询失败
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
+                    return;
+                    break;
+                default:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
+                    break;
+            }
+            block(NO,error);
+        }
+    }];
 }
 
 - (void)request_Projects_WithUser:(User *)user loaded:(NSArray *)loaded block:(AVArrayResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
-    [query whereKey:@"responsible" equalTo:[AVQuery getUserObjectWithId:user.objectId]];
+    AVUser *curUser = [AVQuery getUserObjectWithId:user.objectId];
+    if (!curUser) {
+        block(nil,nil);
+        return;
+    }
+    [query whereKey:@"responsible" equalTo:curUser];
     [query orderByDescending:@"updatedAt"];
     [query whereKey:@"objectId" notContainedIn:loaded];
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
@@ -127,6 +162,10 @@
 - (void)request_Projects_WithType:(ProjectsType)type block:(AVArrayResultBlock)block{
     NSMutableArray *querysArr = [NSMutableArray array];
     User *curUser = [Login curLoginUser];
+    if (!curUser) {
+        block(nil,nil);
+        return;
+    }
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     switch (type) {
         case ProjectsTypeAll:
@@ -249,6 +288,10 @@
     AVUser *user = [AVUser currentUser];
     NSMutableArray *digPros = [user objectForKey:@"watched"];
     AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
+    if (!object) {
+        block(NO,nil);
+        return;
+    }
     if ( [digPros containsObject:object]){
         [user removeObject:object forKey:@"watched"];
         

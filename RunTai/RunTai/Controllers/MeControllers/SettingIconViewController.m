@@ -141,6 +141,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    self.myImageView = nil;
+}
+
 /*
 #pragma mark - Navigation
 

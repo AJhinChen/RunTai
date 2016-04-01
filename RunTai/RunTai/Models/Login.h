@@ -15,6 +15,7 @@
 @property (readwrite, nonatomic, strong) NSNumber *remember_me;
 
 + (NSString *)preUserPhone;
++ (NSString *)preUserIcon;
 + (void)setPreUserPhone:(NSString *)phoneStr;
 + (BOOL)isLogin;
 + (User *)curLoginUser;

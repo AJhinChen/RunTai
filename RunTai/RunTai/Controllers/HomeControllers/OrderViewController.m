@@ -259,6 +259,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    _myTableView.delegate = nil;
+    _myTableView.dataSource = nil;
+    self.myRegister = nil;
+    self.curUser = nil;
+    self.footerBtn = nil;
+    self.phoneCodeCellIdentifier = nil;
+}
+
 /*
 #pragma mark - Navigation
 

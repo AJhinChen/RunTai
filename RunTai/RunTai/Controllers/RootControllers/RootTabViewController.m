@@ -8,11 +8,11 @@
 
 #import "RootTabViewController.h"
 #import "Home_RootViewController.h"
-#import "Gallery_RootViewController.h"
 #import "Architecture_RootViewController.h"
 #import "Me_RootViewController.h"
 #import "RDVTabBarItem.h"
 #import "BaseNavigationController.h"
+#import "Case_RootViewController.h"
 
 @interface RootTabViewController ()<UITabBarControllerDelegate>
 
@@ -54,8 +54,8 @@
     Home_RootViewController *home = [[Home_RootViewController alloc] init];
     [self addOneChildVc:home title:@"首页" imageName:@"tabbar_home" selectedImageName:@"tabbar_home_selected"];
     
-    Gallery_RootViewController *message = [[Gallery_RootViewController alloc] init];
-    [self addOneChildVc:message title:@"图库" imageName:@"tabbar_photo" selectedImageName:@"tabbar_photo_selected"];
+    Case_RootViewController *cases = [[Case_RootViewController alloc] init];
+    [self addOneChildVc:cases title:@"图库" imageName:@"tabbar_photo" selectedImageName:@"tabbar_photo_selected"];
     
     Architecture_RootViewController *arch = [[Architecture_RootViewController alloc] init];
     [self addOneChildVc:arch title:@"架构" imageName:@"tabbar_arch" selectedImageName:@"tabbar_arch_selected"];
@@ -79,12 +79,12 @@
     
     //设置标题
     childVc.title = title;
-    if ([childVc class] == [Home_RootViewController class]){
-        childVc.navigationItem.title = @"装修笔录";
-    }
-    if ([childVc class] == [Gallery_RootViewController class]){
-        childVc.navigationItem.title = @"设计师的仓库";
-    }
+//    if ([childVc class] == [Home_RootViewController class]){
+//        childVc.navigationItem.title = @"装修笔录";
+//    }
+//    if ([childVc class] == [Case_RootViewController class]){
+//        childVc.navigationItem.title = @"全部案例";
+//    }
     
     //设置图标
     childVc.tabBarItem.image = [UIImage imageNamed:imageName];

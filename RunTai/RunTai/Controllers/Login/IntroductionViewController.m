@@ -87,6 +87,15 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)dealloc{
+    self.registerBtn = nil;
+    self.loginBtn = nil;
+    self.gohomeBtn = nil;
+    self.pageControl = nil;
+    self.iconsDict = nil;
+    self.tipsDict = nil;
+}
+
 #pragma mark - Orientations
 - (BOOL)shouldAutorotate{
     return UIInterfaceOrientationIsLandscape(self.interfaceOrientation);

@@ -40,6 +40,7 @@
 #import "NSURL+Common.h"
 #import "UIButton+Common.h"
 #import "objc/runtime.h"
+#import <POP.h>
 
 #endif
 
@@ -54,7 +55,7 @@
 //Social Data
 #define kSocial_WX_ID @"wx66159095d91df6a9"
 #define kSocial_WX_Secret @"fd56e99979f84af485f82dc329891109"
-#define BUFFER_SIZE 1024 * 100
+#define BUFFER_SIZE 1024 * 1
 #define kSocial_QQ_ID  @""
 #define kSocial_QQ_Secret @""
 #define kSocial_EN_Key @""

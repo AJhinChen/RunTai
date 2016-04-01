@@ -102,6 +102,10 @@
     __weak typeof(self) weakSelf = self;
     _myFliterMenu.clickBlock = ^(NSInteger pageIndex){
         [weakSelf fliterBtnClose:TRUE];
+        if (![Login isLogin]) {
+            [NSObject showHudTipStr:@"登录后才能查看哦!"];
+            return;
+        }
         if (pageIndex%2 != 0 || pageIndex == weakSelf.selectNum) {
             return;
         }else{
@@ -121,6 +125,8 @@
         self.pCount = pCount;
         [self myFliterMenuAction];
     }];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openWithWeixin:) name:@"Weixin" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -139,6 +145,12 @@
 
 - (void)configSegmentItems{
     _segmentItems = @[@"全部笔录",@"我的订单",@"我的收藏"];
+}
+
+- (void)openWithWeixin:(NSNotification *)sender{
+    NoteViewController *vc = [[NoteViewController alloc] init];
+    vc.curPro = sender.object;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - nav item
@@ -568,6 +580,7 @@
     self.dataList = nil;
     self.loadedObjects = nil;
     self.pCount = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 /*
 #pragma mark - Navigation

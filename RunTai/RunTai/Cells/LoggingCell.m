@@ -107,34 +107,6 @@
 //    [self.contentView addSubview:self.line];
 }
 
-- (void)statusPhotoOnTap:(UITapGestureRecognizer *)recognizer {
-    // 1.创建图片浏览器
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    
-    // 2.设置图片浏览器显示的所有图片
-    NSMutableArray *photos = [NSMutableArray array];
-    int count = (int)[self.note.pic_urls count];
-    for (int i = 0; i <count; i++){
-        Photo *pic = [[Photo alloc] init];
-        pic.original_pic = self.note.pic_urls[i];
-        
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:pic.original_pic];
-        //设置来源于哪一个UIImageView
-        photo.srcImageView = self.subviews[i];
-        
-        [photos addObject:photo];
-    }
-    
-    browser.photos = photos;
-    
-    // 3.设置默认显示的图片索引
-    browser.currentPhotoIndex = recognizer.view.tag;
-    
-    // 4.显示浏览器
-    [browser show];
-}
-
 + (CGFloat)cellHeightWithObj:(Note *)obj{
     CGRect rect=[obj.text boundingRectWithSize:CGSizeMake(kScreen_Width - 8*2, INT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:NotesCommonFont,NSFontAttributeName, nil] context:nil];
     CGSize photoSize = [LoggingPhotosView sizeWithPhotosCount:(int)obj.pic_urls.count];

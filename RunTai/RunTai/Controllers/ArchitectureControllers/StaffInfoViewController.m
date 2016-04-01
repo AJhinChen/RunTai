@@ -80,8 +80,13 @@
 
 - (void)dealloc
 {
-    _myTableView.delegate = nil;
-    _myTableView.dataSource = nil;
+    self.myTableView.delegate = nil;
+    self.myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.headerView = nil;
+    self.dataList = nil;
+    self.loadedObjects = nil;
+    self.myProjects = nil;
 }
 
 - (void)setupRefresh {

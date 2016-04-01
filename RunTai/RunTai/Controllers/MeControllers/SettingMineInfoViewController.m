@@ -390,13 +390,13 @@
 - (void)dealloc{
     _myTableView.delegate = nil;
     _myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.view = nil;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    self.myTableView = nil;
-    self.view = nil;
 }
 
 /*

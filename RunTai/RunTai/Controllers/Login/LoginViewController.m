@@ -195,7 +195,7 @@
         make.centerX.equalTo(headerV);
         make.centerY.equalTo(headerV).offset(30);
     }];
-    [_iconUserView setImage:kPlaceholderUserIcon];
+    [_iconUserView sd_setImageWithURL:[[Login preUserIcon] urlImageWithCodePathResizeToView:_iconUserView] placeholderImage:kPlaceholderUserIcon];
     return headerV;
 }
 
@@ -333,6 +333,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
 }
 
 - (void)dealloc{

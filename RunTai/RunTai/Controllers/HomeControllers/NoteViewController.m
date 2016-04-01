@@ -18,13 +18,8 @@
 #import "Note.h"
 #import "Login.h"
 
-static NSString *kAPPContentTitle = @"[润泰装饰]我的装修笔录";
-static NSString *kAPPContentDescription = @"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
-static NSString *kAppContentExInfo = @"<xml>extend info</xml>";
-static NSString *kAppContnetExURL = @"http://www.njruntai.com";
-static NSString *kAppMessageExt = @"这是第三方带的测试字段";
-static NSString *kAppMessageAction = @"<action>dotaliTest</action>";
 
+#define ORIGINAL_MAX_WIDTH 640.0f
 const CGFloat BackGroupHeight = 250;
 
 @interface NoteViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,WXApiManagerDelegate>
@@ -260,29 +255,33 @@ const CGFloat BackGroupHeight = 250;
 
 -(void)collectClicked:(UIButton *)btn
 {
-    btn.selected = !btn.selected;
-    if (btn.selected) {
-        [NSObject showLoadingView:@"收藏中.."];
+    if (![Login isLogin]) {
+        [NSObject showHudTipStr:@"登录后才能收藏哦!"];
     }else{
-        [NSObject showLoadingView:@"取消收藏中.."];
-    }
-    [[RunTai_NetAPIManager sharedManager]request_CollectNote_WithProject:_curPro.objectId block:^(BOOL succeeded, NSError *error) {
-        [NSObject hideLoadingView];
-        if (error) {
-            if (btn.selected) {
-                [NSObject showHudTipStr:@"收藏失败"];
-            }else{
-                [NSObject showHudTipStr:@"取消收藏失败"];
-            }
-            btn.selected = !btn.selected;
+        btn.selected = !btn.selected;
+        if (btn.selected) {
+            [NSObject showLoadingView:@"收藏中.."];
         }else{
-            if (btn.selected) {
-                [NSObject showHudTipStr:@"收藏成功"];
-            }else{
-                [NSObject showHudTipStr:@"取消收藏成功"];
-            }
+            [NSObject showLoadingView:@"取消收藏中.."];
         }
-    }];
+        [[RunTai_NetAPIManager sharedManager]request_CollectNote_WithProject:_curPro.objectId block:^(BOOL succeeded, NSError *error) {
+            [NSObject hideLoadingView];
+            if (succeeded) {
+                if (btn.selected) {
+                    [NSObject showHudTipStr:@"收藏成功"];
+                }else{
+                    [NSObject showHudTipStr:@"取消收藏成功"];
+                }
+            }else{
+                if (btn.selected) {
+                    [NSObject showHudTipStr:@"收藏失败"];
+                }else{
+                    [NSObject showHudTipStr:@"取消收藏失败"];
+                }
+                btn.selected = !btn.selected;
+            }
+        }];
+    }
 }
 
 
@@ -301,18 +300,25 @@ const CGFloat BackGroupHeight = 250;
     [self sendAppContent];
 }
 
+static NSString *kAPPContentTitle = @"[润泰装饰]我的装修笔录";
+static NSString *kAPPContentDescription = @"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
+static NSString *kAppContentExInfo = @"http://www.njruntai.com";
+static NSString *kAppContnetExURL = @"http://fir.im/runtai";
+static NSString *kAppMessageExt = @"http://fir.im/runtai";
+static NSString *kAppMessageAction = @"http://fir.im/runtai";
+
 - (void)sendAppContent {
     Byte* pBuffer = (Byte *)malloc(BUFFER_SIZE);
     memset(pBuffer, 0, BUFFER_SIZE);
     NSData* data = [NSData dataWithBytes:pBuffer length:BUFFER_SIZE];
     free(pBuffer);
     
-    UIImage *thumbImage = [UIImage imageNamed:@"AppIcon"];
+    UIImage *thumbImage = [self imageByScalingAndCroppingForSourceImage:imageBG.image targetSize:CGSizeMake(180, 180)];
     [WXApiRequestHandler sendAppContentData:data
-                                    ExtInfo:kAppContentExInfo
+                                    ExtInfo:self.curPro.objectId
                                      ExtURL:kAppContnetExURL
-                                      Title:kAPPContentTitle
-                                Description:kAPPContentDescription
+                                      Title:[NSString stringWithFormat:@"[润泰装饰]%@的装修笔录",self.curPro.owner.name]
+                                Description:[NSString stringWithFormat:@"%@%@,点击查看更多详情!",self.curPro.full_name,self.curPro.name]
                                  MessageExt:kAppMessageExt
                               MessageAction:kAppMessageAction
                                  ThumbImage:thumbImage
@@ -518,6 +524,58 @@ const CGFloat BackGroupHeight = 250;
     UIGraphicsEndImageContext();
     
     return theImage;
+}
+
+#pragma mark image scale utility
+
+- (UIImage *)imageByScalingAndCroppingForSourceImage:(UIImage *)sourceImage targetSize:(CGSize)targetSize {
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO)
+    {
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        if (widthFactor > heightFactor)
+            scaleFactor = widthFactor; // scale to fit height
+        else
+            scaleFactor = heightFactor; // scale to fit width
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        // center the image
+        if (widthFactor > heightFactor)
+        {
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+        }
+        else
+            if (widthFactor < heightFactor)
+            {
+                thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+            }
+    }
+    UIGraphicsBeginImageContext(targetSize); // this will crop
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    if(newImage == nil) NSLog(@"could not scale image");
+    
+    //pop the context to get back to the default
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 #pragma mark - 加载数据

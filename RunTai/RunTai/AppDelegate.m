@@ -11,8 +11,10 @@
 #import "RootTabViewController.h"
 #import "WXApiManager.h"
 #import "Login.h"
+#import "NoteViewController.h"
+#import "Home_RootViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -37,18 +39,75 @@
     [self.window makeKeyAndVisible];
     
     //向微信注册
-    [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecorate"];
-    
+    [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return  [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    return [WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark URL Schemes
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    return [WXApi handleOpenURL:url delegate:self];
+}
+/*! @brief 收到一个来自微信的请求，第三方应用程序处理完后调用sendResp向微信发送结果
+ *
+ * 收到一个来自微信的请求，异步处理完成后必须调用sendResp发送处理结果给微信。
+ * 可能收到的请求有GetMessageFromWXReq、ShowMessageFromWXReq等。
+ * @param req 具体请求内容，是自动释放的
+ */
+-(void) onReq:(BaseReq*)req{
+    if ([req isKindOfClass:[ShowMessageFromWXReq class]]) {
+        ShowMessageFromWXReq *msg = (ShowMessageFromWXReq*)req;
+        WXAppExtendObject *media = msg.message.mediaObject;
+        AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:media.extInfo];
+        
+        Project *project = [[Project alloc]init];
+        AVFile *backgroundFile = [object objectForKey:@"background"];
+        project.objectId = object.objectId;
+        project.background = backgroundFile.url;
+        project.name = [object objectForKey:@"name"];
+        project.full_name = [object objectForKey:@"full_name"];
+        project.description_mine = [object objectForKey:@"description_mine"];
+        project.id = [NSNumber numberWithInt:object.objectId.intValue];
+        project.owner_id = [object objectForKey:@"owner_id"];
+        project.done = [object objectForKey:@"done"];
+        project.processing = [object objectForKey:@"processing"];
+        project.stared = [object objectForKey:@"stared"];
+        project.watch_count = [object objectForKey:@"watch_count"];
+        project.isStaring = [object objectForKey:@"isStaring"];
+        project.isWatching = [object objectForKey:@"isWatching"];
+        project.isLoadingMember = [object objectForKey:@"isLoadingMember"];
+        project.created_at = [object objectForKey:@"created_at"];
+        project.updated_at = [object objectForKey:@"updated_at"];
+        AVUser *owner = [AVQuery getUserObjectWithId:((AVUser *)[object objectForKey:@"owner"]).objectId];
+        project.owner=[Login transfer:owner];
+        AVUser *responsible = [AVQuery getUserObjectWithId:((AVUser *)[object objectForKey:@"responsible"]).objectId];
+        project.responsible = [Login transfer:responsible];
+        project.list = [object objectForKey:@"notes"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Weixin" object:project];
+    }
+}
+
+
+
+/*! @brief 发送一个sendReq后，收到微信的回应
+ *
+ * 收到一个来自微信的处理结果。调用一次sendReq后会收到onResp。
+ * 可能收到的处理结果有SendMessageToWXResp、SendAuthResp等。
+ * @param resp具体的回应内容，是自动释放的
+ */
+-(void) onResp:(BaseResp*)resp{
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        if(resp.errCode == 0) {
+            [NSObject showHudTipStr:@"分享成功"];
+        }else{
+            [NSObject showHudTipStr:@"分享失败"];
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

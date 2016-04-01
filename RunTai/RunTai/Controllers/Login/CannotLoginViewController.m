@@ -241,6 +241,16 @@
     }];
 }
 
+- (void)dealloc{
+    self.myTableView.delegate = nil;
+    self.myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.footerBtn = nil;
+    self.activityIndicator = nil;
+    self.footerBtn = nil;
+    self.phoneCodeCellIdentifier = nil;
+}
+
 /*
 #pragma mark - Navigation
 

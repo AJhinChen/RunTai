@@ -16,11 +16,17 @@
 #import "User.h"
 #import "Home_RootViewController.h"
 #import "Projects.h"
+#import "WXApiRequestHandler.h"
+#import "WXApiManager.h"
+#import "PopMenu.h"
+#import "WebViewController.h"
 
 @interface Me_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
 
 @property (nonatomic, strong) User *curUser;
+@property (nonatomic, strong) PopMenu *myPopMenu;
+@property (nonatomic) enum WXScene currentScene;
 
 @end
 
@@ -48,6 +54,68 @@
         }];
         tableView;
     });
+    //初始化弹出菜单
+    __weak typeof(self) weakSelf = self;
+    NSArray *menuItems = @[
+                           [MenuItem itemWithTitle:@"微信" iconName:@"share_btn_wxsession" index:0],
+                           [MenuItem itemWithTitle:@"朋友圈" iconName:@"share_btn_wxtimeline" index:1],
+                           ];
+    if (!_myPopMenu) {
+        _myPopMenu = [[PopMenu alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height-0) items:menuItems];
+        _myPopMenu.perRowItemCount = 2;
+        _myPopMenu.menuAnimationType = kPopMenuAnimationTypeSina;
+    }
+    @weakify(self);
+    _myPopMenu.didSelectedItemCompletion = ^(MenuItem *selectedItem){
+        [weakSelf.myPopMenu.realTimeBlurFooter disMiss];
+        @strongify(self);
+        if (!selectedItem) return;
+        switch (selectedItem.index) {
+            case 0:
+                [self shareToWeChatMsg];
+                break;
+            case 1:
+                [self shareToWeChatFriends];
+                break;
+            default:
+                NSLog(@"%@",selectedItem.title);
+                break;
+        }
+    };
+}
+
+-(void)shareClicked
+{
+    [_myPopMenu showMenuAtView:kKeyWindow startPoint:CGPointMake(0, -100) endPoint:CGPointMake(0, -100)];
+}
+
+-(void)closeMenu{
+    if ([_myPopMenu isShowed]) {
+        [_myPopMenu dismissMenu];
+    }
+}
+
+-(void)shareToWeChatFriends{
+    self.currentScene = WXSceneTimeline;
+    [self sendAppContent];
+}
+
+-(void)shareToWeChatMsg{
+    self.currentScene = WXSceneSession;
+    [self sendAppContent];
+}
+
+static NSString *kAPPContentTitle = @"[润泰装饰]我的装修笔录";
+static NSString *kAPPContentDescription = @"前边我虽然说过，要是还没有拿到手，很多事情还不能确定和准备。不过设计这个事情还是可以提前准备的！哈哈！\n刚好有个朋友就是在装修公司做室内设计的，就是麻烦他了！\n特别喜欢它们给我设计的餐厅的部分！卡座！不多说了上图！";
+static NSString *kAppContentExInfo = @"http://www.njruntai.com";
+static NSString *kAppContnetExURL = @"http://fir.im/runtai";
+static NSString *kAppMessageExt = @"http://fir.im/runtai";
+static NSString *kAppMessageAction = @"http://fir.im/runtai";
+
+- (void)sendAppContent {
+    
+    UIImage *thumbImage = [UIImage imageNamed:@"icon"];
+    [WXApiRequestHandler sendLinkURL:kAppContnetExURL TagName:@"[润泰装饰]" Title:@"[润泰装饰]官方APP" Description:@"润泰装饰设计，完美家居生活" ThumbImage:thumbImage InScene:_currentScene];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -181,6 +249,10 @@
         Projects *curPro = [[Projects alloc]init];
         switch (indexPath.row) {
             case 0:{
+                if (![Login isLogin]) {
+                    [NSObject showHudTipStr:@"登录后才能查看哦!"];
+                    return;
+                }
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeCreated;
                 vc.myProjects = curPro;
@@ -188,9 +260,22 @@
             }
                 break;
             case 1:{
+                if (![Login isLogin]) {
+                    [NSObject showHudTipStr:@"登录后才能查看哦!"];
+                    return;
+                }
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeWatched;
                 vc.myProjects = curPro;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 2:{
+                [self shareClicked];
+            }
+                break;
+            case 3:{
+                WebViewController *vc = [WebViewController webVCWithUrlStr:@"http://www.runtaizs.com"];
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
@@ -208,6 +293,14 @@
     vc.showDismissButton = YES;
     UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)dealloc
+{
+    _myTableView.delegate = nil;
+    _myTableView.dataSource = nil;
+    self.curUser = nil;
+    self.myPopMenu = nil;
 }
 
 /*

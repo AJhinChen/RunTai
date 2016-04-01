@@ -155,12 +155,12 @@
     });
     NSString *tipStr = @"注册 润泰账号 表示您已同意《润泰装饰 服务条款》";
     if (_methodType == RegisterMethodOrder) {
-        tipStr = @"*您的信息将被严格保密，资料提交后客服将在24小时内联系您\n*申请免费设计表示您已同意《润泰装饰 服务条款》";
+        tipStr = @"*温馨提示：申请前请确保‘我的订单’中没有订单正在‘审核中’，否则将会无法申请！\n*您的信息将被严格保密，资料提交后客服将在24小时内联系您\n*申请免费设计表示您已同意《润泰装饰 服务条款》";
     }
     lineLabel.text = tipStr;
     [lineLabel addLinkToTransitInformation:@{@"actionStr" : @"gotoServiceTermsVC"} withRange:[tipStr rangeOfString:@"《润泰装饰 服务条款》"]];
     CGRect footerBtnFrame = _footerBtn.frame;
-    lineLabel.frame = CGRectMake(CGRectGetMinX(footerBtnFrame), CGRectGetMaxY(footerBtnFrame) +12, CGRectGetWidth(footerBtnFrame), 30);
+    lineLabel.frame = CGRectMake(CGRectGetMinX(footerBtnFrame), CGRectGetMaxY(footerBtnFrame) +12, CGRectGetWidth(footerBtnFrame), 65);
     [footerV addSubview:lineLabel];
     
     return footerV;
@@ -192,7 +192,7 @@
             weakSelf.myRegister.phone = valueStr;
         };
     }else if (indexPath.row == 2){
-        [cell setPlaceholder:@" 设置密码" value:self.myRegister.password];
+        [cell setPlaceholder:@" 设置登录密码" value:self.myRegister.password];
         cell.textValueChangedBlock = ^(NSString *valueStr){
             weakSelf.myRegister.password = valueStr;
         };
@@ -294,8 +294,23 @@
     if (self.curUser) {
         [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
             [weakSelf.footerBtn stopQueryAnimate];
-            [weakSelf dismissSelf];
-            [NSObject showHudTipStr:@"免费申请设计成功"];
+            if (succeeded) {
+                [weakSelf dismissSelf];
+                [NSObject showHudTipStr:@"免费申请设计成功"];
+            }else{
+                NSString * errorCode = error.userInfo[@"code"];
+                switch (errorCode.intValue) {
+                    case 28:
+                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
+                        break;
+                    case 999:
+                        [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
+                        break;
+                    default:
+                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
+                        break;
+                }
+            }
         }];
     }else{
         [AVUser verifyMobilePhone:_myRegister.code withBlock:^(BOOL succeeded, NSError *error) {
@@ -323,8 +338,11 @@
                                 case 28:
                                     [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
                                     break;
+                                case 999:
+                                    [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
+                                    break;
                                 default:
-                                    [NSObject showHudTipStr:@"免费申请设计失败,请重试!"];
+                                    [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
                                     break;
                             }
                         }
@@ -344,7 +362,7 @@
                         if (_methodType == RegisterMethodLogin) {
                             [NSObject showHudTipStr:@"注册失败"];
                         }else{
-                            [NSObject showHudTipStr:@"免费申请设计失败"];
+                            [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
                         }
                     }
                         break;
@@ -364,6 +382,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc{
+    self.myTableView.delegate = nil;
+    self.myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.myRegister = nil;
+    self.curUser = nil;
+    self.footerBtn = nil;
+    self.phoneCodeCellIdentifier = nil;
+    self.inputTipsView = nil;
 }
 
 /*

@@ -127,6 +127,8 @@
 {
     _myTableView.delegate = nil;
     _myTableView.dataSource = nil;
+    self.myTableView = nil;
+    self.myTextValue = nil;
 }
 
 @end

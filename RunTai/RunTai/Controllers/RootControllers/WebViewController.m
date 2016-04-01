@@ -27,14 +27,14 @@
     }
     
     //    NSString *tasksRegexStr = @"/user/tasks[\?]?";
-    NSString *tasksRegexStr = @"/user/tasks";
-    if ([curUrlStr captureComponentsMatchedByRegex:tasksRegexStr].count > 0){
-        if ([kKeyWindow.rootViewController isKindOfClass:[RootTabViewController class]]) {
-            RootTabViewController *vc = (RootTabViewController *)kKeyWindow.rootViewController;
-            vc.selectedIndex = 1;
-            return nil;
-        }
-    }
+//    NSString *tasksRegexStr = @"/user/tasks";
+//    if ([curUrlStr captureComponentsMatchedByRegex:tasksRegexStr].count > 0){
+//        if ([kKeyWindow.rootViewController isKindOfClass:[RootTabViewController class]]) {
+//            RootTabViewController *vc = (RootTabViewController *)kKeyWindow.rootViewController;
+//            vc.selectedIndex = 1;
+//            return nil;
+//        }
+//    }
     
     NSString *proName = [NSString stringWithFormat:@"/%@.app/", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]];
     NSURL *curUrl;
@@ -124,11 +124,11 @@
 #pragma mark VC
 - (BOOL)canAndGoOutWithLinkStr:(NSString *)linkStr{
     BOOL canGoOut = NO;
-    UIViewController *vc = [[BaseViewController alloc]init];
-    if (vc) {
-        canGoOut = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    UIViewController *vc = [[BaseViewController alloc]init];
+//    if (vc) {
+//        canGoOut = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
     return canGoOut;
 }
 
@@ -158,6 +158,12 @@
     }else{
         kTipAlert(@"%@\n%@", urlString, [error.userInfo objectForKey:@"NSLocalizedDescription"]? [error.userInfo objectForKey:@"NSLocalizedDescription"]: error.description);
     }
+}
+
+- (void)dealloc{
+    self.delegate = nil;
+    self.progressProxy = nil;
+    self.progressView = nil;
 }
 
 @end

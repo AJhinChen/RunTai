@@ -56,8 +56,8 @@
 #define kSocial_WX_ID @"wx66159095d91df6a9"
 #define kSocial_WX_Secret @"fd56e99979f84af485f82dc329891109"
 #define BUFFER_SIZE 1024 * 1
-#define kSocial_QQ_ID  @""
-#define kSocial_QQ_Secret @""
+#define kSocial_QQ_ID  @"1105189963"
+#define kSocial_QQ_Secret @"PcLWyMxEy8VOF5RS"
 #define kSocial_EN_Key @""
 #define kSocial_EN_Secret @""
 #define kSocial_Sina_RedirectURL @""

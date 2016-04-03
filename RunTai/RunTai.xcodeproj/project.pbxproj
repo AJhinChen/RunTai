@@ -1302,7 +1302,6 @@
 				TargetAttributes = {
 					CE13C4C61C96A01400AFC539 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = CT85NVA3Z3;
 					};
 				};
 			};
@@ -1676,9 +1675,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.dev.filmart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4dfcae8f-b9a2-44ea-94f0-e592f81f5739";
 			};
 			name = Debug;
 		};
@@ -1698,9 +1697,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.dev.filmart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4dfcae8f-b9a2-44ea-94f0-e592f81f5739";
 			};
 			name = Release;
 		};

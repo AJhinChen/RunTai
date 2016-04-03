@@ -5,6 +5,8 @@
 //  Created by Joel Chen on 16/3/14.
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
+#define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define _IPHONE80_ 80000
 
 #import "AppDelegate.h"
 #import "IntroductionViewController.h"
@@ -20,9 +22,27 @@
 
 @implementation AppDelegate
 
+#pragma mark XGPush
+- (void)registerPush{
+    float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if(sysVer < 8){
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    }else{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
+        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+        UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
+                                                                                     categories:[NSSet setWithObject:categorys]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:userSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+#endif
+    }
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self registerPush];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
     //设置导航条样式
@@ -76,9 +96,6 @@
         project.processing = [object objectForKey:@"processing"];
         project.stared = [object objectForKey:@"stared"];
         project.watch_count = [object objectForKey:@"watch_count"];
-        project.isStaring = [object objectForKey:@"isStaring"];
-        project.isWatching = [object objectForKey:@"isWatching"];
-        project.isLoadingMember = [object objectForKey:@"isLoadingMember"];
         project.created_at = [object objectForKey:@"created_at"];
         project.updated_at = [object objectForKey:@"updated_at"];
         AVUser *owner = [AVQuery getUserObjectWithId:((AVUser *)[object objectForKey:@"owner"]).objectId];

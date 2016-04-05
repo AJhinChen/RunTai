@@ -14,7 +14,6 @@
 
 @interface TweetSendTextCell () <AGEmojiKeyboardViewDelegate, AGEmojiKeyboardViewDataSource>
 @property (strong, nonatomic) AGEmojiKeyboardView *emojiKeyboardView;
-@property (strong, nonatomic) UIButton *locationButton;
 @end
 
 
@@ -107,7 +106,6 @@
         UIView  *keyboardToolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_footerToolBar.frame) - 40, kScreen_Width, 40)];
         [keyboardToolBar addLineUp:YES andDown:NO andColor:[UIColor colorWithHexString:@"0xc8c7cc"]];
         keyboardToolBar.backgroundColor = [UIColor colorWithHexString:@"0xf8f8f8"];
-        [_footerToolBar addSubview:_locationButton];
         {//tool button
             UIButton *photoButton = [self toolButtonWithToolBarFrame:keyboardToolBar.frame index:0 imageStr:@"keyboard_photo" andSelecter:@selector(photoButtonClicked:)];
             [keyboardToolBar addSubview:photoButton];
@@ -170,18 +168,9 @@
 
 - (void)emojiKeyBoardView:(AGEmojiKeyboardView *)emojiKeyBoardView didUseEmoji:(NSString *)emoji {
     NSRange selectedRange = self.tweetContentView.selectedRange;
-    
-    NSString *emotion_monkey = [emoji emotionMonkeyName];
-    if (emotion_monkey) {
-        emotion_monkey = [NSString stringWithFormat:@" :%@: ", emotion_monkey];
-        self.tweetContentView.text = [self.tweetContentView.text stringByReplacingCharactersInRange:selectedRange withString:emotion_monkey];
-        self.tweetContentView.selectedRange = NSMakeRange(selectedRange.location +emotion_monkey.length, 0);
-        [self textViewDidChange:self.tweetContentView];
-    }else{
-        self.tweetContentView.text = [self.tweetContentView.text stringByReplacingCharactersInRange:selectedRange withString:emoji];
-        self.tweetContentView.selectedRange = NSMakeRange(selectedRange.location +emoji.length, 0);
-        [self textViewDidChange:self.tweetContentView];
-    }
+    self.tweetContentView.text = [self.tweetContentView.text stringByReplacingCharactersInRange:selectedRange withString:emoji];
+    self.tweetContentView.selectedRange = NSMakeRange(selectedRange.location +emoji.length, 0);
+    [self textViewDidChange:self.tweetContentView];
 }
 
 - (void)emojiKeyBoardViewDidPressBackSpace:(AGEmojiKeyboardView *)emojiKeyBoardView {

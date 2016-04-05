@@ -31,6 +31,8 @@
 
 @property (strong, nonatomic) NSString *phoneCodeCellIdentifier;
 
+@property (strong, nonatomic) AVUser *customUser;
+
 @property (assign, nonatomic) int row;
 
 @end
@@ -49,21 +51,7 @@
     if (!_myRegister) {
         self.myRegister = [Register new];
     }
-    if ([Login isLogin]) {
-        self.curUser = [Login curLoginUser];
-        if (self.curUser) {
-            self.row = 2;
-            self.myRegister.phone = self.curUser.phone;
-            self.myRegister.global_key = self.curUser.global_key;
-            self.myRegister.gender = self.curUser.gender;
-            self.myRegister.code = @"1111";
-            self.myRegister.password = @"pass";
-        }else{
-            self.row = 4;
-        }
-    }else{
-        self.row = 4;
-    }
+    self.row = 4;
     
     //    添加myTableView
     _myTableView = ({
@@ -242,6 +230,7 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [NSObject showHudTipStr:@"验证码发送成功"];
+            self.customUser = user;
             [sender startUpTimer];
         }else{
             // 发送失败可以查看 error 里面提供的信息
@@ -291,85 +280,56 @@
     [self.view endEditing:YES];
     __weak typeof(self) weakSelf = self;
     [self.footerBtn startQueryAnimate];
-    if (self.curUser) {
-        [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
-            [weakSelf.footerBtn stopQueryAnimate];
-            if (succeeded) {
-                [weakSelf dismissSelf];
-                [NSObject showHudTipStr:@"免费申请设计成功"];
-            }else{
-                NSString * errorCode = error.userInfo[@"code"];
-                switch (errorCode.intValue) {
-                    case 28:
-                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
-                        break;
-                    case 999:
-                        [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
-                        break;
-                    default:
-                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请重试"];
-                        break;
-                }
-            }
-        }];
-    }else{
-        [AVUser verifyMobilePhone:_myRegister.code withBlock:^(BOOL succeeded, NSError *error) {
-            //验证结果
-            if (succeeded) {
-                AVUser *user = [AVUser currentUser];
-                [user setObject:_myRegister.gender forKey:@"gender"];
-                [user setObject:_myRegister.global_key forKey:@"name"];
-                [user saveInBackground];
-                [Login doLogin:user];
-                [Login setPreUserPhone:self.myRegister.phone];//记住登录账号
-                if (_methodType == RegisterMethodLogin) {
-                    [weakSelf.footerBtn stopQueryAnimate];
-                    [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
-                    [NSObject showHudTipStr:@"注册成功"];
-                }else{
-                    [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
-                        [weakSelf.footerBtn stopQueryAnimate];
-                        if (succeeded) {
-                            [weakSelf dismissSelf];
-                            [NSObject showHudTipStr:@"免费申请设计成功"];
-                        }else{
-                            NSString * errorCode = error.userInfo[@"code"];
-                            switch (errorCode.intValue) {
-                                case 28:
-                                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
-                                    break;
-                                case 999:
-                                    [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
-                                    break;
-                                default:
-                                    [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
-                                    break;
-                            }
-                        }
-                    }];
-                }
-            }else{
+    [AVUser verifyMobilePhone:_myRegister.code withBlock:^(BOOL succeeded, NSError *error) {
+        //验证结果
+        if (succeeded) {
+            if (_methodType == RegisterMethodLogin) {
                 [weakSelf.footerBtn stopQueryAnimate];
-                NSString * errorCode = error.userInfo[@"code"];
-                switch (errorCode.intValue) {
-                    case 28:
-                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
-                        break;
-                    case 603:
-                        [NSObject showHudTipStr:@"验证码错误"];
-                        break;
-                    default:{
-                        if (_methodType == RegisterMethodLogin) {
-                            [NSObject showHudTipStr:@"注册失败"];
-                        }else{
-                            [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
+                [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
+                [NSObject showHudTipStr:@"注册成功"];
+            }else{
+                [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:[Login transfer:self.customUser] block:^(BOOL succeeded, NSError *error) {
+                    [weakSelf.footerBtn stopQueryAnimate];
+                    if (succeeded) {
+                        [weakSelf dismissSelf];
+                        [NSObject showHudTipStr:@"免费申请设计成功"];
+                    }else{
+                        NSString * errorCode = error.userInfo[@"code"];
+                        switch (errorCode.intValue) {
+                            case 28:
+                                [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                                break;
+                            case 999:
+                                [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
+                                break;
+                            default:
+                                [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
+                                break;
                         }
                     }
-                        break;
-                }
+                }];
             }
-        }];
-    }
+        }else{
+            [weakSelf.footerBtn stopQueryAnimate];
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                case 603:
+                    [NSObject showHudTipStr:@"验证码错误"];
+                    break;
+                default:{
+                    if (_methodType == RegisterMethodLogin) {
+                        [NSObject showHudTipStr:@"注册失败"];
+                    }else{
+                        [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];
+                    }
+                }
+                    break;
+            }
+        }
+    }];
 }
 
 #pragma mark VC

@@ -22,7 +22,7 @@ static Note *_tweetForSend = nil;
 -(id)copyWithZone:(NSZone*)zone {
     Note *note = [[[self class] allocWithZone:zone] init];
     note.objectId = [_objectId copy];
-    note.updatedAt = [_updatedAt copy];
+    note.createdAt = [_createdAt copy];
     note.text=[_text copy];
     note.pic_urls=[NSMutableArray arrayWithCapacity:0];
     return note;

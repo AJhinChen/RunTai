@@ -270,6 +270,31 @@
     }];
 }
 
+- (void)request_UpdateNote_WithNoteId:(NSString *)noteId text:(NSString *)text photos:(NSArray *)photos type:(NSNumber *)type block:(AVBooleanResultBlock)block {
+    NSMutableArray *pic_urls = [NSMutableArray array];
+    NSError* theError;
+    for(TweetImage* photo in photos){
+        AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(photo.image)];
+        [photoFile save:&theError];
+        if(theError==nil){
+            [pic_urls addObject:photoFile];
+        }else{
+            for(AVFile* file in pic_urls){
+                [file deleteInBackground];
+            }
+            return;
+        }
+    }
+    
+    AVObject *note = [AVQuery getObjectOfClass:@"Note" objectId:noteId];
+    [note setObject:text forKey:@"text"];
+    [note setObject:pic_urls forKey:@"pic_urls"];
+    AVUser *avuser = [AVUser currentUser];
+    [note setObject:avuser forKey:@"responsible"];
+    [note setObject:type forKey:@"type"];
+    [note saveInBackgroundWithBlock:block];
+}
+
 - (void)request_Notes_WithNotes:(NSArray *)notes block:(AVArrayResultBlock)block{
     NSMutableArray *querysArr = [NSMutableArray array];
     for (AVObject *object in notes) {

@@ -17,12 +17,12 @@
 #import "RunTai_NetAPIManager.h"
 #import "Note.h"
 #import "Login.h"
-
+#import "TweetSendViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 const CGFloat BackGroupHeight = 250;
 
-@interface NoteViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,WXApiManagerDelegate>
+@interface NoteViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,WXApiManagerDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 {
     
     UITableView *myTableView;
@@ -41,6 +41,8 @@ const CGFloat BackGroupHeight = 250;
 @property (nonatomic, strong) Project *myProject;
 
 @property (strong, nonatomic) NSMutableArray *dataList;
+
+@property (assign, nonatomic) NSIndexPath *cellIndexPath;
 
 @end
 
@@ -381,8 +383,92 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         if ([self.dataList count]>0) {
             cell.note = self.dataList[indexPath.section-2];
         }
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.delegate = self;
+        AVUser *curUser = [AVUser currentUser];
+        if ([[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
+            cell.rightUtilityButtons = [self rightButtons];
+        }
         return cell;
     }
+}
+
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+//    [leftUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+//                                                icon:[UIImage imageNamed:@"ios7-telephone"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"compose"]];
+    //    [leftUtilityButtons sw_addUtilityButtonWithColor:
+    //     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
+    //                                                icon:[UIImage imageNamed:@"cross.png"]];
+    //    [leftUtilityButtons sw_addUtilityButtonWithColor:
+    //     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+    //                                                icon:[UIImage imageNamed:@"list.png"]];
+    
+    return leftUtilityButtons;
+}
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    //    [rightUtilityButtons sw_addUtilityButtonWithColor:
+    //     [UIColor colorWithHexString:@"0x3bbc79"]
+    //                                                title:@"抢单"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"删除"];
+    
+    return rightUtilityButtons;
+}
+
+#pragma mark - SWTableViewDelegate
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    [NSObject showLoadingView:@"提取数据中.."];
+    self.cellIndexPath = [myTableView indexPathForCell:cell];
+    Note *curNote = self.dataList[self.cellIndexPath.section-2];
+    TweetSendViewController *vc = [[TweetSendViewController alloc] init];
+    vc.curTweet = curNote;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:^{
+        [NSObject hideLoadingView];
+    }];
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    self.cellIndexPath = [myTableView indexPathForCell:cell];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"笔录删除警告" message:[NSString stringWithFormat:@"您确认要删除该笔录吗？"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认删除",nil];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex!=alertView.cancelButtonIndex){
+        [NSObject showLoadingView:@"笔录删除中.."];
+        Project *curPro = self.dataList[self.cellIndexPath.section-2];
+        [[RunTai_NetAPIManager sharedManager]request_DeleteProject_WithProject:curPro.objectId block:^(BOOL succeeded, NSError *error) {
+            [NSObject hideLoadingView];
+            if (succeeded) {
+                [self.dataList removeObjectAtIndex:self.cellIndexPath.section-2];
+                [myTableView deleteSections:[NSIndexSet indexSetWithIndex:self.cellIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [NSObject showHudTipStr:@"删除成功"];
+            }else{
+                NSString * errorCode = error.userInfo[@"code"];
+                switch (errorCode.intValue) {
+                    case 28:
+                        [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                        break;
+                    default:
+                        [NSObject showHudTipStr:@"删除失败"];
+                        break;
+                }
+            }
+        }];
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -427,7 +513,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         
         UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(kPaddingLeftWidth*2+80, kPaddingLeftWidth, kScreen_Width-(kPaddingLeftWidth*2+80)*2, 44-kPaddingLeftWidth*2)];
         
-        title.text=[NSDate stringFromDate:note.updatedAt];
+        title.text=[NSDate stringFromDate:note.createdAt];
         title.textColor = [UIColor colorWithHexString:@"0x222222"];
         title.font = NotesIntroFont;
         title.textAlignment=NSTextAlignmentCenter;

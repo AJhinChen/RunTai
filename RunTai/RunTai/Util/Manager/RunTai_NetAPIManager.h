@@ -46,6 +46,8 @@
 
 - (void)request_CreateNote_WithProject:(NSString *)projectId text:(NSString *)text photos:(NSArray *)photos type:(NSNumber *)type block:(AVBooleanResultBlock)block;
 
+- (void)request_UpdateNote_WithNoteId:(NSString *)noteId text:(NSString *)text photos:(NSArray *)photos type:(NSNumber *)type block:(AVBooleanResultBlock)block;
+
 - (void)request_Notes_WithNotes:(NSArray *)notes block:(AVArrayResultBlock)block;
 
 - (void)request_CollectNote_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block;

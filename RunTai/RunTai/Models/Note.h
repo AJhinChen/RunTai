@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, NoteType)
 @property (nonatomic , strong) NSMutableArray *pic_urls;
 @property (readwrite, nonatomic, strong) NSMutableArray *selectedAssetURLs;
 
-@property (strong, nonatomic) NSDate *updatedAt;
+@property (strong, nonatomic) NSDate *createdAt;
 
 @property (assign, nonatomic) NoteType noteType;
 

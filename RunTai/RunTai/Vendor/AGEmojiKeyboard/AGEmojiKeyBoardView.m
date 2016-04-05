@@ -41,7 +41,7 @@ NSString *const RecentUsedEmojiCharactersKey = @"RecentUsedEmojiCharactersKey";
 
 - (NSString *)categoryNameAtIndex:(NSUInteger)index {
     //    NSArray *categoryList = @[segmentRecentName, @"People", @"Objects", @"Nature", @"Places", @"Symbols"];
-    NSArray *categoryList = @[@"emoji", @"big_monkey", @"big_monkey_gif"];
+    NSArray *categoryList = @[@"emoji"];
     return categoryList[index];
 }
 
@@ -65,7 +65,7 @@ NSString *const RecentUsedEmojiCharactersKey = @"RecentUsedEmojiCharactersKey";
     dispatch_once(&onceToken, ^{
         array = [NSMutableArray array];
         for (AGEmojiKeyboardViewCategoryImage i = AGEmojiKeyboardViewCategoryImageEmoji;
-             i <= AGEmojiKeyboardViewCategoryImageMonkey_Gif;
+             i <= AGEmojiKeyboardViewCategoryImageEmoji;
              ++i) {
             [array addObject:[self.dataSource emojiKeyboardView:self imageForSelectedCategory:i]];
         }
@@ -79,7 +79,7 @@ NSString *const RecentUsedEmojiCharactersKey = @"RecentUsedEmojiCharactersKey";
     dispatch_once(&onceToken, ^{
         array = [NSMutableArray array];
         for (AGEmojiKeyboardViewCategoryImage i = AGEmojiKeyboardViewCategoryImageEmoji;
-             i <= AGEmojiKeyboardViewCategoryImageMonkey_Gif;
+             i <= AGEmojiKeyboardViewCategoryImageEmoji;
              ++i) {
             [array addObject:[self.dataSource emojiKeyboardView:self imageForNonSelectedCategory:i]];
         }
@@ -140,7 +140,7 @@ NSString *const RecentUsedEmojiCharactersKey = @"RecentUsedEmojiCharactersKey";
         self.pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"keyboard_page_selected"];
         self.pageControl.hidesForSinglePage = YES;
         self.pageControl.backgroundColor = [UIColor clearColor];
-        CGSize pageControlSize = [self.pageControl sizeForNumberOfPages:3];
+        CGSize pageControlSize = [self.pageControl sizeForNumberOfPages:1];
         NSUInteger numberOfPages = [self numberOfPagesForCategory:self.category
                                                       inFrameSize:CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - CGRectGetHeight(self.easeTabBar.bounds) - pageControlSize.height)];
         self.pageControl.numberOfPages = numberOfPages;
@@ -168,7 +168,7 @@ NSString *const RecentUsedEmojiCharactersKey = @"RecentUsedEmojiCharactersKey";
 }
 
 - (void)layoutSubviews {
-    CGSize pageControlSize = [self.pageControl sizeForNumberOfPages:3];
+    CGSize pageControlSize = [self.pageControl sizeForNumberOfPages:1];
     NSUInteger numberOfPages = [self numberOfPagesForCategory:self.category
                                                   inFrameSize:CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - CGRectGetHeight(self.easeTabBar.bounds) - pageControlSize.height)];
     

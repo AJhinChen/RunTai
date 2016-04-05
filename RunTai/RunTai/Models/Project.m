@@ -97,7 +97,7 @@
             
         }
         note.pic_urls = picUrls;
-        note.updatedAt = [object objectForKey:@"updatedAt"];
+        note.createdAt = [object objectForKey:@"createdAt"];
         NSString *type = [object objectForKey:@"type"];
         note.noteType = type.integerValue;
         [pro.list addObject:note];

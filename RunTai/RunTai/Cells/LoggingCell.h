@@ -8,9 +8,10 @@
 #define kCellIdentifier_LoggingCell @"LoggingCell"
 
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell.h>
 #import "Note.h"
 
-@interface LoggingCell : UITableViewCell
+@interface LoggingCell : SWTableViewCell
 
 @property (strong, nonatomic) Note *note;
 

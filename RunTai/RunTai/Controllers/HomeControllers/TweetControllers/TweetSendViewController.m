@@ -42,6 +42,18 @@
     // Do any additional setup after loading the view.
     if (!_curTweet) {
         _curTweet = [Note tweetForSend];
+    }else{
+        NSMutableArray *pic_urls = [NSMutableArray arrayWithCapacity:9];
+        for (NSString *url in _curTweet.pic_urls) {
+            TweetImage *photo = [[TweetImage alloc]init];
+            photo.assetURL = [NSURL URLWithString:url];
+            photo.image = [UIImage imageWithData:[NSData
+                                                  dataWithContentsOfURL:[NSURL URLWithString:url]]];
+            photo.thumbnailImage = photo.image;
+            [pic_urls addObject:photo];
+        }
+        [_curTweet.pic_urls removeAllObjects];
+        [_curTweet.pic_urls addObjectsFromArray:pic_urls];
     }
     
     //设置导航标题
@@ -244,7 +256,11 @@
         return cell;
     }else{
         TitleValueMoreCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_TitleValue forIndexPath:indexPath];
-        [cell setTitleStr:@"项目进度" valueStr:[Project getProcessingName:_curPro.processing.intValue]];
+        if (_curPro) {
+            [cell setTitleStr:@"项目进度" valueStr:[Project getProcessingName:_curPro.processing.intValue]];
+        }else{
+            [cell setTitleStr:@"项目进度" valueStr:[Project getProcessingName:_curTweet.noteType]];
+        }
         [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
         return cell;
     }
@@ -269,9 +285,12 @@
         if (_curPro.processing) {
             processing = _curPro.processing;
         }
+        if (_curTweet.noteType) {
+            processing = [NSNumber numberWithInteger:_curTweet.noteType];
+        }
         __weak typeof(self) weakSelf = self;
         [ActionSheetStringPicker showPickerWithTitle:nil rows:@[@[@"上门服务",@"准备阶段", @"拆改阶段",@"水电阶段", @"泥木阶段",@"油漆阶段", @"竣工阶段",@"软装阶段", @"入住阶段"]] initialSelection:@[processing] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
-            weakSelf.curPro.processing = [selectedIndex firstObject];
+            weakSelf.curTweet.noteType = ((NSNumber *)[selectedIndex firstObject]).integerValue;
             [weakSelf.myTableView reloadData];
         } cancelBlock:nil origin:self.view];
     }
@@ -306,60 +325,27 @@
     [self.view endEditing:YES];
     __weak typeof(self) weakSelf = self;
     [NSObject showLoadingView:@"发送中..."];
-    [[RunTai_NetAPIManager sharedManager]request_CreateNote_WithProject:self.curPro.objectId text:self.curTweet.text photos:self.curTweet.pic_urls type:self.curPro.processing block:^(BOOL succeeded, NSError *error) {
-        [NSObject hideLoadingView];
-        if (succeeded) {
-            [weakSelf cancelBtnClicked:nil];
-            [NSObject showHudTipStr:@"评论成功"];
-        }else{
-            [NSObject showHudTipStr:@"评论失败，请重试"];
-        }
-    }];
-//    _curTweet.text = [_curTweet.text aliasedString];
-//    [self sendTweetToServer];//自己处理发送请求
-//    
-//    NSError* error;
-//    if (_type == TweetSendWeibo) {
-//        [[Coding_NetAPIManager sharedManager] createStatusWithImage:self.curTweet.tweetContent photos:self.curTweet.tweetImages status:self.object error:&error];
-//        __weak typeof(self) weakSelf = self;
-//        [self dismissSelfWithCompletion:^{
-//            [[Coding_NetAPIManager sharedManager] hideLoadingView];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:StatusOriginalDidRefreshNotication object:nil];
-//            
-//            if (weakSelf.curTweet.callback) {
-//                [weakSelf handleCallBack:weakSelf.curTweet.callback status:YES];
-//            }
-//        }];
-//    }else if (_type ==TweetSendComment){
-//        [[Coding_NetAPIManager sharedManager] commentToUser:self.object content:self.curTweet.tweetContent photos:self.curTweet.tweetImages block:^(BOOL succeeded, NSError *error) {
-//            if (succeeded){
-//                NSLog(@"评论成功了");
-//            }else{
-//                NSLog(@"评论失败了");
-//            }
-//            __weak typeof(self) weakSelf = self;
-//            [self dismissSelfWithCompletion:^{
-//                [[Coding_NetAPIManager sharedManager] hideLoadingView];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:CommentOriginalDidRefreshNotication object:nil];
-//                
-//                if (weakSelf.curTweet.callback) {
-//                    [weakSelf handleCallBack:weakSelf.curTweet.callback status:YES];
-//                }
-//            }];
-//        }];
-//    }else if (_type ==TweetSendRetweet){
-//        [[Coding_NetAPIManager sharedManager] createStatusWithImage:self.curTweet.tweetContent photos:self.curTweet.tweetImages status:self.object error:&error];
-//        
-//        __weak typeof(self) weakSelf = self;
-//        [self dismissSelfWithCompletion:^{
-//            [[Coding_NetAPIManager sharedManager] hideLoadingView];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:StatusOriginalDidRefreshNotication object:nil];
-//            
-//            if (weakSelf.curTweet.callback) {
-//                [weakSelf handleCallBack:weakSelf.curTweet.callback status:YES];
-//            }
-//        }];
-//    }
+    if (self.curPro) {
+        [[RunTai_NetAPIManager sharedManager]request_CreateNote_WithProject:self.curPro.objectId text:self.curTweet.text photos:self.curTweet.pic_urls type:self.curPro.processing block:^(BOOL succeeded, NSError *error) {
+            [NSObject hideLoadingView];
+            if (succeeded) {
+                [weakSelf cancelBtnClicked:nil];
+                [NSObject showHudTipStr:@"添加笔录成功"];
+            }else{
+                [NSObject showHudTipStr:@"添加笔录失败，请重试"];
+            }
+        }];
+    }else{
+        [[RunTai_NetAPIManager sharedManager]request_UpdateNote_WithNoteId:self.curTweet.objectId text:self.curTweet.text photos:self.curTweet.pic_urls type:[NSNumber numberWithInteger:self.curTweet.noteType] block:^(BOOL succeeded, NSError *error) {
+            [NSObject hideLoadingView];
+            if (succeeded) {
+                [weakSelf cancelBtnClicked:nil];
+                [NSObject showHudTipStr:@"修改笔录成功"];
+            }else{
+                [NSObject showHudTipStr:@"修改笔录失败，请重试"];
+            }
+        }];
+    }
 }
 
 - (void)enableNavItem:(BOOL)isEnable{
@@ -371,6 +357,9 @@
 {
     _myTableView.delegate = nil;
     _myTableView.dataSource = nil;
+    self.curTweet = nil;
+    self.curPro = nil;
+    self.selectedAssetArray = nil;
 }
 
 #pragma mark

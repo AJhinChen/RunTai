@@ -25,6 +25,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
+//    [AVOSCloud setAllLogsEnabled:YES];
     //设置导航条样式
     [self customizeInterface];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];

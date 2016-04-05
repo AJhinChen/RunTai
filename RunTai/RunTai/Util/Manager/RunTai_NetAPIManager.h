@@ -44,7 +44,7 @@
 
 #pragma mark - Note
 
-- (void)request_CreateNote_WithProject:(Project *)project text:(NSString *)text photos:(NSArray *)photos type:(ProjectType)type block:(AVBooleanResultBlock)block;
+- (void)request_CreateNote_WithProject:(NSString *)projectId text:(NSString *)text photos:(NSArray *)photos type:(NSNumber *)type block:(AVBooleanResultBlock)block;
 
 - (void)request_Notes_WithNotes:(NSArray *)notes block:(AVArrayResultBlock)block;
 

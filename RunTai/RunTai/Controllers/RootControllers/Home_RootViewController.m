@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "RunTai_NetAPIManager.h"
 #import "ProjectCount.h"
+#import "TweetSendViewController.h"
 
 @interface Home_RootViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSMutableDictionary *myProjectsDict;
@@ -441,11 +442,9 @@
     cell.curPro = curPro;
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
-    if (curPro.processing.intValue==0) {
-        AVUser *curUser = [AVUser currentUser];
-        if ([[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
-            cell.rightUtilityButtons = [self rightButtons];
-        }
+    AVUser *curUser = [AVUser currentUser];
+    if (curPro.processing.intValue==0 && [[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
+        cell.rightUtilityButtons = [self rightButtons];
     }
     return cell;
 }
@@ -532,6 +531,7 @@
 
 #pragma mark - SWTableViewDelegate
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    self.cellIndexPath = [self.myTableView indexPathForCell:cell];
     switch (index) {
         case 0:{
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"电话联系" message:[NSString stringWithFormat:@"您确认要电话联系客户吗？"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认",nil];
@@ -539,8 +539,13 @@
             [alertView show];
         }
             break;
-        case 1:
-            NSLog(@"clock button was pressed");
+        case 1:{
+            TweetSendViewController *vc = [[TweetSendViewController alloc] init];
+            Project *curPro = self.dataList[self.cellIndexPath.section];
+            vc.curPro = curPro;
+            BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+            [self presentViewController:nav animated:YES completion:nil];
+        }
             break;
         default:
             break;
@@ -663,7 +668,7 @@
         [pic_urls addObject:pic];
     }
     
-    [[RunTai_NetAPIManager sharedManager]request_CreateNote_WithProject:curPro text:@"我和老公都很喜欢简欧风格，让福圣鑫的设计师按我们的想法出的设计图，第一张是我从网上找出图，背景墙铺设壁纸，第二张是我们让设计师出的图，背景墙铺设磁砖，大家看看哪种效果更好呢？给点意见吧" photos:pic_urls type:1 block:^(BOOL succeeded, NSError *error) {
+    [[RunTai_NetAPIManager sharedManager]request_CreateNote_WithProject:curPro.objectId text:@"我和老公都很喜欢简欧风格，让福圣鑫的设计师按我们的想法出的设计图，第一张是我从网上找出图，背景墙铺设壁纸，第二张是我们让设计师出的图，背景墙铺设磁砖，大家看看哪种效果更好呢？给点意见吧" photos:pic_urls type:[NSNumber numberWithInt:1] block:^(BOOL succeeded, NSError *error) {
         [NSObject hideLoadingView];
         if (succeeded) {
             [NSObject showHudTipStr:@"创建笔录成功"];

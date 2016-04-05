@@ -236,11 +236,11 @@
 
 #pragma mark - Note
 
-- (void)request_CreateNote_WithProject:(Project *)project text:(NSString *)text photos:(NSArray *)photos type:(ProjectType)type block:(AVBooleanResultBlock)block {
+- (void)request_CreateNote_WithProject:(NSString *)projectId text:(NSString *)text photos:(NSArray *)photos type:(NSNumber *)type block:(AVBooleanResultBlock)block {
     NSMutableArray *pic_urls = [NSMutableArray array];
     NSError* theError;
-    for(UIImage* photo in photos){
-        AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(photo)];
+    for(TweetImage* photo in photos){
+        AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(photo.image)];
         [photoFile save:&theError];
         if(theError==nil){
             [pic_urls addObject:photoFile];
@@ -255,14 +255,18 @@
     AVObject *note = [AVObject objectWithClassName:@"Note"];
     [note setObject:text forKey:@"text"];
     [note setObject:pic_urls forKey:@"pic_urls"];
-    AVUser *avuser = [AVQuery getUserObjectWithId:@"56f4d7507db2a20052d9478f"];
+    AVUser *avuser = [AVUser currentUser];
     [note setObject:avuser forKey:@"responsible"];
-    [note setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
+    [note setObject:type forKey:@"type"];
     [note saveInBackgroundWithBlock:^(BOOL succeeded , NSError *error){
-        AVObject *object = [AVQuery getObjectOfClass:@"Note" objectId:project.objectId];
-        [object addObject:note.objectId forKey:@"notes"];
-        [object setObject:[NSNumber numberWithInteger:type] forKey:@"processing"];
-        [object saveInBackgroundWithBlock:block];
+        if (succeeded) {
+            AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
+            [object addObject:note forKey:@"notes"];
+            [object setObject:type forKey:@"processing"];
+            [object saveInBackgroundWithBlock:block];
+        }else{
+            block(NO,error);
+        }
     }];
 }
 

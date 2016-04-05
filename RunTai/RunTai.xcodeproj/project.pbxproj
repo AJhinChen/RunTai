@@ -10,6 +10,35 @@
 		3299DBB5B39BCE3A2EDDD0E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5190DAAAFACDBD09EF7EBA1 /* libPods.a */; };
 		CE0CCFF51CA395F70015FD0A /* Projects.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF41CA395F70015FD0A /* Projects.m */; };
 		CE0CCFF81CA397340015FD0A /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF71CA397340015FD0A /* Project.m */; };
+		CE1182DD1CB0CD7D0096ECA1 /* DSComposePhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182D01CB0CD7D0096ECA1 /* DSComposePhotosView.m */; };
+		CE1182DE1CB0CD7D0096ECA1 /* DSComposePhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182D21CB0CD7D0096ECA1 /* DSComposePhotoViewCell.m */; };
+		CE1182E31CB0CD7D0096ECA1 /* TweetSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182DC1CB0CD7D0096ECA1 /* TweetSendViewController.m */; };
+		CE1183051CB0CE340096ECA1 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE1182E61CB0CE340096ECA1 /* JKImagePickerController.strings */; };
+		CE1183061CB0CE340096ECA1 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1182E81CB0CE340096ECA1 /* ImagesPicker.xcassets */; };
+		CE1183071CB0CE340096ECA1 /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182EC1CB0CE340096ECA1 /* JKAssets.m */; };
+		CE1183081CB0CE340096ECA1 /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182EE1CB0CE340096ECA1 /* JKAssetsCollectionFooterView.m */; };
+		CE1183091CB0CE340096ECA1 /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182F01CB0CE340096ECA1 /* JKAssetsGroupCell.m */; };
+		CE11830A1CB0CE340096ECA1 /* JKAssetsGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182F21CB0CE340096ECA1 /* JKAssetsGroupsView.m */; };
+		CE11830B1CB0CE340096ECA1 /* JKAssetsThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182F41CB0CE340096ECA1 /* JKAssetsThumbnailView.m */; };
+		CE11830C1CB0CE340096ECA1 /* JKAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182F61CB0CE340096ECA1 /* JKAssetsViewCell.m */; };
+		CE11830D1CB0CE340096ECA1 /* JKImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182F81CB0CE340096ECA1 /* JKImagePickerController.m */; };
+		CE11830E1CB0CE340096ECA1 /* JKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182FA1CB0CE340096ECA1 /* JKPhotoBrowser.m */; };
+		CE11830F1CB0CE340096ECA1 /* JKPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182FC1CB0CE340096ECA1 /* JKPhotoBrowserCell.m */; };
+		CE1183101CB0CE340096ECA1 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1182FE1CB0CE340096ECA1 /* JKPromptView.m */; };
+		CE1183111CB0CE340096ECA1 /* JKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183001CB0CE340096ECA1 /* JKUtil.m */; };
+		CE1183121CB0CE340096ECA1 /* PhotoAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183021CB0CE340096ECA1 /* PhotoAlbumManager.m */; };
+		CE1183131CB0CE340096ECA1 /* UIView+JKPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183041CB0CE340096ECA1 /* UIView+JKPicker.m */; };
+		CE1183271CB0CE750096ECA1 /* TweetSendTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11831D1CB0CE750096ECA1 /* TweetSendTextCell.m */; };
+		CE1183281CB0CE750096ECA1 /* TweetSendImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11831F1CB0CE750096ECA1 /* TweetSendImagesCell.m */; };
+		CE11832C1CB0D19F0096ECA1 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11832B1CB0D19F0096ECA1 /* UIPlaceHolderTextView.m */; };
+		CE1183341CB0D27F0096ECA1 /* AGEmojiKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11832F1CB0D27F0096ECA1 /* AGEmojiKeyBoardView.m */; };
+		CE1183351CB0D27F0096ECA1 /* AGEmojiPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183311CB0D27F0096ECA1 /* AGEmojiPageView.m */; };
+		CE1183361CB0D27F0096ECA1 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1183321CB0D27F0096ECA1 /* EmojisList.plist */; };
+		CE1183371CB0D27F0096ECA1 /* emotion_list.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE1183331CB0D27F0096ECA1 /* emotion_list.plist */; };
+		CE11833B1CB0D37D0096ECA1 /* TweetSendImageCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11833A1CB0D37D0096ECA1 /* TweetSendImageCCell.m */; };
+		CE11833E1CB0D4C60096ECA1 /* UICustomCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11833D1CB0D4C60096ECA1 /* UICustomCollectionView.m */; };
+		CE1183411CB0D6FA0096ECA1 /* UIActionSheet+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */; };
+		CE1183431CB0DE910096ECA1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183421CB0DE910096ECA1 /* Note.m */; };
 		CE13C4CC1C96A01400AFC539 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CB1C96A01400AFC539 /* main.m */; };
 		CE13C4CF1C96A01400AFC539 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CE1C96A01400AFC539 /* AppDelegate.m */; };
 		CE13C4D81C96A01400AFC539 /* RunTai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4D61C96A01400AFC539 /* RunTai.xcdatamodeld */; };
@@ -94,7 +123,6 @@
 		CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */; };
 		CEB573B51CA4DF820020198A /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573B41CA4DF820020198A /* AddressManager.m */; };
 		CEB573B71CA4DF910020198A /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = CEB573B61CA4DF910020198A /* address.json */; };
-		CEB573DC1CA90FA10020198A /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573DB1CA90FA10020198A /* Note.m */; };
 		CEB573FC1CABCBCF0020198A /* Case_RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573FB1CABCBCF0020198A /* Case_RootViewController.m */; };
 		CEB573FF1CABCF330020198A /* CaseImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573FE1CABCF330020198A /* CaseImageCell.m */; };
 		CEB574021CABD3BF0020198A /* Case.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB574011CABD3BF0020198A /* Case.m */; };
@@ -191,6 +219,60 @@
 		CE0CCFF41CA395F70015FD0A /* Projects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Projects.m; sourceTree = "<group>"; };
 		CE0CCFF61CA397340015FD0A /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		CE0CCFF71CA397340015FD0A /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
+		CE1182CF1CB0CD7D0096ECA1 /* DSComposePhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSComposePhotosView.h; sourceTree = "<group>"; };
+		CE1182D01CB0CD7D0096ECA1 /* DSComposePhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSComposePhotosView.m; sourceTree = "<group>"; };
+		CE1182D11CB0CD7D0096ECA1 /* DSComposePhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSComposePhotoViewCell.h; sourceTree = "<group>"; };
+		CE1182D21CB0CD7D0096ECA1 /* DSComposePhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSComposePhotoViewCell.m; sourceTree = "<group>"; };
+		CE1182DB1CB0CD7D0096ECA1 /* TweetSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetSendViewController.h; sourceTree = "<group>"; };
+		CE1182DC1CB0CD7D0096ECA1 /* TweetSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetSendViewController.m; sourceTree = "<group>"; };
+		CE1182E71CB0CE340096ECA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JKImagePickerController.strings; sourceTree = "<group>"; };
+		CE1182E81CB0CE340096ECA1 /* ImagesPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPicker.xcassets; sourceTree = "<group>"; };
+		CE1182E91CB0CE340096ECA1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/JKImagePickerController.strings"; sourceTree = "<group>"; };
+		CE1182EB1CB0CE340096ECA1 /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
+		CE1182EC1CB0CE340096ECA1 /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
+		CE1182ED1CB0CE340096ECA1 /* JKAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsCollectionFooterView.h; sourceTree = "<group>"; };
+		CE1182EE1CB0CE340096ECA1 /* JKAssetsCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsCollectionFooterView.m; sourceTree = "<group>"; };
+		CE1182EF1CB0CE340096ECA1 /* JKAssetsGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupCell.h; sourceTree = "<group>"; };
+		CE1182F01CB0CE340096ECA1 /* JKAssetsGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupCell.m; sourceTree = "<group>"; };
+		CE1182F11CB0CE340096ECA1 /* JKAssetsGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsGroupsView.h; sourceTree = "<group>"; };
+		CE1182F21CB0CE340096ECA1 /* JKAssetsGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsGroupsView.m; sourceTree = "<group>"; };
+		CE1182F31CB0CE340096ECA1 /* JKAssetsThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsThumbnailView.h; sourceTree = "<group>"; };
+		CE1182F41CB0CE340096ECA1 /* JKAssetsThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsThumbnailView.m; sourceTree = "<group>"; };
+		CE1182F51CB0CE340096ECA1 /* JKAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsViewCell.h; sourceTree = "<group>"; };
+		CE1182F61CB0CE340096ECA1 /* JKAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssetsViewCell.m; sourceTree = "<group>"; };
+		CE1182F71CB0CE340096ECA1 /* JKImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKImagePickerController.h; sourceTree = "<group>"; };
+		CE1182F81CB0CE340096ECA1 /* JKImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKImagePickerController.m; sourceTree = "<group>"; };
+		CE1182F91CB0CE340096ECA1 /* JKPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowser.h; sourceTree = "<group>"; };
+		CE1182FA1CB0CE340096ECA1 /* JKPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowser.m; sourceTree = "<group>"; };
+		CE1182FB1CB0CE340096ECA1 /* JKPhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPhotoBrowserCell.h; sourceTree = "<group>"; };
+		CE1182FC1CB0CE340096ECA1 /* JKPhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPhotoBrowserCell.m; sourceTree = "<group>"; };
+		CE1182FD1CB0CE340096ECA1 /* JKPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPromptView.h; sourceTree = "<group>"; };
+		CE1182FE1CB0CE340096ECA1 /* JKPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPromptView.m; sourceTree = "<group>"; };
+		CE1182FF1CB0CE340096ECA1 /* JKUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUtil.h; sourceTree = "<group>"; };
+		CE1183001CB0CE340096ECA1 /* JKUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUtil.m; sourceTree = "<group>"; };
+		CE1183011CB0CE340096ECA1 /* PhotoAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoAlbumManager.h; sourceTree = "<group>"; };
+		CE1183021CB0CE340096ECA1 /* PhotoAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumManager.m; sourceTree = "<group>"; };
+		CE1183031CB0CE340096ECA1 /* UIView+JKPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JKPicker.h"; sourceTree = "<group>"; };
+		CE1183041CB0CE340096ECA1 /* UIView+JKPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JKPicker.m"; sourceTree = "<group>"; };
+		CE11831C1CB0CE750096ECA1 /* TweetSendTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetSendTextCell.h; sourceTree = "<group>"; };
+		CE11831D1CB0CE750096ECA1 /* TweetSendTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetSendTextCell.m; sourceTree = "<group>"; };
+		CE11831E1CB0CE750096ECA1 /* TweetSendImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetSendImagesCell.h; sourceTree = "<group>"; };
+		CE11831F1CB0CE750096ECA1 /* TweetSendImagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetSendImagesCell.m; sourceTree = "<group>"; };
+		CE11832A1CB0D19F0096ECA1 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		CE11832B1CB0D19F0096ECA1 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		CE11832E1CB0D27F0096ECA1 /* AGEmojiKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiKeyBoardView.h; sourceTree = "<group>"; };
+		CE11832F1CB0D27F0096ECA1 /* AGEmojiKeyBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiKeyBoardView.m; sourceTree = "<group>"; };
+		CE1183301CB0D27F0096ECA1 /* AGEmojiPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiPageView.h; sourceTree = "<group>"; };
+		CE1183311CB0D27F0096ECA1 /* AGEmojiPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiPageView.m; sourceTree = "<group>"; };
+		CE1183321CB0D27F0096ECA1 /* EmojisList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojisList.plist; sourceTree = "<group>"; };
+		CE1183331CB0D27F0096ECA1 /* emotion_list.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emotion_list.plist; sourceTree = "<group>"; };
+		CE1183391CB0D37D0096ECA1 /* TweetSendImageCCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetSendImageCCell.h; sourceTree = "<group>"; };
+		CE11833A1CB0D37D0096ECA1 /* TweetSendImageCCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetSendImageCCell.m; sourceTree = "<group>"; };
+		CE11833C1CB0D4C60096ECA1 /* UICustomCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomCollectionView.h; sourceTree = "<group>"; };
+		CE11833D1CB0D4C60096ECA1 /* UICustomCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomCollectionView.m; sourceTree = "<group>"; };
+		CE11833F1CB0D6FA0096ECA1 /* UIActionSheet+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Common.h"; sourceTree = "<group>"; };
+		CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Common.m"; sourceTree = "<group>"; };
+		CE1183421CB0DE910096ECA1 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		CE13C4C71C96A01400AFC539 /* RunTai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE13C4CB1C96A01400AFC539 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE13C4CD1C96A01400AFC539 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -358,7 +440,6 @@
 		CEB573B41CA4DF820020198A /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManager.m; sourceTree = "<group>"; };
 		CEB573B61CA4DF910020198A /* address.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
 		CEB573DA1CA90FA10020198A /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		CEB573DB1CA90FA10020198A /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		CEB573FA1CABCBCF0020198A /* Case_RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Case_RootViewController.h; sourceTree = "<group>"; };
 		CEB573FB1CABCBCF0020198A /* Case_RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Case_RootViewController.m; sourceTree = "<group>"; };
 		CEB573FD1CABCF330020198A /* CaseImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseImageCell.h; sourceTree = "<group>"; };
@@ -537,6 +618,92 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE1182CE1CB0CD7D0096ECA1 /* TweetControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE1182CF1CB0CD7D0096ECA1 /* DSComposePhotosView.h */,
+				CE1182D01CB0CD7D0096ECA1 /* DSComposePhotosView.m */,
+				CE1182D11CB0CD7D0096ECA1 /* DSComposePhotoViewCell.h */,
+				CE1182D21CB0CD7D0096ECA1 /* DSComposePhotoViewCell.m */,
+				CE1182DB1CB0CD7D0096ECA1 /* TweetSendViewController.h */,
+				CE1182DC1CB0CD7D0096ECA1 /* TweetSendViewController.m */,
+			);
+			path = TweetControllers;
+			sourceTree = "<group>";
+		};
+		CE1182E41CB0CE340096ECA1 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				CE1182E51CB0CE340096ECA1 /* Assets */,
+				CE1182EA1CB0CE340096ECA1 /* Classes */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		CE1182E51CB0CE340096ECA1 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CE1182E61CB0CE340096ECA1 /* JKImagePickerController.strings */,
+				CE1182E81CB0CE340096ECA1 /* ImagesPicker.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		CE1182EA1CB0CE340096ECA1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE1182EB1CB0CE340096ECA1 /* JKAssets.h */,
+				CE1182EC1CB0CE340096ECA1 /* JKAssets.m */,
+				CE1182ED1CB0CE340096ECA1 /* JKAssetsCollectionFooterView.h */,
+				CE1182EE1CB0CE340096ECA1 /* JKAssetsCollectionFooterView.m */,
+				CE1182EF1CB0CE340096ECA1 /* JKAssetsGroupCell.h */,
+				CE1182F01CB0CE340096ECA1 /* JKAssetsGroupCell.m */,
+				CE1182F11CB0CE340096ECA1 /* JKAssetsGroupsView.h */,
+				CE1182F21CB0CE340096ECA1 /* JKAssetsGroupsView.m */,
+				CE1182F31CB0CE340096ECA1 /* JKAssetsThumbnailView.h */,
+				CE1182F41CB0CE340096ECA1 /* JKAssetsThumbnailView.m */,
+				CE1182F51CB0CE340096ECA1 /* JKAssetsViewCell.h */,
+				CE1182F61CB0CE340096ECA1 /* JKAssetsViewCell.m */,
+				CE1182F71CB0CE340096ECA1 /* JKImagePickerController.h */,
+				CE1182F81CB0CE340096ECA1 /* JKImagePickerController.m */,
+				CE1182F91CB0CE340096ECA1 /* JKPhotoBrowser.h */,
+				CE1182FA1CB0CE340096ECA1 /* JKPhotoBrowser.m */,
+				CE1182FB1CB0CE340096ECA1 /* JKPhotoBrowserCell.h */,
+				CE1182FC1CB0CE340096ECA1 /* JKPhotoBrowserCell.m */,
+				CE1182FD1CB0CE340096ECA1 /* JKPromptView.h */,
+				CE1182FE1CB0CE340096ECA1 /* JKPromptView.m */,
+				CE1182FF1CB0CE340096ECA1 /* JKUtil.h */,
+				CE1183001CB0CE340096ECA1 /* JKUtil.m */,
+				CE1183011CB0CE340096ECA1 /* PhotoAlbumManager.h */,
+				CE1183021CB0CE340096ECA1 /* PhotoAlbumManager.m */,
+				CE1183031CB0CE340096ECA1 /* UIView+JKPicker.h */,
+				CE1183041CB0CE340096ECA1 /* UIView+JKPicker.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		CE11832D1CB0D27F0096ECA1 /* AGEmojiKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				CE11832E1CB0D27F0096ECA1 /* AGEmojiKeyBoardView.h */,
+				CE11832F1CB0D27F0096ECA1 /* AGEmojiKeyBoardView.m */,
+				CE1183301CB0D27F0096ECA1 /* AGEmojiPageView.h */,
+				CE1183311CB0D27F0096ECA1 /* AGEmojiPageView.m */,
+				CE1183321CB0D27F0096ECA1 /* EmojisList.plist */,
+				CE1183331CB0D27F0096ECA1 /* emotion_list.plist */,
+			);
+			path = AGEmojiKeyboard;
+			sourceTree = "<group>";
+		};
+		CE1183381CB0D37C0096ECA1 /* CCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE1183391CB0D37D0096ECA1 /* TweetSendImageCCell.h */,
+				CE11833A1CB0D37D0096ECA1 /* TweetSendImageCCell.m */,
+			);
+			path = CCell;
+			sourceTree = "<group>";
+		};
 		CE13C4BE1C96A01400AFC539 = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +769,8 @@
 		CE13C4EC1C96E51D00AFC539 /* OC_Category */ = {
 			isa = PBXGroup;
 			children = (
+				CE11833F1CB0D6FA0096ECA1 /* UIActionSheet+Common.h */,
+				CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */,
 				CE4F485F1CA238EF00FBB678 /* UIButton+Common.h */,
 				CE4F48601CA238EF00FBB678 /* UIButton+Common.m */,
 				CED1CD361C9FE92E007ED5FD /* NSURL+Common.h */,
@@ -637,6 +806,8 @@
 		CE13C4FE1C96ED9900AFC539 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CE11832D1CB0D27F0096ECA1 /* AGEmojiKeyboard */,
+				CE1182E41CB0CE340096ECA1 /* ImagePicker */,
 				CEB574091CAD029D0020198A /* DropdownMenu */,
 				CED1CD3C1C9FEB85007ED5FD /* AFNetworking */,
 				CED1CD061C9FC62C007ED5FD /* MJPhotoBrowser */,
@@ -788,6 +959,10 @@
 		CE2AED6F1C97D9C50039CB5A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE11833C1CB0D4C60096ECA1 /* UICustomCollectionView.h */,
+				CE11833D1CB0D4C60096ECA1 /* UICustomCollectionView.m */,
+				CE11832A1CB0D19F0096ECA1 /* UIPlaceHolderTextView.h */,
+				CE11832B1CB0D19F0096ECA1 /* UIPlaceHolderTextView.m */,
 				CE2AED701C97D9FB0039CB5A /* PopFliterMenu.h */,
 				CE2AED711C97D9FB0039CB5A /* PopFliterMenu.m */,
 				CE2AEDF21C99A5E20039CB5A /* LoggingPhotoView.h */,
@@ -820,6 +995,7 @@
 		CE2AED7D1C97E9460039CB5A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CE1183381CB0D37C0096ECA1 /* CCell */,
 				CE2AED7E1C97EA7C0039CB5A /* NotesCell.h */,
 				CE2AED7F1C97EA7C0039CB5A /* NotesCell.m */,
 				CE2AED8A1C9922580039CB5A /* DirectorCell.h */,
@@ -848,6 +1024,10 @@
 				CE4F485A1CA12BCC00FBB678 /* UserInfoIconCell.m */,
 				CEB573FD1CABCF330020198A /* CaseImageCell.h */,
 				CEB573FE1CABCF330020198A /* CaseImageCell.m */,
+				CE11831C1CB0CE750096ECA1 /* TweetSendTextCell.h */,
+				CE11831D1CB0CE750096ECA1 /* TweetSendTextCell.m */,
+				CE11831E1CB0CE750096ECA1 /* TweetSendImagesCell.h */,
+				CE11831F1CB0CE750096ECA1 /* TweetSendImagesCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -855,6 +1035,7 @@
 		CE2AED861C99018E0039CB5A /* HomeControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE1182CE1CB0CD7D0096ECA1 /* TweetControllers */,
 				CE2AED871C99020E0039CB5A /* NoteViewController.h */,
 				CE2AED881C99020E0039CB5A /* NoteViewController.m */,
 				CEDF67EB1C9D33FF006D6D26 /* OrderViewController.h */,
@@ -928,7 +1109,7 @@
 				CE0CCFF61CA397340015FD0A /* Project.h */,
 				CE0CCFF71CA397340015FD0A /* Project.m */,
 				CEB573DA1CA90FA10020198A /* Note.h */,
-				CEB573DB1CA90FA10020198A /* Note.m */,
+				CE1183421CB0DE910096ECA1 /* Note.m */,
 				CEB574001CABD3BF0020198A /* Case.h */,
 				CEB574011CABD3BF0020198A /* Case.m */,
 			);
@@ -1329,6 +1510,7 @@
 				CED1CCED1C9FA043007ED5FD /* SVWebViewControllerActivityReport-iPad@2x.png in Resources */,
 				CED1CCE91C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				CED1CCF31C9FA043007ED5FD /* SVWebViewControllerActivitySafari@2x.png in Resources */,
+				CE1183061CB0CE340096ECA1 /* ImagesPicker.xcassets in Resources */,
 				CE13C4DA1C96A01400AFC539 /* Assets.xcassets in Resources */,
 				CE13C4E51C96A14A00AFC539 /* Podfile in Resources */,
 				CE2AED8E1C996F1E0039CB5A /* Launch Screen.storyboard in Resources */,
@@ -1342,12 +1524,15 @@
 				CEB574081CACB3560020198A /* case.json in Resources */,
 				CE2AEE161C9AF8BB0039CB5A /* read_me.txt in Resources */,
 				CED1CD021C9FA4CF007ED5FD /* angle-mask.png in Resources */,
+				CE1183051CB0CE340096ECA1 /* JKImagePickerController.strings in Resources */,
 				CED1CD1C1C9FC62C007ED5FD /* MJPhotoBrowser.bundle in Resources */,
 				CEB574061CAC3C1D0020198A /* icon.png in Resources */,
 				CED1CCF01C9FA043007ED5FD /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
 				CED1CCEC1C9FA043007ED5FD /* SVWebViewControllerActivityChrome@2x.png in Resources */,
+				CE1183361CB0D27F0096ECA1 /* EmojisList.plist in Resources */,
 				CED1CCF11C9FA043007ED5FD /* SVWebViewControllerActivitySafari-iPad@2x.png in Resources */,
 				CED1CD041C9FA4CF007ED5FD /* angle-mask@3x.png in Resources */,
+				CE1183371CB0D27F0096ECA1 /* emotion_list.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1406,14 +1591,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1183121CB0CE340096ECA1 /* PhotoAlbumManager.m in Sources */,
 				CE2AED341C97AD8D0039CB5A /* RootTabViewController.m in Sources */,
 				CED1CD1F1C9FC62C007ED5FD /* MJPhotoProgressView.m in Sources */,
 				CED1CD221C9FC62C007ED5FD /* SDWebImageManager+MJ.m in Sources */,
 				CE2AED311C97AD7C0039CB5A /* BaseViewController.m in Sources */,
 				CE2AED851C98FE310039CB5A /* Architecture_RootViewController.m in Sources */,
 				CE2AED801C97EA7C0039CB5A /* NotesCell.m in Sources */,
+				CE11830D1CB0CE340096ECA1 /* JKImagePickerController.m in Sources */,
 				CE2AED791C97DB660039CB5A /* UIView+Common.m in Sources */,
 				CED1CCB41C9F8F46007ED5FD /* PhoneCodeButton.m in Sources */,
+				CE11830F1CB0CE340096ECA1 /* JKPhotoBrowserCell.m in Sources */,
 				CE2AEE041C9A986A0039CB5A /* NSString+Common.m in Sources */,
 				CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */,
 				CED1CD211C9FC62C007ED5FD /* MJPhotoView.m in Sources */,
@@ -1430,15 +1618,20 @@
 				CED1CD761C9FEB85007ED5FD /* UIRefreshControl+AFNetworking.m in Sources */,
 				CE2AEDFC1C9A82F00039CB5A /* ProjectCount.m in Sources */,
 				CED1CD6A1C9FEB85007ED5FD /* AFHTTPSessionManager.m in Sources */,
+				CE1183431CB0DE910096ECA1 /* Note.m in Sources */,
+				CE11830E1CB0CE340096ECA1 /* JKPhotoBrowser.m in Sources */,
 				CED1CD6B1C9FEB85007ED5FD /* AFURLSessionManager.m in Sources */,
 				CED1CD691C9FEB85007ED5FD /* AFURLConnectionOperation.m in Sources */,
 				CED1CD051C9FA4CF007ED5FD /* LoadingView.m in Sources */,
 				CEDF67E41C9D05CE006D6D26 /* UIButton+Bootstrap.m in Sources */,
+				CE11830C1CB0CE340096ECA1 /* JKAssetsViewCell.m in Sources */,
 				CEDF67DA1C9CFDBD006D6D26 /* ActionSheetDistancePicker.m in Sources */,
 				CED1CCEB1C9FA043007ED5FD /* SVWebViewControllerActivityChrome.m in Sources */,
 				CED1CD381C9FE92E007ED5FD /* NSURL+Common.m in Sources */,
+				CE1183341CB0D27F0096ECA1 /* AGEmojiKeyBoardView.m in Sources */,
 				CE0CCFF51CA395F70015FD0A /* Projects.m in Sources */,
 				CE2AEE1F1C9AF9560039CB5A /* WXApiResponseHandler.m in Sources */,
+				CE1183091CB0CE340096ECA1 /* JKAssetsGroupCell.m in Sources */,
 				CED1CD2F1C9FE481007ED5FD /* Login2FATipCell.m in Sources */,
 				CE2AEDC31C997F9E0039CB5A /* UIView+WebCacheOperation.m in Sources */,
 				CEDF67DD1C9CFDBD006D6D26 /* DistancePickerView.m in Sources */,
@@ -1446,19 +1639,23 @@
 				CED1CCE61C9FA043007ED5FD /* SVModalWebViewController.m in Sources */,
 				CE2AEDCD1C998F340039CB5A /* LoggingCell.m in Sources */,
 				CED1CCB11C9F8E1F007ED5FD /* Input_OnlyText_Cell.m in Sources */,
+				CE11830B1CB0CE340096ECA1 /* JKAssetsThumbnailView.m in Sources */,
 				CE2AEE351C9B90740039CB5A /* GlowImageView.m in Sources */,
 				CE2AED201C96F4390039CB5A /* EARestrictedScrollView.m in Sources */,
+				CE1182DD1CB0CD7D0096ECA1 /* DSComposePhotosView.m in Sources */,
 				CE2AEE201C9AF9560039CB5A /* WXApiManager.m in Sources */,
 				CE2AEDB81C997F9E0039CB5A /* SDWebImageDecoder.m in Sources */,
 				CE13C4F31C96E54300AFC539 /* UIColor+expanded.m in Sources */,
 				CE2AEDBB1C997F9E0039CB5A /* SDWebImageManager.m in Sources */,
 				CE2AED1B1C96F3FB0039CB5A /* EAIntroPage.m in Sources */,
+				CE11833E1CB0D4C60096ECA1 /* UICustomCollectionView.m in Sources */,
 				CE13C5021C96ED9900AFC539 /* SMPageControl.m in Sources */,
 				CE4F48611CA238EF00FBB678 /* UIButton+Common.m in Sources */,
 				CED1CD6F1C9FEB85007ED5FD /* AFURLResponseSerialization.m in Sources */,
 				CED1CCBC1C9F9923007ED5FD /* UITTTAttributedLabel.m in Sources */,
 				CEB574021CABD3BF0020198A /* Case.m in Sources */,
 				CED1CD1B1C9FC62C007ED5FD /* MJPhoto.m in Sources */,
+				CE1183281CB0CE750096ECA1 /* TweetSendImagesCell.m in Sources */,
 				CED1CD1D1C9FC62C007ED5FD /* MJPhotoBrowser.m in Sources */,
 				CED1CD711C9FEB85007ED5FD /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				CE2AEE011C9A965E0039CB5A /* UserInfoCell.m in Sources */,
@@ -1477,6 +1674,7 @@
 				CE2AED591C97B2EC0039CB5A /* RDVTabBarController.m in Sources */,
 				CEDF67DE1C9CFDBD006D6D26 /* SWActionSheet.m in Sources */,
 				CED1CCBF1C9F9D3A007ED5FD /* Register.m in Sources */,
+				CE11832C1CB0D19F0096ECA1 /* UIPlaceHolderTextView.m in Sources */,
 				CE2AEE071C9A9A1C0039CB5A /* UserDescriptionCell.m in Sources */,
 				CE2AED2E1C96F4DC0039CB5A /* NSDate+convenience.m in Sources */,
 				CE2AEDB61C997F9E0039CB5A /* SDImageCache.m in Sources */,
@@ -1489,6 +1687,7 @@
 				CE13C50E1C96EFB100AFC539 /* RegisterViewController.m in Sources */,
 				CE2AED941C997F3B0039CB5A /* UITapImageView.m in Sources */,
 				CED1CCFB1C9FA078007ED5FD /* NJKWebViewProgressView.m in Sources */,
+				CE1183271CB0CE750096ECA1 /* TweetSendTextCell.m in Sources */,
 				CEDF67BB1C9CF8A6006D6D26 /* TitleValueMoreCell.m in Sources */,
 				CEDF67ED1C9D33FF006D6D26 /* OrderViewController.m in Sources */,
 				CED1CCC41C9F9DC9007ED5FD /* NSObject+Common.m in Sources */,
@@ -1498,7 +1697,9 @@
 				CEDF67C11C9CFC5D006D6D26 /* SettingTextViewController.m in Sources */,
 				CEDF67DB1C9CFDBD006D6D26 /* ActionSheetLocalePicker.m in Sources */,
 				CED1CCE81C9FA043007ED5FD /* SVWebViewController.m in Sources */,
+				CE1182E31CB0CD7D0096ECA1 /* TweetSendViewController.m in Sources */,
 				CE2AEDBD1C997F9E0039CB5A /* UIButton+WebCache.m in Sources */,
+				CE1183131CB0CE340096ECA1 /* UIView+JKPicker.m in Sources */,
 				CED1CD701C9FEB85007ED5FD /* AFNetworkActivityIndicatorManager.m in Sources */,
 				CE2AED581C97B2EC0039CB5A /* RDVTabBar.m in Sources */,
 				CED1CD201C9FC62C007ED5FD /* MJPhotoToolbar.m in Sources */,
@@ -1510,18 +1711,21 @@
 				CE2AEE1E1C9AF9560039CB5A /* WXApiRequestHandler.m in Sources */,
 				CE2AED7C1C97E0BE0039CB5A /* UIView+Frame.m in Sources */,
 				CE2AEDF11C99A37C0039CB5A /* Photo.m in Sources */,
+				CE11833B1CB0D37D0096ECA1 /* TweetSendImageCCell.m in Sources */,
 				CE2AED761C97DA2B0039CB5A /* XHRealTimeBlur.m in Sources */,
 				CED1CD771C9FEB85007ED5FD /* UIWebView+AFNetworking.m in Sources */,
 				CED1CD741C9FEB85007ED5FD /* UIImageView+AFNetworking.m in Sources */,
 				CED1CD6C1C9FEB85007ED5FD /* AFNetworkReachabilityManager.m in Sources */,
 				CE2AED4A1C97AEE50039CB5A /* Me_RootViewController.m in Sources */,
 				CED1CD291C9FE1B2007ED5FD /* Login.m in Sources */,
-				CEB573DC1CA90FA10020198A /* Note.m in Sources */,
+				CE11830A1CB0CE340096ECA1 /* JKAssetsGroupsView.m in Sources */,
+				CE1183071CB0CE340096ECA1 /* JKAssets.m in Sources */,
 				CE2AEDC01C997F9E0039CB5A /* UIImage+WebP.m in Sources */,
 				CE2AED251C96F46B0039CB5A /* NSDate+Common.m in Sources */,
 				CE13C50D1C96EFB100AFC539 /* LoginViewController.m in Sources */,
 				CED1CCFA1C9FA078007ED5FD /* NJKWebViewProgress.m in Sources */,
 				CE2AEE381C9B90740039CB5A /* PopMenu.m in Sources */,
+				CE1183101CB0CE340096ECA1 /* JKPromptView.m in Sources */,
 				CED1CD751C9FEB85007ED5FD /* UIProgressView+AFNetworking.m in Sources */,
 				CEB573B51CA4DF820020198A /* AddressManager.m in Sources */,
 				CED1CD671C9FEB85007ED5FD /* AFHTTPRequestOperation.m in Sources */,
@@ -1537,7 +1741,9 @@
 				CE13C4CF1C96A01400AFC539 /* AppDelegate.m in Sources */,
 				CE13C4D81C96A01400AFC539 /* RunTai.xcdatamodeld in Sources */,
 				CE13C4CC1C96A01400AFC539 /* main.m in Sources */,
+				CE1183411CB0D6FA0096ECA1 /* UIActionSheet+Common.m in Sources */,
 				CEDF67D71C9CFDBD006D6D26 /* AbstractActionSheetPicker.m in Sources */,
+				CE1182DE1CB0CD7D0096ECA1 /* DSComposePhotoViewCell.m in Sources */,
 				CE2AED1C1C96F3FB0039CB5A /* EAIntroView.m in Sources */,
 				CED1CD2C1C9FE214007ED5FD /* User.m in Sources */,
 				CED1CCF21C9FA043007ED5FD /* SVWebViewControllerActivitySafari.m in Sources */,
@@ -1547,11 +1753,14 @@
 				CED1CD681C9FEB85007ED5FD /* AFHTTPRequestOperationManager.m in Sources */,
 				CE2AEDF41C99A5E20039CB5A /* LoggingPhotoView.m in Sources */,
 				CE2AEDF71C9A4C560039CB5A /* LoggingPhotosView.m in Sources */,
+				CE1183081CB0CE340096ECA1 /* JKAssetsCollectionFooterView.m in Sources */,
+				CE1183111CB0CE340096ECA1 /* JKUtil.m in Sources */,
 				CED1CD721C9FEB85007ED5FD /* UIAlertView+AFNetworking.m in Sources */,
 				CED1CD1A1C9FC62C007ED5FD /* MBProgressHUD+Add.m in Sources */,
 				CED1CD1E1C9FC62C007ED5FD /* MJPhotoLoadingView.m in Sources */,
 				CEDF67DC1C9CFDBD006D6D26 /* ActionSheetStringPicker.m in Sources */,
 				CE2AED441C97AEC30039CB5A /* Home_RootViewController.m in Sources */,
+				CE1183351CB0D27F0096ECA1 /* AGEmojiPageView.m in Sources */,
 				CE2AED5A1C97B2EC0039CB5A /* RDVTabBarItem.m in Sources */,
 				CEDF67D91C9CFDBD006D6D26 /* ActionSheetDatePicker.m in Sources */,
 				CED1CD261C9FCD80007ED5FD /* GenderButton.m in Sources */,
@@ -1562,6 +1771,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		CE1182E61CB0CE340096ECA1 /* JKImagePickerController.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE1182E71CB0CE340096ECA1 /* en */,
+				CE1182E91CB0CE340096ECA1 /* zh-Hans */,
+			);
+			name = JKImagePickerController.strings;
+			sourceTree = "<group>";
+		};
 		CED1CCC91C9FA043007ED5FD /* SVWebViewController.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

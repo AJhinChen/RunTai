@@ -11,6 +11,7 @@
 #import "StaffInfoViewController.h"
 #import "RunTai_NetAPIManager.h"
 #import "Login.h"
+#import "RegisterViewController.h"
 
 @interface Architecture_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -70,6 +71,20 @@
     segmentCtr.tintColor = [UIColor colorWithHexString:@"0xb0271d"];
     [segmentCtr addTarget:self action:@selector(OnTapSegmentCtr:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = segmentCtr;
+    
+    UIButton *button = [[UIButton alloc] init];
+    [button setBackgroundImage:[UIImage imageWithName:@"ios7-plus-outline"] forState:UIControlStateNormal];
+    // 设置按钮的尺寸为背景图片的尺寸
+    button.size = button.currentBackgroundImage.size;
+    [button addTarget:self action:@selector(addStaffClicked) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
+- (void)addStaffClicked{
+    RegisterViewController *vc = [[RegisterViewController alloc]init];
+    vc.methodType = RegisterMethodLogin;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)loadStaffs{

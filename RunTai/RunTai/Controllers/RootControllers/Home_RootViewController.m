@@ -14,8 +14,8 @@
 #import "RegisterViewController.h"
 #import "MJRefresh.h"
 #import "RunTai_NetAPIManager.h"
-#import "ProjectCount.h"
 #import "TweetSendViewController.h"
+#import "EditProInfoViewController.h"
 
 @interface Home_RootViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSMutableDictionary *myProjectsDict;
@@ -30,8 +30,6 @@
 
 @property (strong, nonatomic) NSMutableArray *dataList;
 @property (strong, nonatomic) NSMutableArray *loadedObjects;
-
-@property (strong, nonatomic) ProjectCount *pCount;
 
 @property (assign, nonatomic) NSIndexPath *cellIndexPath;
 
@@ -53,8 +51,12 @@
             self.title = @"全部笔录";
             [self setupNavBtn];
             break;
+        case ProjectsTypeReviewing:
+            self.title = @"审核中的";
+            [self setupNavBtn];
+            break;
         case ProjectsTypeCreated:
-            self.title = @"我的订单";
+            self.title = @"我负责的";
             break;
         case ProjectsTypeWatched:
             self.title = @"我收藏的";
@@ -64,16 +66,16 @@
             [self setupNavBtn];
             break;
     }
+    self.tabBarItem.title = @"笔录";
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
     }
     if (!_loadedObjects) {
         _loadedObjects = [[NSMutableArray alloc] initWithCapacity:2];
     }
-    [self configSegmentItems];
     
     _selectNum=0;
-    _myProjectsDict = [[NSMutableDictionary alloc] initWithCapacity:_segmentItems.count];
+    _myProjectsDict = [[NSMutableDictionary alloc] initWithCapacity:0];
     // Do any additional setup after loading the view.
     
     _searchedArray = [NSMutableArray array];
@@ -114,8 +116,74 @@
         if (pageIndex%2 != 0 || pageIndex == weakSelf.selectNum) {
             return;
         }else{
+            switch (pageIndex/2) {
+                case ProjectsTypeAll:
+                    weakSelf.title = @"全部笔录";
+                    if (!weakSelf.myTableView.tableHeaderView) {
+                        weakSelf.myTableView.tableHeaderView = weakSelf.mySearchBar;
+                    }
+                    weakSelf.selectNum=pageIndex;
+                    weakSelf.myProjects.type = pageIndex/2;
+                    weakSelf.myTableView.mj_header.hidden = NO;
+                    weakSelf.myTableView.mj_footer.hidden = NO;
+                    [weakSelf.myTableView.mj_header beginRefreshing];
+                    return;
+                    break;
+                case ProjectsTypeReviewing:
+                    if (weakSelf.pCount.reviewing.intValue==0) {
+                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+                        return;
+                    }
+                    weakSelf.title = @"审核中的";
+                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+                    weakSelf.myTableView.tableHeaderView = nil;
+                    if (weakSelf.pCount.created.intValue == 0) {
+                        weakSelf.myTableView.mj_header.hidden = YES;
+                        weakSelf.myTableView.mj_footer.hidden = YES;
+                        return;
+                    }
+                    break;
+                case ProjectsTypeCreated:
+                    if (weakSelf.pCount.created.intValue==0) {
+                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+                        return;
+                    }
+                    weakSelf.title = @"我负责的";
+                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+                    weakSelf.myTableView.tableHeaderView = nil;
+                    if (weakSelf.pCount.created.intValue == 0) {
+                        weakSelf.myTableView.mj_header.hidden = YES;
+                        weakSelf.myTableView.mj_footer.hidden = YES;
+                        return;
+                    }
+                    break;
+                case ProjectsTypeWatched:
+                    if (weakSelf.pCount.watched.intValue==0) {
+                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+                        return;
+                    }
+                    weakSelf.title = @"我收藏的";
+                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+                    weakSelf.myTableView.tableHeaderView = nil;
+                    //                    if (!self.myTableView.tableHeaderView) {
+                    //                        self.myTableView.tableHeaderView = self.mySearchBar;
+                    //                    }
+                    if (weakSelf.pCount.watched.intValue == 0) {
+                        weakSelf.myTableView.mj_header.hidden = YES;
+                        weakSelf.myTableView.mj_footer.hidden = YES;
+                        return;
+                    }
+                    break;
+                default:
+                    weakSelf.title = @"全部笔录";
+                    break;
+            }
+            [weakSelf.dataList removeAllObjects];
+            [weakSelf.loadedObjects removeAllObjects];
+            [weakSelf.myTableView reloadData];
+            weakSelf.tabBarItem.title = @"笔录";
             weakSelf.selectNum=pageIndex;
-            weakSelf.myProjects.type = weakSelf.selectNum/2;
+            weakSelf.myProjects.type = pageIndex/2;
             [weakSelf myFliterMenuAction];
         }
     };
@@ -146,10 +214,6 @@
         [self fliterBtnClose:TRUE];
         [_myFliterMenu dismissMenu];
     }
-}
-
-- (void)configSegmentItems{
-    _segmentItems = @[@"全部笔录",@"我的订单",@"我的收藏"];
 }
 
 - (void)openWithWeixin:(NSNotification *)sender{
@@ -200,53 +264,6 @@
 }
 
 - (void)myFliterMenuAction{
-    switch (self.myProjects.type) {
-        case ProjectsTypeAll:
-            self.title = @"全部笔录";
-            if (!self.myTableView.tableHeaderView) {
-                self.myTableView.tableHeaderView = self.mySearchBar;
-            }
-            self.myTableView.mj_header.hidden = NO;
-            self.myTableView.mj_footer.hidden = NO;
-            [self.dataList removeAllObjects];
-            [self.loadedObjects removeAllObjects];
-            [self.myTableView reloadData];
-            [self.myTableView.mj_header beginRefreshing];
-            return;
-            break;
-        case ProjectsTypeCreated:
-            self.title = @"我的订单";
-            [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-            self.myTableView.tableHeaderView = nil;
-            if (self.pCount.created.intValue == 0) {
-                self.myTableView.mj_header.hidden = YES;
-                self.myTableView.mj_footer.hidden = YES;
-                [self.dataList removeAllObjects];
-                [self.loadedObjects removeAllObjects];
-                [self.myTableView reloadData];
-                return;
-            }
-            break;
-        case ProjectsTypeWatched:
-            self.title = @"我收藏的";
-            [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-            self.myTableView.tableHeaderView = nil;
-            //                    if (!self.myTableView.tableHeaderView) {
-            //                        self.myTableView.tableHeaderView = self.mySearchBar;
-            //                    }
-            if (self.pCount.watched.intValue == 0) {
-                self.myTableView.mj_header.hidden = YES;
-                self.myTableView.mj_footer.hidden = YES;
-                [self.dataList removeAllObjects];
-                [self.loadedObjects removeAllObjects];
-                [self.myTableView reloadData];
-                return;
-            }
-            break;
-        default:
-            self.title = @"全部笔录";
-            break;
-    }
     __weak typeof(self) weakSelf = self;
     [[RunTai_NetAPIManager sharedManager]request_Projects_WithType:self.myProjects.type block:^(NSArray *objects, NSError *error) {
         weakSelf.myTableView.mj_header.hidden = YES;
@@ -320,6 +337,9 @@
         [_myFliterMenu dismissMenu];
     }else
     {
+        [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
+            self.pCount = pCount;
+        }];
         [self fliterBtnClose:FALSE];
         _myFliterMenu.selectNum=_selectNum;
         UIView *presentView=[[[UIApplication sharedApplication].keyWindow rootViewController] view];
@@ -348,7 +368,6 @@
  *  加载最新的数据
  */
 - (void)loadNewProjects{
-    
     typeof(self) __weak weakSelf= self;
     [[RunTai_NetAPIManager sharedManager] request_Projects_WithLoadMore:self.loadedObjects block:^(NSArray *objects, NSError *error) {
         if ([objects count]>0) {
@@ -441,11 +460,17 @@
     }else{
         curPro = self.dataList[indexPath.section];
     }
+    cell.editProblock = ^(){
+        EditProInfoViewController *vc = [[EditProInfoViewController alloc] init];
+        vc.curPro = curPro;
+        BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+    };
     cell.curPro = curPro;
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
     AVUser *curUser = [AVUser currentUser];
-    if (curPro.processing.intValue==0 && [[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
+    if ([[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
         cell.rightUtilityButtons = [self rightButtons];
     }
     return cell;

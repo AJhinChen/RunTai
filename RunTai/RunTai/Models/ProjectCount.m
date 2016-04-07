@@ -13,6 +13,7 @@
 - (void)configWithProjects:(ProjectCount *)ProjectCount
 {
     self.all = ProjectCount.all;
+    self.reviewing = ProjectCount.reviewing;
     self.watched = ProjectCount.watched;
     self.created = ProjectCount.created;
 }

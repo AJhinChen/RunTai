@@ -10,7 +10,7 @@
 
 @interface NotesCell()
 
-@property (strong, nonatomic) UIImageView *backgroundImg ,*iconImg ,*watchedImg, *userSexIconView;
+@property (strong, nonatomic) UIImageView *backgroundImg ,*iconImg ,*watchedImg, *userSexIconView, *editImg;
 
 @property (strong, nonatomic) UILabel *userLabel ,*titleLabel ,*introLabel ,*statusLabel ,*watchedLabel;
 
@@ -55,6 +55,19 @@
     });
     
     [self.contentView addSubview:self.backgroundImg];
+    
+    self.editImg = ({
+        UIImageView *imgView = [[UIImageView alloc] init];
+        imgView.image = [UIImage imageNamed:@"edit"];
+        imgView.contentMode = UIViewContentModeScaleAspectFit;
+        imgView.userInteractionEnabled = YES;
+        //添加手势
+        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgViewOnTap)];
+        [imgView addGestureRecognizer:gestureRecognizer];
+        imgView;
+    });
+    
+    [self.contentView addSubview:self.editImg];
     
     //titleLabel
     
@@ -190,6 +203,12 @@
         make.left.equalTo(self.contentView.mas_left).offset(paddingToLeft);
     }];
     
+    [self.editImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(25, 25));
+        make.right.equalTo(self.contentView.mas_right).offset(-paddingToBottom*2);
+        make.top.equalTo(self.contentView.mas_top).offset(paddingToBottom);
+    }];
+    
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
         make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
@@ -238,6 +257,12 @@
         make.right.equalTo(self.watchedImg.mas_left).offset(-paddingToLeft);
         make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
     }];
+}
+
+- (void)imgViewOnTap{
+    if (_editProblock) {
+        _editProblock();
+    }
 }
 
 + (CGFloat)cellHeight{

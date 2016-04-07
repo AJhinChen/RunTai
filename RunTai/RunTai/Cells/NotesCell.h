@@ -18,6 +18,8 @@
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
+@property (copy, nonatomic) void(^editProblock)();
+
 + (CGFloat)cellHeight;
 
 @end

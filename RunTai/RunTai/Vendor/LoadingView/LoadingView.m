@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) UIView  * bgView;
 @property (strong, nonatomic) UIView * contentView;
-@property (strong, nonatomic) UIImageView * closeView;
 @property (strong, nonatomic) CAShapeLayer *indefiniteAnimatedLayer;
 @property (strong, nonatomic) UILabel * lbTitle;
 
@@ -59,15 +58,6 @@
         self.lbTitle.font=[UIFont systemFontOfSize:15];
         self.lbTitle.text=title;
         [self.contentView addSubview:self.lbTitle];
-        
-        self.closeView = [[UIImageView alloc] initWithFrame:CGRectMake(120, -20, 40, 40)];
-        self.closeView.image = [UIImage imageNamed:@"ios7-close-outline"];
-        self.closeView.contentMode = UIViewContentModeScaleAspectFit;
-        self.closeView.userInteractionEnabled = YES;
-        //添加手势
-        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-        [self.closeView addGestureRecognizer:gestureRecognizer];
-        [self.contentView addSubview:self.closeView];
         
         CGPoint arcCenter = CGPointMake(30, 30);
         CGRect rect = CGRectMake(0.0f, 0.0f, 60, 60);

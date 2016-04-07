@@ -76,8 +76,8 @@
         }
         [self.navigationController popViewControllerAnimated:YES];
     }else if (self.settingType == SettingTypeAddressName){
-        if ([_myTextValue length]>10) {
-            [NSObject showHudTipStr:@"称呼字数不能超过10个汉字或英文字母"];
+        if ([_myTextValue length]>20) {
+            [NSObject showHudTipStr:@"称呼字数不能超过20个汉字或英文字母"];
             return;
         }
         if (self.doneBlock) {

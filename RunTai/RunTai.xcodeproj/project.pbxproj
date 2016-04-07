@@ -39,6 +39,7 @@
 		CE11833E1CB0D4C60096ECA1 /* UICustomCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11833D1CB0D4C60096ECA1 /* UICustomCollectionView.m */; };
 		CE1183411CB0D6FA0096ECA1 /* UIActionSheet+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */; };
 		CE1183431CB0DE910096ECA1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183421CB0DE910096ECA1 /* Note.m */; };
+		CE1183BB1CB4B2CC0096ECA1 /* EditProInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183BA1CB4B2CC0096ECA1 /* EditProInfoViewController.m */; };
 		CE13C4CC1C96A01400AFC539 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CB1C96A01400AFC539 /* main.m */; };
 		CE13C4CF1C96A01400AFC539 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CE1C96A01400AFC539 /* AppDelegate.m */; };
 		CE13C4D81C96A01400AFC539 /* RunTai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4D61C96A01400AFC539 /* RunTai.xcdatamodeld */; };
@@ -273,6 +274,8 @@
 		CE11833F1CB0D6FA0096ECA1 /* UIActionSheet+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Common.h"; sourceTree = "<group>"; };
 		CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Common.m"; sourceTree = "<group>"; };
 		CE1183421CB0DE910096ECA1 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		CE1183B91CB4B2CC0096ECA1 /* EditProInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProInfoViewController.h; sourceTree = "<group>"; };
+		CE1183BA1CB4B2CC0096ECA1 /* EditProInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProInfoViewController.m; sourceTree = "<group>"; };
 		CE13C4C71C96A01400AFC539 /* RunTai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE13C4CB1C96A01400AFC539 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE13C4CD1C96A01400AFC539 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1040,6 +1043,8 @@
 				CE2AED881C99020E0039CB5A /* NoteViewController.m */,
 				CEDF67EB1C9D33FF006D6D26 /* OrderViewController.h */,
 				CEDF67EC1C9D33FF006D6D26 /* OrderViewController.m */,
+				CE1183B91CB4B2CC0096ECA1 /* EditProInfoViewController.h */,
+				CE1183BA1CB4B2CC0096ECA1 /* EditProInfoViewController.m */,
 			);
 			path = HomeControllers;
 			sourceTree = "<group>";
@@ -1643,6 +1648,7 @@
 				CE2AEE351C9B90740039CB5A /* GlowImageView.m in Sources */,
 				CE2AED201C96F4390039CB5A /* EARestrictedScrollView.m in Sources */,
 				CE1182DD1CB0CD7D0096ECA1 /* DSComposePhotosView.m in Sources */,
+				CE1183BB1CB4B2CC0096ECA1 /* EditProInfoViewController.m in Sources */,
 				CE2AEE201C9AF9560039CB5A /* WXApiManager.m in Sources */,
 				CE2AEDB81C997F9E0039CB5A /* SDWebImageDecoder.m in Sources */,
 				CE13C4F31C96E54300AFC539 /* UIColor+expanded.m in Sources */,

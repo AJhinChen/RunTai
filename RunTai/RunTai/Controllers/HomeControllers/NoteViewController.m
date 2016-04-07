@@ -365,9 +365,13 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     }else if (indexPath.section == 1){
         ListsCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_ListsCell forIndexPath:indexPath];
         NSArray *components = [self.curPro.name componentsSeparatedByString:@"/"];
+        NSString *price = components[0];
         switch (indexPath.row) {
             case 0:
-                [cell setImageStr:@"list_icon_pre" andTitle:[NSString stringWithFormat:@"报价清单: %@",components[0]]];
+                if (!price || [price isEqualToString:@""]) {
+                    price = @"0";
+                }
+                [cell setImageStr:@"list_icon_pre" andTitle:[NSString stringWithFormat:@"报价清单: %@",price]];
                 break;
             case 1:
                 [cell setImageStr:@"list_icon_end" andTitle:@"实际清单: 16.7万"];
@@ -448,8 +452,8 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex!=alertView.cancelButtonIndex){
         [NSObject showLoadingView:@"笔录删除中.."];
-        Project *curPro = self.dataList[self.cellIndexPath.section-2];
-        [[RunTai_NetAPIManager sharedManager]request_DeleteProject_WithProject:curPro.objectId block:^(BOOL succeeded, NSError *error) {
+        Note *curNote = self.dataList[self.cellIndexPath.section-2];
+        [[RunTai_NetAPIManager sharedManager]request_DeleteNote_WithNoteId:curNote.objectId block:^(BOOL succeeded, NSError *error) {
             [NSObject hideLoadingView];
             if (succeeded) {
                 [self.dataList removeObjectAtIndex:self.cellIndexPath.section-2];

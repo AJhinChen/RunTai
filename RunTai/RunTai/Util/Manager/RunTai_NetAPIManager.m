@@ -33,6 +33,22 @@
     }];
 }
 
+- (void)request_UpdateProInfo_WithParam:(NSString *)param value:(Project *)value block:(AVBooleanResultBlock)block{
+    AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:param];
+    NSString *background = [object objectForKey:@"background"];
+    [object setObject:value.full_name forKey:@"full_name"];
+    [object setObject:value.name forKey:@"name"];
+    AVFile* photoFile=[AVFile fileWithURL:value.background];
+    [object setObject:value.processing forKey:@"processing"];
+    [object setObject:photoFile forKey:@"background"];
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+        block(succeeded,error);
+        if (succeeded) {
+            [self request_DeleteOriginalFile_WithUrl:background];
+        }
+    }];
+}
+
 - (void)request_DeleteOriginalFile_WithUrl:(NSString *)url{
     AVQuery *query = [AVQuery queryWithClassName:@"_File"];
     [query setCachePolicy:kAVCachePolicyNetworkOnly];
@@ -49,7 +65,38 @@
 
 - (void)request_DeleteProject_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block{
     AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
+    AVFile* photoFile=[object objectForKey:@"background"];
+    if (photoFile && ![photoFile.url isEqualToString:@""]) {
+        [self request_DeleteOriginalFile_WithUrl:photoFile.url];
+    }
+    NSArray *notes = [object objectForKey:@"notes"];
+    for (AVObject *obj in notes) {
+        AVObject *object = [AVQuery getObjectOfClass:@"Note" objectId:obj.objectId];
+        [self request_DeleteNote_WithNoteId:object.objectId block:nil];
+    }
     [object deleteInBackgroundWithBlock:block];
+}
+
+- (void)request_DeleteNote_WithNoteId:(NSString *)noteId block:(AVBooleanResultBlock)block{
+    AVObject *object = [AVQuery getObjectOfClass:@"Note" objectId:noteId];
+    NSArray *pic_urls = [object objectForKey:@"pic_urls"];
+    for (AVFile *file in pic_urls) {
+        AVObject *pic = [AVQuery getObjectOfClass:@"_File" objectId:file.objectId];
+        NSString *url = [pic objectForKey:@"url"];
+        if (url && ![url isEqualToString:@""]) {
+            [self request_DeleteOriginalFile_WithUrl:url];
+        }
+    }
+    [object deleteInBackgroundWithBlock:block];
+}
+
+- (void)request_DeleteUser_WithUserId:(NSString *)userId block:(AVBooleanResultBlock)block{
+    AVUser *user = [AVQuery getUserObjectWithId:userId];
+    AVFile* photoFile = [user objectForKey:@"avatar"];
+    if (photoFile && ![photoFile.url isEqualToString:@""]) {
+        [self request_DeleteOriginalFile_WithUrl:photoFile.url];
+    }
+    [user deleteInBackgroundWithBlock:block];
 }
 
 - (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block{
@@ -128,14 +175,32 @@
             // 查询成功，输出计数
             pCount.all = [NSNumber numberWithInteger:number?number:0];
             AVQuery *query = [AVQuery queryWithClassName:@"Project"];
-            [query whereKey:@"owner" equalTo:[AVUser currentUser]];
+            [query whereKey:@"processing" equalTo:@0];
             [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
                 if (!error) {
-                    // 查询成功，输出计数
-                    NSInteger watched = [((User *)[Login curLoginUser]).watched count];
-                    pCount.created = [NSNumber numberWithInteger:number?number:0];
-                    pCount.watched = [NSNumber numberWithInteger:watched?watched:0];
-                    block(pCount,nil);
+                    pCount.reviewing = [NSNumber numberWithInteger:number?number:0];
+                    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
+                    [query whereKey:@"responsible" equalTo:[AVUser currentUser]];
+                    [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
+                        if (!error) {
+                            // 查询成功，输出计数
+                            NSInteger watched = [((User *)[Login curLoginUser]).watched count];
+                            pCount.created = [NSNumber numberWithInteger:number?number:0];
+                            pCount.watched = [NSNumber numberWithInteger:watched?watched:0];
+                            block(pCount,nil);
+                        } else {
+                            // 查询失败
+                            NSString * errorCode = error.userInfo[@"code"];
+                            switch (errorCode.intValue) {
+                                case 28:
+                                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请切换页面重试"];
+                                    break;
+                                default:
+                                    [NSObject showHudTipStr:@"获取我的订单数量失败,请切换页面重试"];
+                                    break;
+                            }
+                        }
+                    }];
                 } else {
                     // 查询失败
                     NSString * errorCode = error.userInfo[@"code"];
@@ -175,6 +240,11 @@
     switch (type) {
         case ProjectsTypeAll:
             [query addDescendingOrder:@"watch_count"];
+            [querysArr addObject:query];
+            break;
+        case ProjectsTypeReviewing:
+            [query whereKey:@"processing" equalTo:@0];
+            [query orderByDescending:@"createdAt"];
             [querysArr addObject:query];
             break;
         case ProjectsTypeCreated:
@@ -255,13 +325,13 @@
     AVObject *note = [AVObject objectWithClassName:@"Note"];
     [note setObject:text forKey:@"text"];
     [note setObject:pic_urls forKey:@"pic_urls"];
-    AVUser *avuser = [AVUser currentUser];
-    [note setObject:avuser forKey:@"responsible"];
     [note setObject:type forKey:@"type"];
     [note saveInBackgroundWithBlock:^(BOOL succeeded , NSError *error){
         if (succeeded) {
             AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
             [object addObject:note forKey:@"notes"];
+            AVUser *avuser = [AVUser currentUser];
+            [object setObject:avuser forKey:@"responsible"];
             [object setObject:type forKey:@"processing"];
             [object saveInBackgroundWithBlock:block];
         }else{

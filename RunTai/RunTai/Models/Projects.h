@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, ProjectsType)
 {
     ProjectsTypeAll = 0,
+    ProjectsTypeReviewing,
     ProjectsTypeCreated,
     ProjectsTypeWatched,
     ProjectsTypeAllPublic,

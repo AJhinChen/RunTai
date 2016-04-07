@@ -198,10 +198,10 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         if (indexPath.section == 1){
             switch (indexPath.row) {
                 case 0:
-                    [cell setImageStr:@"find_people" andTitle:@"我的订单"];
+                    [cell setImageStr:@"find_people" andTitle:@"我负责的"];
                     break;
                 case 1:
-                    [cell setImageStr:@"game_center" andTitle:@"我的收藏"];
+                    [cell setImageStr:@"game_center" andTitle:@"我收藏的"];
                     break;
                 case 2:
                     [cell setImageStr:@"cast" andTitle:@"推荐润泰"];
@@ -254,6 +254,10 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                     return;
                 }
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
+                if (vc.pCount.created.intValue == 0) {
+                    [NSObject showHudTipStr:@"没有想过笔录可以查看!"];
+                    return;
+                }
                 curPro.type = ProjectsTypeCreated;
                 vc.myProjects = curPro;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -265,6 +269,10 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                     return;
                 }
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
+                if (vc.pCount.watched.intValue == 0) {
+                    [NSObject showHudTipStr:@"没有想过笔录可以查看!"];
+                    return;
+                }
                 curPro.type = ProjectsTypeWatched;
                 vc.myProjects = curPro;
                 [self.navigationController pushViewController:vc animated:YES];

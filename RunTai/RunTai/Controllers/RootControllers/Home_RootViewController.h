@@ -8,9 +8,12 @@
 
 #import "BaseViewController.h"
 #import "Projects.h"
+#import "ProjectCount.h"
+
 @interface Home_RootViewController : BaseViewController
 
-@property (strong, nonatomic) NSArray *segmentItems;
 @property (nonatomic, strong) Projects *myProjects;
+
+@property (strong, nonatomic) ProjectCount *pCount;
 
 @end

@@ -290,7 +290,11 @@
         }
         __weak typeof(self) weakSelf = self;
         [ActionSheetStringPicker showPickerWithTitle:nil rows:@[@[@"上门服务",@"准备阶段", @"拆改阶段",@"水电阶段", @"泥木阶段",@"油漆阶段", @"竣工阶段",@"软装阶段", @"入住阶段"]] initialSelection:@[processing] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
-            weakSelf.curTweet.noteType = ((NSNumber *)[selectedIndex firstObject]).integerValue;
+            if (weakSelf.curPro) {
+                weakSelf.curPro.processing = [selectedIndex firstObject];
+            }else{
+                weakSelf.curTweet.noteType = ((NSNumber *)[selectedIndex firstObject]).integerValue;
+            }
             [weakSelf.myTableView reloadData];
         } cancelBlock:nil origin:self.view];
     }

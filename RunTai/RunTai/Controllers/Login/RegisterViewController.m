@@ -322,6 +322,7 @@
                 [user setObject:@"1" forKey:@"authority"];
                 [user setObject:_myRegister.phone forKey:@"mobilePhoneNumber"];
                 [user setObject:_myRegister.location forKey:@"location"];
+                [user saveInBackground];
                 [Login doLogin:user];
                 [Login setPreUserPhone:self.myRegister.phone];//记住登录账号
                 [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];

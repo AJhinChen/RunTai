@@ -10,6 +10,6 @@
 
 @interface Register : NSObject
 //请求
-@property (readwrite, nonatomic, strong) NSString *gender, *global_key, *phone, *code, *password, *confirm_password;
+@property (readwrite, nonatomic, strong) NSString *professional, *location, *gender, *global_key, *phone, *code, *password, *confirm_password;
 
 @end

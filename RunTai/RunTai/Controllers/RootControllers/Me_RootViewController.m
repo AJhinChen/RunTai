@@ -20,6 +20,7 @@
 #import "WXApiManager.h"
 #import "PopMenu.h"
 #import "WebViewController.h"
+#import "RunTai_NetAPIManager.h"
 
 @interface Me_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) User *curUser;
 @property (nonatomic, strong) PopMenu *myPopMenu;
 @property (nonatomic) enum WXScene currentScene;
+@property (nonatomic, strong) ProjectCount *pCount;
 
 @end
 
@@ -35,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我";
+    self.pCount = [[ProjectCount alloc]init];
     // Do any additional setup after loading the view.
 //    self.automaticallyAdjustsScrollViewInsets=NO;
     //    添加myTableView
@@ -84,6 +87,27 @@
     };
 }
 
+- (void)loadProCount{
+    [NSObject showLoadingView:@"加载中.."];
+    __weak typeof(self) weakSelf = self;
+    [[RunTai_NetAPIManager sharedManager] request_ProjectsCatergoryAndCounts_WithAll:^(ProjectCount *data, NSError *error){
+        [NSObject hideLoadingView];
+        if (!error) {
+            [weakSelf.pCount configWithProjects:data];
+        }else{
+            NSString * errorCode = error.userInfo[@"code"];
+            switch (errorCode.intValue) {
+                case 28:
+                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
+                    break;
+                default:
+                    [NSObject showHudTipStr:@"获取笔录总数失败,请重试!"];
+                    break;
+            }
+        }
+    }];
+}
+
 -(void)shareClicked
 {
     [_myPopMenu showMenuAtView:kKeyWindow startPoint:CGPointMake(0, -100) endPoint:CGPointMake(0, -100)];
@@ -126,6 +150,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     [super viewDidAppear:animated];
     if ([Login isLogin]) {
         self.curUser = [Login curLoginUser];
+        [self loadProCount];
     }
     [self.myTableView reloadData];
 }
@@ -253,11 +278,11 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                     [NSObject showHudTipStr:@"登录后才能查看哦!"];
                     return;
                 }
-                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
-                if (vc.pCount.created.intValue == 0) {
-                    [NSObject showHudTipStr:@"没有想过笔录可以查看!"];
+                if (_pCount.created.intValue == 0) {
+                    [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
                     return;
                 }
+                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeCreated;
                 vc.myProjects = curPro;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -268,11 +293,11 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                     [NSObject showHudTipStr:@"登录后才能查看哦!"];
                     return;
                 }
-                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
-                if (vc.pCount.watched.intValue == 0) {
-                    [NSObject showHudTipStr:@"没有想过笔录可以查看!"];
+                if (_pCount.watched.intValue == 0) {
+                    [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
                     return;
                 }
+                Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeWatched;
                 vc.myProjects = curPro;
                 [self.navigationController pushViewController:vc animated:YES];

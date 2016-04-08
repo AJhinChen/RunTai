@@ -29,6 +29,8 @@
 
 #pragma mark - Project
 
+- (void)request_Projects_WithRefresh:(AVArrayResultBlock)block;
+
 - (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block;
 
 - (void)request_DeleteProject_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block;

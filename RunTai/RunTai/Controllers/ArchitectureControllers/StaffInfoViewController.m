@@ -161,7 +161,11 @@
             default:
                 break;
         }
-        [cell setTitle:[NSString stringWithFormat:@"楼盘业主:[%@%@%@",address,curPro.owner.name,curPro.owner.gender] subtitle:[NSString stringWithFormat:@"户型报价:%@",curPro.name] value:curPro.owner.avatar];
+        NSString *name = @"";
+        if (curPro && curPro.name) {
+            name = curPro.name;
+        }
+        [cell setTitle:[NSString stringWithFormat:@"楼盘业主:[%@%@%@",address,curPro.owner.name,curPro.owner.gender] subtitle:[NSString stringWithFormat:@"户型报价:%@",name] value:curPro.owner.avatar];
         [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
         return cell;
     }

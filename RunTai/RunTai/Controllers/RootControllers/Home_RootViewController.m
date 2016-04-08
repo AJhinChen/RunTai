@@ -104,6 +104,10 @@
     });
     _myTableView.tableHeaderView = _mySearchBar;
     
+    [self setupOrderBtn];
+    [self setupRefresh];
+    
+    
     //初始化过滤目录
     _myFliterMenu = [[PopFliterMenu alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) items:nil];
     __weak typeof(self) weakSelf = self;
@@ -137,11 +141,8 @@
                     weakSelf.title = @"审核中的";
                     [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
                     weakSelf.myTableView.tableHeaderView = nil;
-                    if (weakSelf.pCount.created.intValue == 0) {
-                        weakSelf.myTableView.mj_header.hidden = YES;
-                        weakSelf.myTableView.mj_footer.hidden = YES;
-                        return;
-                    }
+                    weakSelf.myTableView.mj_header.hidden = YES;
+                    weakSelf.myTableView.mj_footer.hidden = YES;
                     break;
                 case ProjectsTypeCreated:
                     if (weakSelf.pCount.created.intValue==0) {
@@ -151,11 +152,8 @@
                     weakSelf.title = @"我负责的";
                     [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
                     weakSelf.myTableView.tableHeaderView = nil;
-                    if (weakSelf.pCount.created.intValue == 0) {
-                        weakSelf.myTableView.mj_header.hidden = YES;
-                        weakSelf.myTableView.mj_footer.hidden = YES;
-                        return;
-                    }
+                    weakSelf.myTableView.mj_header.hidden = YES;
+                    weakSelf.myTableView.mj_footer.hidden = YES;
                     break;
                 case ProjectsTypeWatched:
                     if (weakSelf.pCount.watched.intValue==0) {
@@ -165,14 +163,8 @@
                     weakSelf.title = @"我收藏的";
                     [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
                     weakSelf.myTableView.tableHeaderView = nil;
-                    //                    if (!self.myTableView.tableHeaderView) {
-                    //                        self.myTableView.tableHeaderView = self.mySearchBar;
-                    //                    }
-                    if (weakSelf.pCount.watched.intValue == 0) {
-                        weakSelf.myTableView.mj_header.hidden = YES;
-                        weakSelf.myTableView.mj_footer.hidden = YES;
-                        return;
-                    }
+                    weakSelf.myTableView.mj_header.hidden = YES;
+                    weakSelf.myTableView.mj_footer.hidden = YES;
                     break;
                 default:
                     weakSelf.title = @"全部笔录";
@@ -191,13 +183,10 @@
     _myFliterMenu.closeBlock=^(){
         [weakSelf closeFliter];
     };
-    
-    [self setupOrderBtn];
-    [self setupRefresh];
     [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
         self.pCount = pCount;
-        [self myFliterMenuAction];
     }];
+    [weakSelf.myTableView.mj_header beginRefreshing];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openWithWeixin:) name:@"Weixin" object:nil];
 }
@@ -266,8 +255,6 @@
 - (void)myFliterMenuAction{
     __weak typeof(self) weakSelf = self;
     [[RunTai_NetAPIManager sharedManager]request_Projects_WithType:self.myProjects.type block:^(NSArray *objects, NSError *error) {
-        weakSelf.myTableView.mj_header.hidden = YES;
-        weakSelf.myTableView.mj_footer.hidden = YES;
         [weakSelf.dataList removeAllObjects];
         [weakSelf.loadedObjects removeAllObjects];
         if ([objects count]>0) {
@@ -369,9 +356,12 @@
  */
 - (void)loadNewProjects{
     typeof(self) __weak weakSelf= self;
-    [[RunTai_NetAPIManager sharedManager] request_Projects_WithLoadMore:self.loadedObjects block:^(NSArray *objects, NSError *error) {
+    [[RunTai_NetAPIManager sharedManager] request_Projects_WithRefresh:^(NSArray *objects, NSError *error) {
+        [self.myTableView.mj_header endRefreshing];
+        [self.myTableView.mj_footer resetNoMoreData];
         if ([objects count]>0) {
-            [self.myTableView.mj_header endRefreshing];
+            [weakSelf.dataList removeAllObjects];
+            [weakSelf.loadedObjects removeAllObjects];
             //UITableView开始滚动到的位置（这样一开始headerView是不显示的）
             [self.myTableView setContentOffset:CGPointMake(0.0, 38.0) animated:YES];
             _myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
@@ -389,7 +379,6 @@
                     [NSObject showHudTipStr:@"没有更多笔录"];
                     break;
             }
-            [self.myTableView.mj_header endRefreshing];
         }
     }];
 }
@@ -398,8 +387,8 @@
     
     typeof(self) __weak weakSelf= self;
     [[RunTai_NetAPIManager sharedManager] request_Projects_WithLoadMore:self.loadedObjects block:^(NSArray *objects, NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
         if ([objects count]>0) {
-            [self.myTableView.mj_footer endRefreshing];
             _myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
             // 将新数据插入到旧数据的最后边
             [self.dataList addObjectsFromArray:_myProjects.list];

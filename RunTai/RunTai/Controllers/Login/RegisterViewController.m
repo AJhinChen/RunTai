@@ -18,6 +18,8 @@
 //#import "CannotLoginViewController.h"
 #import "EaseInputTipsView.h"
 #import "RunTai_NetAPIManager.h"
+#import "AddressManager.h"
+#import "ActionSheetStringPicker.h"
 
 @interface RegisterViewController ()<UITableViewDataSource, UITableViewDelegate,TTTAttributedLabelDelegate>
 
@@ -51,7 +53,7 @@
     if (!_myRegister) {
         self.myRegister = [Register new];
     }
-    self.row = 4;
+    self.row = 5;
     
     //    添加myTableView
     _myTableView = ({
@@ -119,14 +121,16 @@
                                                               RACObserve(self, myRegister.phone),
                                                               RACObserve(self, myRegister.gender),
                                                               RACObserve(self, myRegister.password),
-                                                              RACObserve(self, myRegister.code)]
+                                                              RACObserve(self, myRegister.code),
+                                                              RACObserve(self, myRegister.location)]
                                                      reduce:^id(NSString *global_key,
                                                                 NSString *phone,
                                                                 NSString *gender,
                                                                 NSString *password,
-                                                                NSString *code){
+                                                                NSString *code,
+                                                                NSString *location){
                                                          BOOL enabled = (global_key.length > 0 &&
-                                                                         password.length > 0 && phone.length > 0 && code.length > 0);
+                                                                         password.length > 0 && phone.length > 0 && code.length > 0 && location.length > 0);
                                                          return @(enabled);
                                                      }];
     //label
@@ -160,7 +164,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *cellIdentifier = indexPath.row == 3? self.phoneCodeCellIdentifier: indexPath.row == 2? kCellIdentifier_Input_OnlyText_Cell_Password: indexPath.row == 1? kCellIdentifier_Input_OnlyText_Cell_Text : kCellIdentifier_Input_OnlyText_Cell_Gender;
+    NSString *cellIdentifier = indexPath.row == 4? self.phoneCodeCellIdentifier: indexPath.row == 3? kCellIdentifier_Input_OnlyText_Cell_Password: indexPath.row == 0? kCellIdentifier_Input_OnlyText_Cell_Gender : kCellIdentifier_Input_OnlyText_Cell_Text;
     Input_OnlyText_Cell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     __weak typeof(self) weakSelf = self;
@@ -174,17 +178,21 @@
             weakSelf.myRegister.gender = valueStr;
         };
     }else if (indexPath.row == 1){
+        [cell setPlaceholder:@" 所在城市" value:self.myRegister.location];
+        cell.textField.userInteractionEnabled = NO;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if (indexPath.row == 2){
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         [cell setPlaceholder:@" 手机号" value:self.myRegister.phone];
         cell.textValueChangedBlock = ^(NSString *valueStr){
             weakSelf.myRegister.phone = valueStr;
         };
-    }else if (indexPath.row == 2){
+    }else if (indexPath.row == 3){
         [cell setPlaceholder:@" 设置登录密码" value:self.myRegister.password];
         cell.textValueChangedBlock = ^(NSString *valueStr){
             weakSelf.myRegister.password = valueStr;
         };
-    }else if (indexPath.row == 3){
+    }else if (indexPath.row == 4){
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         [cell setPlaceholder:@" 手机验证码" value:self.myRegister.code];
         cell.textValueChangedBlock = ^(NSString *valueStr){
@@ -196,6 +204,24 @@
     }
     [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kLoginPaddingLeftWidth];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 1) {
+        NSNumber *firstLevel = nil, *secondLevel = nil;
+        if (!firstLevel) {
+            firstLevel = [NSNumber numberWithInteger:0];
+        }
+        if (!secondLevel) {
+            secondLevel = [NSNumber numberWithInteger:0];
+        }
+        [ActionSheetStringPicker showPickerWithTitle:nil rows:@[[AddressManager firstLevelArray], [AddressManager secondLevelMap]] initialSelection:@[firstLevel, secondLevel] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
+            NSString *location = [selectedValue componentsJoinedByString:@" "];
+            self.myRegister.location = location;
+            [self.myTableView reloadData];
+        } cancelBlock:nil origin:self.view];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -211,6 +237,10 @@
     [self.view endEditing:YES];
     if (![_myRegister.global_key isGK]) {
         [NSObject showHudTipStr:@"称呼字数不能超过6个汉字或英文字母"];
+        return;
+    }
+    if ([_myRegister.location length] == 0) {
+        [NSObject showHudTipStr:@"请选取您所在的地址"];
         return;
     }
     if (![_myRegister.phone isPhoneNo]) {
@@ -285,6 +315,15 @@
         if (succeeded) {
             if (_methodType == RegisterMethodLogin) {
                 [weakSelf.footerBtn stopQueryAnimate];
+                AVUser *user = [AVUser currentUser];
+                [user setObject:_myRegister.global_key forKey:@"name"];
+                [user setObject:_myRegister.gender forKey:@"gender"];
+                [user setObject:@"资深业务员" forKey:@"professional"];
+                [user setObject:@"1" forKey:@"authority"];
+                [user setObject:_myRegister.phone forKey:@"mobilePhoneNumber"];
+                [user setObject:_myRegister.location forKey:@"location"];
+                [Login doLogin:user];
+                [Login setPreUserPhone:self.myRegister.phone];//记住登录账号
                 [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
                 [NSObject showHudTipStr:@"注册成功"];
             }else{

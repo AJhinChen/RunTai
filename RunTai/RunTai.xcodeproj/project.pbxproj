@@ -40,6 +40,7 @@
 		CE1183411CB0D6FA0096ECA1 /* UIActionSheet+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183401CB0D6FA0096ECA1 /* UIActionSheet+Common.m */; };
 		CE1183431CB0DE910096ECA1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183421CB0DE910096ECA1 /* Note.m */; };
 		CE1183BB1CB4B2CC0096ECA1 /* EditProInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183BA1CB4B2CC0096ECA1 /* EditProInfoViewController.m */; };
+		CE1183BE1CB7543D0096ECA1 /* AddStaffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1183BD1CB7543D0096ECA1 /* AddStaffViewController.m */; };
 		CE13C4CC1C96A01400AFC539 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CB1C96A01400AFC539 /* main.m */; };
 		CE13C4CF1C96A01400AFC539 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CE1C96A01400AFC539 /* AppDelegate.m */; };
 		CE13C4D81C96A01400AFC539 /* RunTai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4D61C96A01400AFC539 /* RunTai.xcdatamodeld */; };
@@ -276,6 +277,8 @@
 		CE1183421CB0DE910096ECA1 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		CE1183B91CB4B2CC0096ECA1 /* EditProInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProInfoViewController.h; sourceTree = "<group>"; };
 		CE1183BA1CB4B2CC0096ECA1 /* EditProInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProInfoViewController.m; sourceTree = "<group>"; };
+		CE1183BC1CB7543D0096ECA1 /* AddStaffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStaffViewController.h; sourceTree = "<group>"; };
+		CE1183BD1CB7543D0096ECA1 /* AddStaffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStaffViewController.m; sourceTree = "<group>"; };
 		CE13C4C71C96A01400AFC539 /* RunTai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE13C4CB1C96A01400AFC539 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE13C4CD1C96A01400AFC539 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1194,6 +1197,8 @@
 			children = (
 				CE8594D91CA1154D007FEC17 /* StaffInfoViewController.h */,
 				CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */,
+				CE1183BC1CB7543D0096ECA1 /* AddStaffViewController.h */,
+				CE1183BD1CB7543D0096ECA1 /* AddStaffViewController.m */,
 			);
 			path = ArchitectureControllers;
 			sourceTree = "<group>";
@@ -1483,7 +1488,6 @@
 				TargetAttributes = {
 					CE13C4C61C96A01400AFC539 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = CT85NVA3Z3;
 					};
 				};
 			};
@@ -1691,6 +1695,7 @@
 				CEDF67941C9BEBCF006D6D26 /* GalleryDrawView.m in Sources */,
 				CE2AEDBA1C997F9E0039CB5A /* SDWebImageDownloaderOperation.m in Sources */,
 				CE13C50E1C96EFB100AFC539 /* RegisterViewController.m in Sources */,
+				CE1183BE1CB7543D0096ECA1 /* AddStaffViewController.m in Sources */,
 				CE2AED941C997F3B0039CB5A /* UITapImageView.m in Sources */,
 				CED1CCFB1C9FA078007ED5FD /* NJKWebViewProgressView.m in Sources */,
 				CE1183271CB0CE750096ECA1 /* TweetSendTextCell.m in Sources */,
@@ -1894,7 +1899,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai.master;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1916,7 +1921,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai.master;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

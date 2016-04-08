@@ -11,7 +11,7 @@
 #import "StaffInfoViewController.h"
 #import "RunTai_NetAPIManager.h"
 #import "Login.h"
-#import "RegisterViewController.h"
+#import "AddStaffViewController.h"
 
 @interface Architecture_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -47,7 +47,10 @@
         }];
         tableView;
     });
-    [self setNav];
+//    AVUser *curUser = [AVUser currentUser];
+//    if ([[curUser objectForKey:@"authority"] isEqualToString:@"9"]) {
+        [self setNav];
+//    }
     [self loadStaffs];
     _type = 0;
 }
@@ -72,24 +75,25 @@
     [segmentCtr addTarget:self action:@selector(OnTapSegmentCtr:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = segmentCtr;
     
-    UIButton *button = [[UIButton alloc] init];
-    [button setBackgroundImage:[UIImage imageWithName:@"ios7-plus-outline"] forState:UIControlStateNormal];
-    // 设置按钮的尺寸为背景图片的尺寸
-    button.size = button.currentBackgroundImage.size;
-    [button addTarget:self action:@selector(addStaffClicked) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    UIButton *button = [[UIButton alloc] init];
+//    [button setBackgroundImage:[UIImage imageWithName:@"ios7-plus-outline"] forState:UIControlStateNormal];
+//    // 设置按钮的尺寸为背景图片的尺寸
+//    button.size = button.currentBackgroundImage.size;
+//    [button addTarget:self action:@selector(addStaffClicked) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
 - (void)addStaffClicked{
-    RegisterViewController *vc = [[RegisterViewController alloc]init];
-    vc.methodType = RegisterMethodLogin;
+    AddStaffViewController *vc = [[AddStaffViewController alloc]init];
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)loadStaffs{
+    [NSObject showLoadingView:@"获取数据中.."];
     typeof(self) __weak weakSelf= self;
     [[RunTai_NetAPIManager sharedManager] request_LoadStaffs:_type?@"上海":@"南京" :^(NSArray *objects, NSError *error) {
+        [NSObject hideLoadingView];
         if ([objects count]>0) {
             for (AVUser *user in objects) {
                 [weakSelf.dataList addObject:[Login transfer:user]];

@@ -10,6 +10,7 @@
 #import "Input_OnlyText_Cell.h"
 #import "EaseInputTipsView.h"
 #import "CannotLoginViewController.h"
+#import "RegisterViewController.h"
 #import "AppDelegate.h"
 
 @interface LoginViewController ()
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) UIImageView *iconUserView, *bgBlurredView;
 @property (strong, nonatomic) EaseInputTipsView *inputTipsView;
 @property (strong, nonatomic) UIButton *dismissButton;
+@property (strong, nonatomic) UIView *bottomView;
 
 @end
 
@@ -59,6 +61,7 @@
     
     self.myTableView.tableHeaderView = [self customHeaderView];
     self.myTableView.tableFooterView=[self customFooterView];
+    [self configBottomView];
     [self showdismissButton:self.showDismissButton];
 }
 
@@ -226,6 +229,31 @@
     return footerV;
 }
 
+#pragma mark BottomView
+- (void)configBottomView{
+    if (!_bottomView) {
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreen_Height - 55, kScreen_Width, 55)];
+        _bottomView.backgroundColor = [UIColor clearColor];
+        UIButton *registerBtn = ({
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [button setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithWhite:0.5 alpha:0.5] forState:UIControlStateHighlighted];
+            
+            [button setTitle:@"去注册" forState:UIControlStateNormal];
+            [_bottomView addSubview:button];
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.size.mas_equalTo(CGSizeMake(100, 30));
+                make.centerX.equalTo(_bottomView);
+                make.top.equalTo(_bottomView);
+            }];
+            button;
+        });
+        [registerBtn addTarget:self action:@selector(goRegisterVC) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_bottomView];
+    }
+}
+
 - (UIImageView *)bgBlurredView{
     if (!_bgBlurredView) {
         //背景图片
@@ -293,6 +321,12 @@
             }
         }
     }];
+}
+
+- (void)goRegisterVC{
+    RegisterViewController *vc = [[RegisterViewController alloc]init];
+    vc.methodType = RegisterMethodLogin;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)cannotLoginBtnClicked:(id)sender {

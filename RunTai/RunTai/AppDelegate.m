@@ -219,7 +219,9 @@
 - (void)setupLoginViewController{
     LoginViewController *vc = [[LoginViewController alloc]init];
     vc.showDismissButton = NO;
-    [self.window setRootViewController:vc];
+    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBarHidden = YES;
+    [self.window setRootViewController:nav];
 }
 
 - (void)setupTabViewController{

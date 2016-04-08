@@ -156,6 +156,16 @@
     [query findObjectsInBackgroundWithBlock:block];
 }
 
+- (void)request_Projects_WithRefresh:(AVArrayResultBlock)block{
+    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
+    [query setCachePolicy:kAVCachePolicyNetworkElseCache];
+    [query includeKey:@"owner"];
+    [query includeKey:@"responsible"];
+    [query orderByDescending:@"updatedAt"];
+    query.limit = 10;
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
 - (void)request_Projects_WithLoadMore:(NSArray *)loaded block:(AVArrayResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     [query whereKey:@"objectId" notContainedIn:loaded];
@@ -249,7 +259,7 @@
             break;
         case ProjectsTypeCreated:
             [query whereKey:@"responsible" equalTo:[AVUser currentUser]];
-            [query orderByDescending:@"updatedAt"];
+            [query orderByDescending:@"createdAt"];
             [querysArr addObject:query];
             break;
         case ProjectsTypeWatched:{

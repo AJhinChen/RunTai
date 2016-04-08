@@ -88,10 +88,8 @@
 }
 
 - (void)loadProCount{
-    [NSObject showLoadingView:@"加载中.."];
     __weak typeof(self) weakSelf = self;
     [[RunTai_NetAPIManager sharedManager] request_ProjectsCatergoryAndCounts_WithAll:^(ProjectCount *data, NSError *error){
-        [NSObject hideLoadingView];
         if (!error) {
             [weakSelf.pCount configWithProjects:data];
         }else{

@@ -1675,9 +1675,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.dev.filmart;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4dfcae8f-b9a2-44ea-94f0-e592f81f5739";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1697,9 +1697,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.dev.filmart;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4dfcae8f-b9a2-44ea-94f0-e592f81f5739";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

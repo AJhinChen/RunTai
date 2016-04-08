@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface ProjectCount : NSObject
-@property (strong, nonatomic) NSNumber *all, *watched, *created;
+@property (strong, nonatomic) NSNumber *hot, *fresh, *watched, *created;
 - (void)configWithProjects:(ProjectCount *)ProjectCount;
 
 @end

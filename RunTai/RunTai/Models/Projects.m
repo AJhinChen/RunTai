@@ -37,7 +37,7 @@
 - (NSString *)typeStr{
     NSString *typeStr;
     switch (_type) {
-        case  ProjectsTypeAll:
+        case  ProjectsTypeHot:
         case  ProjectsTypeCreated:
             typeStr = @"created";
             break;

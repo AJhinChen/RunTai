@@ -47,7 +47,7 @@
     }];
 }
 
-- (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block{
+- (void)request_CreateProject_WithUser:(Register *)myRegister block:(AVBooleanResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     [query whereKey:@"owner" equalTo:[AVUser currentUser]];
     [query whereKey:@"processing" equalTo:@0];
@@ -59,13 +59,13 @@
                 block(NO,error);
             }else{
                 AVObject *project = [AVObject objectWithClassName:@"Project"];
-                AVUser *curUser = [AVQuery getUserObjectWithId:user.objectId];
+                AVUser *curUser = [AVUser currentUser];
                 if (!curUser) {
                     block(NO,nil);
                     return;
                 }
                 [project setObject:curUser forKey:@"owner"];
-                [project setObject:[NSString stringWithFormat:@"[%@ %@]",user.location,user.address] forKey:@"full_name"];
+                [project setObject:[NSString stringWithFormat:@"[%@]",myRegister.location] forKey:@"full_name"];
                 [project setObject:[NSNumber numberWithInt:0] forKey:@"processing"];
                 [project setObject:[NSNumber numberWithInt:0] forKey:@"watch_count"];
                 [project saveInBackgroundWithBlock:block];
@@ -104,13 +104,33 @@
     [query findObjectsInBackgroundWithBlock:block];
 }
 
-- (void)request_Projects_WithLoadMore:(NSArray *)loaded block:(AVArrayResultBlock)block{
+- (void)request_Projects_WithRefresh:(AVArrayResultBlock)block{
+    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
+    [query setCachePolicy:kAVCachePolicyNetworkElseCache];
+    [query whereKey:@"watch_count" greaterThanOrEqualTo:@100];
+    [query includeKey:@"owner"];
+    [query includeKey:@"responsible"];
+    query.limit = 10;
+    [query findObjectsInBackgroundWithBlock:block];
+}
+
+- (void)request_ProjectsLoadMoreWithType:(ProjectsType)type :(NSArray *)loaded block:(AVArrayResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     [query whereKey:@"objectId" notContainedIn:loaded];
+    switch (type) {
+        case ProjectsTypeHot:
+            [query whereKey:@"watch_count" greaterThanOrEqualTo:@100];
+            break;
+        case ProjectsTypeFresh:
+            [query orderByDescending:@"updatedAt"];
+            break;
+            
+        default:
+            break;
+    }
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query includeKey:@"owner"];
     [query includeKey:@"responsible"];
-    [query addDescendingOrder:@"watch_count"];
     query.limit = 10;
     [query findObjectsInBackgroundWithBlock:block];
 }
@@ -121,16 +141,34 @@
     [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
         if (!error) {
             // 查询成功，输出计数
-            pCount.all = [NSNumber numberWithInteger:number?number:0];
+            pCount.fresh = [NSNumber numberWithInteger:number?number:0];
             AVQuery *query = [AVQuery queryWithClassName:@"Project"];
-            [query whereKey:@"owner" equalTo:[AVUser currentUser]];
+            [query whereKey:@"watch_count" greaterThanOrEqualTo:@100];
             [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
                 if (!error) {
-                    // 查询成功，输出计数
-                    NSInteger watched = [((User *)[Login curLoginUser]).watched count];
-                    pCount.created = [NSNumber numberWithInteger:number?number:0];
-                    pCount.watched = [NSNumber numberWithInteger:watched?watched:0];
-                    block(pCount,nil);
+                    pCount.hot = [NSNumber numberWithInteger:number?number:0];
+                    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
+                    [query whereKey:@"owner" equalTo:[AVUser currentUser]];
+                    [query countObjectsInBackgroundWithBlock:^(NSInteger number, NSError *error) {
+                        if (!error) {
+                            // 查询成功，输出计数
+                            NSInteger watched = [((User *)[Login curLoginUser]).watched count];
+                            pCount.created = [NSNumber numberWithInteger:number?number:0];
+                            pCount.watched = [NSNumber numberWithInteger:watched?watched:0];
+                            block(pCount,nil);
+                        } else {
+                            // 查询失败
+                            NSString * errorCode = error.userInfo[@"code"];
+                            switch (errorCode.intValue) {
+                                case 28:
+                                    [NSObject showHudTipStr:@"请求超时，网络信号不好噢,请切换页面重试"];
+                                    break;
+                                default:
+                                    [NSObject showHudTipStr:@"获取我的订单数量失败,请切换页面重试"];
+                                    break;
+                            }
+                        }
+                    }];
                 } else {
                     // 查询失败
                     NSString * errorCode = error.userInfo[@"code"];
@@ -168,14 +206,23 @@
     }
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     switch (type) {
-        case ProjectsTypeAll:
-            [query addDescendingOrder:@"watch_count"];
-            [querysArr addObject:query];
+        case ProjectsTypeFresh:
+            [query includeKey:@"owner"];
+            [query includeKey:@"responsible"];
+            [query orderByDescending:@"updatedAt"];
+            query.limit = 10;
+            [query setCachePolicy:kAVCachePolicyNetworkOnly];
+            [query findObjectsInBackgroundWithBlock:block];
+            return;
             break;
         case ProjectsTypeCreated:
             [query whereKey:@"owner" equalTo:[AVUser currentUser]];
-            [query orderByDescending:@"updatedAt"];
-            [querysArr addObject:query];
+            [query orderByDescending:@"createdAt"];
+            [query includeKey:@"owner"];
+            [query includeKey:@"responsible"];
+            [query setCachePolicy:kAVCachePolicyNetworkOnly];
+            [query findObjectsInBackgroundWithBlock:block];
+            return;
             break;
         case ProjectsTypeWatched:{
             for (AVObject* object in curUser.watched) {
@@ -230,36 +277,6 @@
 
 
 #pragma mark - Note
-
-- (void)request_CreateNote_WithProject:(Project *)project text:(NSString *)text photos:(NSArray *)photos type:(ProjectType)type block:(AVBooleanResultBlock)block {
-    NSMutableArray *pic_urls = [NSMutableArray array];
-    NSError* theError;
-    for(UIImage* photo in photos){
-        AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(photo)];
-        [photoFile save:&theError];
-        if(theError==nil){
-            [pic_urls addObject:photoFile];
-        }else{
-            for(AVFile* file in pic_urls){
-                [file deleteInBackground];
-            }
-            return;
-        }
-    }
-    
-    AVObject *note = [AVObject objectWithClassName:@"Note"];
-    [note setObject:text forKey:@"text"];
-    [note setObject:pic_urls forKey:@"pic_urls"];
-    AVUser *avuser = [AVQuery getUserObjectWithId:@"56f4d7507db2a20052d9478f"];
-    [note setObject:avuser forKey:@"responsible"];
-    [note setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
-    [note saveInBackgroundWithBlock:^(BOOL succeeded , NSError *error){
-        AVObject *object = [AVQuery getObjectOfClass:@"Note" objectId:project.objectId];
-        [object addObject:note.objectId forKey:@"notes"];
-        [object setObject:[NSNumber numberWithInteger:type] forKey:@"processing"];
-        [object saveInBackgroundWithBlock:block];
-    }];
-}
 
 - (void)request_Notes_WithNotes:(NSArray *)notes block:(AVArrayResultBlock)block{
     NSMutableArray *querysArr = [NSMutableArray array];

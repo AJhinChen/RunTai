@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.items = @[@{@"all":@""},@{@"aaa":@"0"},@{@"created":@""},@{@"aaa":@"0"},@{@"watched":@""}].mutableCopy;
+        self.items = @[@{@"hot":@""},@{@"aaa":@"0"},@{@"fresh":@""},@{@"aaa":@"0"},@{@"created":@""},@{@"aaa":@"0"},@{@"watched":@""}].mutableCopy;
         self.pCount=[ProjectCount new];
         self.showStatus=FALSE;
         [self setup];
@@ -142,8 +142,10 @@
 {
     NSString *keyStr=[[aDic allKeys] firstObject];
     NSMutableString *convertStr=[NSMutableString new];
-    if ([keyStr isEqualToString:@"all"]) {
-        [convertStr appendString:@"全部笔录"];
+    if ([keyStr isEqualToString:@"hot"]) {
+        [convertStr appendString:@"热门笔录"];
+    }else if ([keyStr isEqualToString:@"fresh"]) {
+        [convertStr appendString:@"新鲜笔录"];
     }else if ([keyStr isEqualToString:@"created"]) {
         [convertStr appendString:@"我的订单"];
     }else if ([keyStr isEqualToString:@"watched"]) {
@@ -161,7 +163,7 @@
 //更新数据源
 -(void)updateDateSource:(ProjectCount*)pCount
 {
-    _items = @[@{@"all":[pCount.all stringValue]},@{@"aaa":@"0"},@{@"created":[pCount.created stringValue]},@{@"aaa":@"0"},@{@"watched":[pCount.watched stringValue]}].mutableCopy;
+    _items = @[@{@"hot":[pCount.hot stringValue]},@{@"aaa":@"0"},@{@"fresh":[pCount.fresh stringValue]},@{@"aaa":@"0"},@{@"created":[pCount.created stringValue]},@{@"aaa":@"0"},@{@"watched":[pCount.watched stringValue]}].mutableCopy;
 }
 
 
@@ -195,7 +197,7 @@
 #pragma mark -- uitableviewdelegate & datasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -225,7 +225,7 @@
 - (void)sendApplication{
     [self.view endEditing:YES];
     if (self.curUser) {
-        [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
+        [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.myRegister block:^(BOOL succeeded, NSError *error) {
             [self dismissSelf];
             [NSObject showHudTipStr:@"免费申请设计成功"];
         }];

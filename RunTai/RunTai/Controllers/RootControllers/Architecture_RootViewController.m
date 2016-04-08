@@ -73,8 +73,10 @@
 }
 
 - (void)loadStaffs{
+    [NSObject showLoadingView:@"加载中.."];
     typeof(self) __weak weakSelf= self;
     [[RunTai_NetAPIManager sharedManager] request_LoadStaffs:_type?@"上海":@"南京" :^(NSArray *objects, NSError *error) {
+        [NSObject hideLoadingView];
         if ([objects count]>0) {
             for (AVUser *user in objects) {
                 [weakSelf.dataList addObject:[Login transfer:user]];

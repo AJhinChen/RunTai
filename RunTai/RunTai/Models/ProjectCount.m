@@ -12,7 +12,8 @@
 
 - (void)configWithProjects:(ProjectCount *)ProjectCount
 {
-    self.all = ProjectCount.all;
+    self.hot = ProjectCount.hot;
+    self.fresh = ProjectCount.fresh;
     self.watched = ProjectCount.watched;
     self.created = ProjectCount.created;
 }

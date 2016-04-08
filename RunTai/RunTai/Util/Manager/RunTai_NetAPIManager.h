@@ -11,6 +11,7 @@
 #import "Projects.h"
 #import "Project.h"
 #import "Login.h"
+#import "Register.h"
 #import "ProjectCount.h"
 
 @interface RunTai_NetAPIManager : NSObject
@@ -27,11 +28,13 @@
 
 #pragma mark - Project
 
-- (void)request_CreateProject_WithUser:(User *)user block:(AVBooleanResultBlock)block;
+- (void)request_Projects_WithRefresh:(AVArrayResultBlock)block;
+
+- (void)request_CreateProject_WithUser:(Register *)myRegister block:(AVBooleanResultBlock)block;
 
 - (void)request_Projects_WithUser:(User *)user loaded:(NSArray *)loaded block:(AVArrayResultBlock)block;
 
-- (void)request_Projects_WithLoadMore:(NSArray *)loaded block:(AVArrayResultBlock)block;
+- (void)request_ProjectsLoadMoreWithType:(ProjectsType)type :(NSArray *)loaded block:(AVArrayResultBlock)block;
 
 - (void)request_ProjectsCatergoryAndCounts_WithAll:(void (^)(ProjectCount *data, NSError *error))block;
 
@@ -41,8 +44,6 @@
 
 
 #pragma mark - Note
-
-- (void)request_CreateNote_WithProject:(Project *)project text:(NSString *)text photos:(NSArray *)photos type:(ProjectType)type block:(AVBooleanResultBlock)block;
 
 - (void)request_Notes_WithNotes:(NSArray *)notes block:(AVArrayResultBlock)block;
 

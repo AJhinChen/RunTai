@@ -50,6 +50,7 @@
     }
     if (!_myRegister) {
         self.myRegister = [Register new];
+        self.myRegister.gender = @"先生";
     }
     if ([Login isLogin]) {
         self.curUser = [Login curLoginUser];
@@ -330,7 +331,7 @@
     __weak typeof(self) weakSelf = self;
     [self.footerBtn startQueryAnimate];
     if (self.curUser) {
-        [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
+        [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.myRegister block:^(BOOL succeeded, NSError *error) {
             [weakSelf.footerBtn stopQueryAnimate];
             if (succeeded) {
                 [weakSelf dismissSelf];
@@ -367,7 +368,7 @@
                     [((AppDelegate *)[UIApplication sharedApplication].delegate) setupTabViewController];
                     [NSObject showHudTipStr:@"注册成功"];
                 }else{
-                    [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.curUser block:^(BOOL succeeded, NSError *error) {
+                    [[RunTai_NetAPIManager sharedManager] request_CreateProject_WithUser:self.myRegister block:^(BOOL succeeded, NSError *error) {
                         [weakSelf.footerBtn stopQueryAnimate];
                         if (succeeded) {
                             [weakSelf dismissSelf];

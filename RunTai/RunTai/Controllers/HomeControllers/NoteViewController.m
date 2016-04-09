@@ -164,7 +164,7 @@ const CGFloat BackGroupHeight = 250;
     
     nameLabel = ({
         UILabel *title = [[UILabel alloc] init];
-        title.text=self.curPro.full_name;//@"[南京 金城丽景] 品质北欧简约风";
+        title.text = self.curPro.full_name;//@"[南京 金城丽景] 品质北欧简约风";
         title.textColor = [UIColor whiteColor];
         title.font = NotesTitleFont;
         title.textAlignment=NSTextAlignmentLeft;

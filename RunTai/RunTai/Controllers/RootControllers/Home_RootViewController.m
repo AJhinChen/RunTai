@@ -251,7 +251,7 @@
     [_orderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(buttonHeight, buttonHeight));
         make.right.equalTo(self.view.mas_right).offset(-11);
-        make.bottom.equalTo(self.view).offset(-60);
+        make.bottom.equalTo(self.view).offset(-68);
     }];
 }
 

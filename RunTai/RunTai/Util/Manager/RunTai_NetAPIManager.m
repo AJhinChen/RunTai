@@ -199,11 +199,6 @@
 
 - (void)request_Projects_WithType:(ProjectsType)type block:(AVArrayResultBlock)block{
     NSMutableArray *querysArr = [NSMutableArray array];
-    User *curUser = [Login curLoginUser];
-    if (!curUser) {
-        block(nil,nil);
-        return;
-    }
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     switch (type) {
         case ProjectsTypeFresh:
@@ -215,7 +210,12 @@
             [query findObjectsInBackgroundWithBlock:block];
             return;
             break;
-        case ProjectsTypeCreated:
+        case ProjectsTypeCreated:{
+            User *curUser = [Login curLoginUser];
+            if (!curUser) {
+                block(nil,nil);
+                return;
+            }
             [query whereKey:@"owner" equalTo:[AVUser currentUser]];
             [query orderByDescending:@"createdAt"];
             [query includeKey:@"owner"];
@@ -223,8 +223,14 @@
             [query setCachePolicy:kAVCachePolicyNetworkOnly];
             [query findObjectsInBackgroundWithBlock:block];
             return;
+        }
             break;
         case ProjectsTypeWatched:{
+            User *curUser = [Login curLoginUser];
+            if (!curUser) {
+                block(nil,nil);
+                return;
+            }
             for (AVObject* object in curUser.watched) {
                 AVQuery *watched = [AVQuery queryWithClassName:@"Project"];
                 [watched whereKey:@"objectId" equalTo:object.objectId];

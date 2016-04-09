@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) UIImageView *backgroundImg ,*iconImg ,*watchedImg, *userSexIconView, *editImg;
 
+@property (strong, nonatomic) UIView *bgBlurredView;
+
 @property (strong, nonatomic) UILabel *userLabel ,*titleLabel ,*introLabel ,*statusLabel ,*watchedLabel;
 
 @end
@@ -56,9 +58,18 @@
     
     [self.contentView addSubview:self.backgroundImg];
     
+    self.bgBlurredView = ({
+        UIView *view = [[UIView alloc] init];
+        //黑色遮罩
+        view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
+        view;
+    });
+    
+    [self.backgroundImg addSubview:self.bgBlurredView];
+    
     self.editImg = ({
         UIImageView *imgView = [[UIImageView alloc] init];
-        imgView.image = [UIImage imageNamed:@"edit"];
+        imgView.image = [UIImage imageNamed:@"compose"];
         imgView.contentMode = UIViewContentModeScaleAspectFit;
         imgView.userInteractionEnabled = YES;
         //添加手势
@@ -82,7 +93,7 @@
     });
     
 //    CGRect rect=[self.titleLabel.text boundingRectWithSize:CGSizeMake(cellWidth-paddingToLeft, INT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.titleLabel.font,NSFontAttributeName, nil] context:nil];
-    [self.contentView addSubview:self.titleLabel];
+    [self.bgBlurredView addSubview:self.titleLabel];
     
     //introLabel
     
@@ -96,7 +107,7 @@
         intro;
     });
     
-    [self.contentView addSubview:self.introLabel];
+    [self.bgBlurredView addSubview:self.introLabel];
     
     self.iconImg = ({
         UIImageView *imgView = [[UIImageView alloc] init];
@@ -110,21 +121,21 @@
         imgView;
     });
     
-    [self.contentView addSubview:self.iconImg];
+    [self.bgBlurredView addSubview:self.iconImg];
     
     //userLabel
     
-    self.userLabel = ({
-        UILabel *user = [[UILabel alloc] init];
-        user.textColor = [UIColor whiteColor];
-        user.font = NotesCommonFont;
-        user.textAlignment=NSTextAlignmentLeft;
-        user.backgroundColor=[UIColor clearColor];
-        
-        user;
-    });
-    
-    [self.contentView addSubview:self.userLabel];
+//    self.userLabel = ({
+//        UILabel *user = [[UILabel alloc] init];
+//        user.textColor = [UIColor whiteColor];
+//        user.font = NotesCommonFont;
+//        user.textAlignment=NSTextAlignmentLeft;
+//        user.backgroundColor=[UIColor clearColor];
+//        
+//        user;
+//    });
+//    
+//    [self.bgBlurredView addSubview:self.userLabel];
     
     //watchedLabel
     
@@ -138,7 +149,7 @@
         watched;
     });
     
-    [self.contentView addSubview:self.watchedLabel];
+    [self.bgBlurredView addSubview:self.watchedLabel];
     
     //watchedImg
     UIImage *watchedImage = [UIImage imageNamed:@"compose_photo_video_highlighted"];
@@ -154,7 +165,7 @@
         imgView;
     });
 
-    [self.contentView addSubview:self.watchedImg];
+    [self.bgBlurredView addSubview:self.watchedImg];
 
     //statusLabel
     
@@ -168,12 +179,12 @@
         user;
     });
     
-    [self.contentView addSubview:self.statusLabel];
+    [self.bgBlurredView addSubview:self.statusLabel];
     
-    if (!_userSexIconView) {
-        _userSexIconView = [[UIImageView alloc] init];
-        [self.contentView addSubview:_userSexIconView];
-    }
+//    if (!_userSexIconView) {
+//        _userSexIconView = [[UIImageView alloc] init];
+//        [self.contentView addSubview:_userSexIconView];
+//    }
     
 }
 
@@ -203,16 +214,22 @@
         make.left.equalTo(self.contentView.mas_left).offset(paddingToLeft);
     }];
     
+    [self.bgBlurredView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(cellWidth, 60));
+        make.left.equalTo(self.backgroundImg.mas_left);
+        make.bottom.equalTo(self.backgroundImg.mas_bottom);
+    }];
+
     [self.editImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(25, 25));
+        make.size.mas_equalTo(CGSizeMake(30, 30));
         make.right.equalTo(self.contentView.mas_right).offset(-paddingToBottom*2);
         make.top.equalTo(self.contentView.mas_top).offset(paddingToBottom);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(cellWidth-paddingToLeft, 20));
-        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
-        make.top.equalTo(self.backgroundImg.mas_top).offset(paddingToBottom);
+        make.left.equalTo(self.bgBlurredView.mas_left).offset(paddingToLeft);
+        make.top.equalTo(self.bgBlurredView.mas_top).offset(paddingToBottom);
     }];
     
     [self.introLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,40 +239,40 @@
     }];
     
     [self.iconImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(25, 25));
-        make.left.equalTo(self.backgroundImg.mas_left).offset(paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+        make.right.equalTo(self.bgBlurredView.mas_right).offset(-paddingToLeft);
+        make.bottom.equalTo(self.bgBlurredView.mas_top).offset(20);
     }];
     
-    CGFloat userSexIconViewWidth = (14);
-    [_userSexIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(userSexIconViewWidth, userSexIconViewWidth));
-        make.left.equalTo(_iconImg.mas_right).offset(paddingToLeft);
-        make.centerY.equalTo(_iconImg);
-    }];
+//    CGFloat userSexIconViewWidth = (14);
+//    [_userSexIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(userSexIconViewWidth, userSexIconViewWidth));
+//        make.left.equalTo(_iconImg.mas_right).offset(paddingToLeft);
+//        make.centerY.equalTo(_iconImg);
+//    }];
     
-    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(90, 25));
-        make.left.equalTo(self.userSexIconView.mas_right).offset(paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
-    }];
+//    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(90, 25));
+//        make.left.equalTo(self.userSexIconView.mas_right).offset(paddingToLeft);
+//        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+//    }];
     
     [self.watchedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(45, 25));
-        make.right.equalTo(self.backgroundImg.mas_right).offset(-paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+        make.right.equalTo(self.bgBlurredView.mas_right).offset(-paddingToLeft);
+        make.centerY.equalTo(self.introLabel.mas_centerY);
     }];
     
     [self.watchedImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(19, 19));
         make.right.equalTo(self.watchedLabel.mas_left).offset(-3);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft-3);
+        make.centerY.equalTo(self.introLabel.mas_centerY);
     }];
     
     [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(60, 25));
         make.right.equalTo(self.watchedImg.mas_left).offset(-paddingToLeft);
-        make.bottom.equalTo(self.backgroundImg.mas_bottom).offset(-paddingToLeft);
+        make.centerY.equalTo(self.introLabel.mas_centerY);
     }];
 }
 
@@ -266,7 +283,7 @@
 }
 
 + (CGFloat)cellHeight{
-    CGFloat cellHeight = (kScreen_Height - 64 - 49 - kPaddingLeftWidth*3)/3 - 6;
+    CGFloat cellHeight = (kScreen_Height - 64 - 49 - kPaddingLeftWidth*3)/2.3 - 6;
     return ceilf(cellHeight);
 }
 

@@ -474,7 +474,7 @@
                                                 icon:[UIImage imageNamed:@"ios7-telephone"]];
     [leftUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"compose"]];
+                                                icon:[UIImage imageNamed:@"edit"]];
 //    [leftUtilityButtons sw_addUtilityButtonWithColor:
 //     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
 //                                                icon:[UIImage imageNamed:@"cross.png"]];

@@ -145,27 +145,27 @@
         if ([self.dataList count]>0) {
             curPro = self.dataList[indexPath.row];
         }
-        NSArray *components = [curPro.full_name componentsSeparatedByString:@" "];
-        NSString *address = @"";
-        switch ([components count]) {
-            case 1:
-                address = components[0];
-                break;
-            case 2:
-                address = components[1];
-                break;
-            case 3:
-                address = components[2];
-                break;
-                
-            default:
-                break;
-        }
+//        NSArray *components = [curPro.full_name componentsSeparatedByString:@" "];
+//        NSString *address = @"";
+//        switch ([components count]) {
+//            case 1:
+//                address = components[0];
+//                break;
+//            case 2:
+//                address = components[1];
+//                break;
+//            case 3:
+//                address = components[2];
+//                break;
+//                
+//            default:
+//                break;
+//        }
         NSString *name = @"";
         if (curPro && curPro.name) {
             name = curPro.name;
         }
-        [cell setTitle:[NSString stringWithFormat:@"楼盘业主:[%@%@%@",address,curPro.owner.name,curPro.owner.gender] subtitle:[NSString stringWithFormat:@"户型报价:%@",name] value:curPro.owner.avatar];
+        [cell setTitle:[NSString stringWithFormat:@"楼盘业主:%@%@",curPro.owner.name,curPro.owner.gender] subtitle:[NSString stringWithFormat:@"户型报价:%@",curPro.name] value:curPro.owner.avatar];
         [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
         return cell;
     }

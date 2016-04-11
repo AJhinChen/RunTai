@@ -340,8 +340,8 @@
                 // Send a notification to all devices subscribed to the "Giants" channel.
                 NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                       alert, @"alert",
-                                      @"1", @"badge",
-                                      @"default", @"sound",
+                                      @"Increment", @"badge",
+                                      @"ReceivedMessage.caf", @"sound",
                                       nil];
                 // Create time interval
                 NSTimeInterval interval = 60*60*24*7; // 1 week
@@ -350,6 +350,13 @@
                 [push setChannels:[NSArray arrayWithObjects:@"RunTai", nil]];
                 [push setData:data];
                 [push sendPushInBackground];
+//                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                    if (succeeded) {
+//                        [NSObject showHudTipStr:@"推送成功"];
+//                    }else{
+//                        [NSObject showHudTipStr:@"推送失败"];
+//                    }
+//                }];
             }else{
                 NSString * errorCode = error.userInfo[@"code"];
                 switch (errorCode.intValue) {

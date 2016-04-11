@@ -254,13 +254,21 @@
             break;
         case ProjectsTypeReviewing:
             [query whereKey:@"processing" equalTo:@0];
-            [query orderByAscending:@"createdAt"];
-            [querysArr addObject:query];
+            [query orderByDescending:@"createdAt"];
+            [query setCachePolicy:kAVCachePolicyNetworkOnly];
+            [query includeKey:@"owner"];
+            [query includeKey:@"responsible"];
+            [query findObjectsInBackgroundWithBlock:block];
+            return;
             break;
         case ProjectsTypeCreated:
             [query whereKey:@"responsible" equalTo:[AVUser currentUser]];
-            [query orderByAscending:@"createdAt"];
-            [querysArr addObject:query];
+            [query orderByDescending:@"createdAt"];
+            [query setCachePolicy:kAVCachePolicyNetworkOnly];
+            [query includeKey:@"owner"];
+            [query includeKey:@"responsible"];
+            [query findObjectsInBackgroundWithBlock:block];
+            return;
             break;
         case ProjectsTypeWatched:{
             for (AVObject* object in curUser.watched) {

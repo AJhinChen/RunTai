@@ -40,30 +40,6 @@
         self.myProjects = [[Projects alloc]init];
         self.myProjects.type = ProjectsTypeHot;
     }
-    
-    switch (self.myProjects.type) {
-        case ProjectsTypeHot:
-            self.title = @"热门笔录";
-            [self setupNavBtn];
-            break;
-        case ProjectsTypeFresh:
-            self.title = @"新鲜笔录";
-            [self setupNavBtn];
-            break;
-        case ProjectsTypeCreated:
-            self.title = @"我的订单";
-            [self configTableView:4];
-            break;
-        case ProjectsTypeWatched:
-            self.title = @"我的收藏";
-            [self configTableView:6];
-            break;
-        default:
-            self.title = @"热门笔录";
-            [self setupNavBtn];
-            break;
-    }
-    self.tabBarItem.title = @"笔录";
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
     }
@@ -122,6 +98,30 @@
     
     [self setupOrderBtn];
     [self setupRefresh];
+    
+    switch (self.myProjects.type) {
+        case ProjectsTypeHot:
+        self.title = @"热门笔录";
+        [self setupNavBtn];
+        break;
+        case ProjectsTypeFresh:
+        self.title = @"新鲜笔录";
+        [self setupNavBtn];
+        break;
+        case ProjectsTypeCreated:
+        self.title = @"我的订单";
+        [self configTableView:4];
+        break;
+        case ProjectsTypeWatched:
+        self.title = @"我的收藏";
+        [self configTableView:6];
+        break;
+        default:
+        self.title = @"热门笔录";
+        [self setupNavBtn];
+        break;
+    }
+    self.tabBarItem.title = @"笔录";
     if (_myProjects.type == ProjectsTypeHot) {
         [self.myTableView.mj_header beginRefreshing];
     }

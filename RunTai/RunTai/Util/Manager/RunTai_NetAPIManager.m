@@ -254,12 +254,12 @@
             break;
         case ProjectsTypeReviewing:
             [query whereKey:@"processing" equalTo:@0];
-            [query orderByDescending:@"createdAt"];
+            [query orderByAscending:@"createdAt"];
             [querysArr addObject:query];
             break;
         case ProjectsTypeCreated:
             [query whereKey:@"responsible" equalTo:[AVUser currentUser]];
-            [query orderByDescending:@"createdAt"];
+            [query orderByAscending:@"createdAt"];
             [querysArr addObject:query];
             break;
         case ProjectsTypeWatched:{

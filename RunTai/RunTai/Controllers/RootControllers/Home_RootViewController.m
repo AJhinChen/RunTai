@@ -46,29 +46,6 @@
         self.myProjects = [[Projects alloc]init];
         self.myProjects.type = ProjectsTypeAll;
     }
-    switch (self.myProjects.type) {
-        case ProjectsTypeAll:
-            self.title = @"全部笔录";
-            [self setupNavBtn];
-            break;
-        case ProjectsTypeReviewing:
-            self.title = @"申请中的";
-            [self setupNavBtn];
-            break;
-        case ProjectsTypeCreated:
-            self.title = @"我负责的";
-            [self configTableView:4];
-            break;
-        case ProjectsTypeWatched:
-            self.title = @"我收藏的";
-            [self configTableView:6];
-            break;
-        default:
-            self.title = @"全部笔录";
-            [self setupNavBtn];
-            break;
-    }
-    self.tabBarItem.title = @"笔录";
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
     }
@@ -106,10 +83,6 @@
     });
     _myTableView.tableHeaderView = _mySearchBar;
     
-    [self setupOrderBtn];
-    [self setupRefresh];
-    
-    
     //初始化过滤目录
     _myFliterMenu = [[PopFliterMenu alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) items:nil];
     __weak typeof(self) weakSelf = self;
@@ -132,6 +105,34 @@
     [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
         self.pCount = pCount;
     }];
+    
+    [self setupOrderBtn];
+    [self setupRefresh];
+    
+    switch (self.myProjects.type) {
+        case ProjectsTypeAll:
+        self.title = @"全部笔录";
+        [self setupNavBtn];
+        break;
+        case ProjectsTypeReviewing:
+        self.title = @"申请中的";
+        [self setupNavBtn];
+        break;
+        case ProjectsTypeCreated:
+        self.title = @"我负责的";
+        [self configTableView:4];
+        break;
+        case ProjectsTypeWatched:
+        self.title = @"我收藏的";
+        [self configTableView:6];
+        break;
+        default:
+        self.title = @"全部笔录";
+        [self setupNavBtn];
+        break;
+    }
+    self.tabBarItem.title = @"笔录";
+    
     if (_myProjects.type == ProjectsTypeAll) {
         [self.myTableView.mj_header beginRefreshing];
     }

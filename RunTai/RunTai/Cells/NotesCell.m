@@ -173,7 +173,7 @@
         UILabel *user = [[UILabel alloc] init];
         user.textColor = [UIColor whiteColor];
         user.font = NotesCommonFont;
-        user.textAlignment=NSTextAlignmentLeft;
+        user.textAlignment=NSTextAlignmentRight;
         user.backgroundColor=[UIColor clearColor];
         
         user;

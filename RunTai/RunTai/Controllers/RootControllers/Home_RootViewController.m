@@ -52,14 +52,16 @@
             [self setupNavBtn];
             break;
         case ProjectsTypeReviewing:
-            self.title = @"审核中的";
+            self.title = @"申请中的";
             [self setupNavBtn];
             break;
         case ProjectsTypeCreated:
             self.title = @"我负责的";
+            [self configTableView:4];
             break;
         case ProjectsTypeWatched:
             self.title = @"我收藏的";
+            [self configTableView:6];
             break;
         default:
             self.title = @"全部笔录";
@@ -120,63 +122,7 @@
         if (pageIndex%2 != 0 || pageIndex == weakSelf.selectNum) {
             return;
         }else{
-            switch (pageIndex/2) {
-                case ProjectsTypeAll:
-                    weakSelf.title = @"全部笔录";
-                    if (!weakSelf.myTableView.tableHeaderView) {
-                        weakSelf.myTableView.tableHeaderView = weakSelf.mySearchBar;
-                    }
-                    weakSelf.selectNum=pageIndex;
-                    weakSelf.myProjects.type = pageIndex/2;
-                    weakSelf.myTableView.mj_header.hidden = NO;
-                    weakSelf.myTableView.mj_footer.hidden = NO;
-                    [weakSelf.myTableView.mj_header beginRefreshing];
-                    return;
-                    break;
-                case ProjectsTypeReviewing:
-                    if (weakSelf.pCount.reviewing.intValue==0) {
-                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
-                        return;
-                    }
-                    weakSelf.title = @"审核中的";
-                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-                    weakSelf.myTableView.tableHeaderView = nil;
-                    weakSelf.myTableView.mj_header.hidden = YES;
-                    weakSelf.myTableView.mj_footer.hidden = YES;
-                    break;
-                case ProjectsTypeCreated:
-                    if (weakSelf.pCount.created.intValue==0) {
-                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
-                        return;
-                    }
-                    weakSelf.title = @"我负责的";
-                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-                    weakSelf.myTableView.tableHeaderView = nil;
-                    weakSelf.myTableView.mj_header.hidden = YES;
-                    weakSelf.myTableView.mj_footer.hidden = YES;
-                    break;
-                case ProjectsTypeWatched:
-                    if (weakSelf.pCount.watched.intValue==0) {
-                        [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
-                        return;
-                    }
-                    weakSelf.title = @"我收藏的";
-                    [weakSelf.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-                    weakSelf.myTableView.tableHeaderView = nil;
-                    weakSelf.myTableView.mj_header.hidden = YES;
-                    weakSelf.myTableView.mj_footer.hidden = YES;
-                    break;
-                default:
-                    weakSelf.title = @"全部笔录";
-                    break;
-            }
-            [weakSelf.dataList removeAllObjects];
-            [weakSelf.loadedObjects removeAllObjects];
-            [weakSelf.myTableView reloadData];
-            weakSelf.tabBarItem.title = @"笔录";
-            weakSelf.selectNum=pageIndex;
-            weakSelf.myProjects.type = pageIndex/2;
-            [weakSelf myFliterMenuAction];
+            [weakSelf configTableView:pageIndex];
         }
     };
     
@@ -186,9 +132,13 @@
     [_myFliterMenu refreshMenuDate:^(ProjectCount *pCount){
         self.pCount = pCount;
     }];
-    [weakSelf.myTableView.mj_header beginRefreshing];
+    if (_myProjects.type == ProjectsTypeAll) {
+        [self.myTableView.mj_header beginRefreshing];
+    }
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openWithWeixin:) name:@"Weixin" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openWithPush) name:@"Push" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -209,6 +159,71 @@
     NoteViewController *vc = [[NoteViewController alloc] init];
     vc.curPro = sender.object;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)openWithPush{
+    self.tabBarController.selectedIndex = 0;
+    [self configTableView:2];
+}
+
+- (void)configTableView:(NSInteger)pageIndex{
+    switch (pageIndex/2) {
+        case ProjectsTypeAll:
+        self.title = @"全部笔录";
+        if (!self.myTableView.tableHeaderView) {
+            self.myTableView.tableHeaderView = self.mySearchBar;
+        }
+        self.selectNum=pageIndex;
+        self.myProjects.type = pageIndex/2;
+        self.myTableView.mj_header.hidden = NO;
+        self.myTableView.mj_footer.hidden = NO;
+        [self.myTableView.mj_header beginRefreshing];
+        return;
+        break;
+        case ProjectsTypeReviewing:
+        if (self.pCount.reviewing.intValue==0) {
+            [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+            return;
+        }
+        self.title = @"申请中的";
+        [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+        self.myTableView.tableHeaderView = nil;
+        self.myTableView.mj_header.hidden = YES;
+        self.myTableView.mj_footer.hidden = YES;
+        break;
+        case ProjectsTypeCreated:
+        if (self.pCount.created.intValue==0) {
+            [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+            return;
+        }
+        self.title = @"我负责的";
+        [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+        self.myTableView.tableHeaderView = nil;
+        self.myTableView.mj_header.hidden = YES;
+        self.myTableView.mj_footer.hidden = YES;
+        break;
+        case ProjectsTypeWatched:
+        if (self.pCount.watched.intValue==0) {
+            [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
+            return;
+        }
+        self.title = @"我收藏的";
+        [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
+        self.myTableView.tableHeaderView = nil;
+        self.myTableView.mj_header.hidden = YES;
+        self.myTableView.mj_footer.hidden = YES;
+        break;
+        default:
+        self.title = @"全部笔录";
+        break;
+    }
+    [self.dataList removeAllObjects];
+    [self.loadedObjects removeAllObjects];
+    [self.myTableView reloadData];
+    self.tabBarItem.title = @"笔录";
+    self.selectNum=pageIndex;
+    self.myProjects.type = pageIndex/2;
+    [self myFliterMenuAction];
 }
 
 #pragma mark - nav item

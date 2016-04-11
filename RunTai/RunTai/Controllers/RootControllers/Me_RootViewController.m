@@ -283,6 +283,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeCreated;
                 vc.myProjects = curPro;
+                vc.pCount = self.pCount;
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
@@ -298,6 +299,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 Home_RootViewController *vc = [[Home_RootViewController alloc]init];
                 curPro.type = ProjectsTypeWatched;
                 vc.myProjects = curPro;
+                vc.pCount = self.pCount;
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;

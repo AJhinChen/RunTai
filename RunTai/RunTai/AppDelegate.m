@@ -15,7 +15,7 @@
 #import "LoginViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-@interface AppDelegate ()<WXApiDelegate>
+@interface AppDelegate ()<WXApiDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -49,7 +49,7 @@
     [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
     
     //推送设置
-    [self pushConfig:launchOptions];
+//    [self pushConfig:launchOptions];
     return YES;
 }
 
@@ -58,40 +58,26 @@
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     
     // Create a pointer to the Photo object
-    NSString *photoId = [notificationPayload objectForKey:@"p"];
-    AVObject *targetPhoto = [AVObject objectWithoutDataWithClassName:@"Photo"
-                                                            objectId:photoId];
-    
-    // Fetch photo object
-    [targetPhoto fetchIfNeededInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-        // Show photo view controller
-        if (!error && [AVUser currentUser]) {
-            Projects *curPro = [[Projects alloc]init];
-            curPro.type = ProjectsTypeReviewing;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Push" object:curPro];
-        }
-    }];
+    NSNumber *badge = [notificationPayload objectForKey:@"badge"];
+    if (badge.intValue>0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Push" object:nil];
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     // Create empty photo object
-    NSString *photoId = [userInfo objectForKey:@"p"];
-    AVObject *targetPhoto = [AVObject objectWithoutDataWithClassName:@"Photo"
-                                                            objectId:photoId];
-    
-    // Fetch photo object
-    [targetPhoto fetchIfNeededInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-        // Show photo view controller
-        if (error) {
-            handler(UIBackgroundFetchResultFailed);
-        } else if ([AVUser currentUser]) {
-//            PhotoVC *viewController = [[PhotoVC alloc] initWithPhoto:object];
-//            [self.navController pushViewController:viewController animated:YES];
-        } else {
-            handler(UIBackgroundFetchResultNoData);
-        }
-    }];
+    if ([Login isLogin]) {
+        NSDictionary *dict = [userInfo objectForKey:@"msg"];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"订单申请通知" message:dict[@"alert"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"查看", nil];
+        [alertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (!alertView.cancelButtonIndex) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Push" object:nil];
+    }
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

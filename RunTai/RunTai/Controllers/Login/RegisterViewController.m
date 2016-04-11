@@ -147,7 +147,7 @@
     });
     NSString *tipStr = @"注册 润泰账号 表示您已同意《润泰装饰 服务条款》";
     if (_methodType == RegisterMethodOrder) {
-        tipStr = @"*温馨提示：申请前请确保‘我的订单’中没有订单正在‘审核中’，否则将会无法申请！\n*您的信息将被严格保密，资料提交后客服将在24小时内联系您\n*申请免费设计表示您已同意《润泰装饰 服务条款》";
+        tipStr = @"*温馨提示：申请前请确保‘我的订单’中没有订单正在‘申请中’，否则将会无法申请！\n*您的信息将被严格保密，资料提交后客服将在24小时内联系您\n*申请免费设计表示您已同意《润泰装饰 服务条款》";
     }
     lineLabel.text = tipStr;
     [lineLabel addLinkToTransitInformation:@{@"actionStr" : @"gotoServiceTermsVC"} withRange:[tipStr rangeOfString:@"《润泰装饰 服务条款》"]];
@@ -354,7 +354,7 @@
                                 [NSObject showHudTipStr:@"请求超时，网络信号不好噢"];
                                 break;
                             case 999:
-                                [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在审核中"];
+                                [NSObject showHudTipStr:@"申请失败，请确认您是否有订单正在申请中"];
                                 break;
                             default:
                                 [NSObject showHudTipStr:@"免费申请设计失败,请重试或拨打客服热线!"];

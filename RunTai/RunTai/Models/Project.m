@@ -47,31 +47,31 @@
 +(NSString*)getProcessingName:(int)num{
     switch (num) {
         case 0:
-            return @"审核中..";
+            return @"申请中";
             break;
         case 1:
-            return @"准备阶段";
+            return @"准备中";
             break;
         case 2:
-            return @"拆改阶段";
+            return @"拆改中";
             break;
         case 3:
-            return @"水电阶段";
+            return @"水电中";
             break;
         case 4:
-            return @"泥木阶段";
+            return @"泥木中";
             break;
         case 5:
-            return @"油漆阶段";
+            return @"油漆中";
             break;
         case 6:
-            return @"竣工阶段";
+            return @"竣工中";
             break;
         case 7:
-            return @"软装阶段";
+            return @"软装中";
             break;
         case 8:
-            return @"入住阶段";
+            return @"入住中";
             break;
         default:
             return @"上门服务";

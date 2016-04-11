@@ -145,7 +145,7 @@
     if ([keyStr isEqualToString:@"all"]) {
         [convertStr appendString:@"全部笔录"];
     }else if ([keyStr isEqualToString:@"reviewing"]) {
-        [convertStr appendString:@"审核中的"];
+        [convertStr appendString:@"申请中的"];
     }else if ([keyStr isEqualToString:@"created"]) {
         [convertStr appendString:@"我负责的"];
     }else if ([keyStr isEqualToString:@"watched"]) {

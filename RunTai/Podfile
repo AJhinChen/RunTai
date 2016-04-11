@@ -39,6 +39,7 @@ pod 'UMengAnalytics', '3.5.10'
 
 # 使用云后台LeanCloud功能：
 pod 'AVOSCloud'
+pod 'AVOSCloudIM'
 
 # 使用刷新控件功能：
 pod 'MJRefresh'

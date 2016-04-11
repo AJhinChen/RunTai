@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '15558F9D1DF783FE295F1420'
+               BlueprintIdentifier = '32D1F8A9970CFCA7C3A8CCE9'
                BlueprintName = 'UIImage+BlurredFrame'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libUIImage+BlurredFrame.a'>

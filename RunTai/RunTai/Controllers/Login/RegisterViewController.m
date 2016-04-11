@@ -333,6 +333,20 @@
                     if (succeeded) {
                         [weakSelf dismissSelf];
                         [NSObject showHudTipStr:@"免费申请设计成功"];
+                        NSString *alert = [NSString stringWithFormat:@"[%@] %@%@申请了免费设计，请及时处理!",_myRegister.location,_myRegister.global_key,_myRegister.gender];
+                        // Send a notification to all devices subscribed to the "Giants" channel.
+                        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              alert, @"alert",
+                                              @"Increment", @"badge",
+                                              @"ReceivedMessage.caf", @"sound",
+                                              nil];
+                        // Create time interval
+                        NSTimeInterval interval = 60*60*24*7; // 1 week
+                        AVPush *push = [[AVPush alloc] init];
+                        [push expireAfterTimeInterval:interval];
+                        [push setChannels:[NSArray arrayWithObjects:@"RunTai", nil]];
+                        [push setData:data];
+                        [push sendPushInBackground];
                     }else{
                         NSString * errorCode = error.userInfo[@"code"];
                         switch (errorCode.intValue) {

@@ -123,6 +123,7 @@
 		CE4F485E1CA227DD00FBB678 /* RunTai_NetAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F485D1CA227DD00FBB678 /* RunTai_NetAPIManager.m */; };
 		CE4F48611CA238EF00FBB678 /* UIButton+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F48601CA238EF00FBB678 /* UIButton+Common.m */; };
 		CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */; };
+		CE91B5721CBB4E7400DF3CFD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE91B5711CBB4E7400DF3CFD /* AudioToolbox.framework */; };
 		CEB573B51CA4DF820020198A /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573B41CA4DF820020198A /* AddressManager.m */; };
 		CEB573B71CA4DF910020198A /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = CEB573B61CA4DF910020198A /* address.json */; };
 		CEB573FC1CABCBCF0020198A /* Case_RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573FB1CABCBCF0020198A /* Case_RootViewController.m */; };
@@ -442,6 +443,7 @@
 		CE4F48601CA238EF00FBB678 /* UIButton+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Common.m"; sourceTree = "<group>"; };
 		CE8594D91CA1154D007FEC17 /* StaffInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffInfoViewController.h; sourceTree = "<group>"; };
 		CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffInfoViewController.m; sourceTree = "<group>"; };
+		CE91B5711CBB4E7400DF3CFD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CEB573B31CA4DF820020198A /* AddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressManager.h; sourceTree = "<group>"; };
 		CEB573B41CA4DF820020198A /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManager.m; sourceTree = "<group>"; };
 		CEB573B61CA4DF910020198A /* address.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE91B5721CBB4E7400DF3CFD /* AudioToolbox.framework in Frameworks */,
 				CE2AEE151C9AF8BB0039CB5A /* libWeChatSDK.a in Frameworks */,
 				3299DBB5B39BCE3A2EDDD0E3 /* libPods.a in Frameworks */,
 			);
@@ -1440,6 +1443,7 @@
 		D4032B3A5DD62E68F5083AF7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE91B5711CBB4E7400DF3CFD /* AudioToolbox.framework */,
 				D5190DAAAFACDBD09EF7EBA1 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -1899,9 +1903,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai.master;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.mytvgdpushtest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b538fc4a-52d1-458f-9f97-40cd9a1695c1";
 			};
 			name = Debug;
 		};
@@ -1921,9 +1925,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.RunTai.master;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.mytvgdpushtest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b538fc4a-52d1-458f-9f97-40cd9a1695c1";
 			};
 			name = Release;
 		};

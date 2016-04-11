@@ -13,6 +13,7 @@
 #import "NoteViewController.h"
 #import "Home_RootViewController.h"
 #import "LoginViewController.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -25,6 +26,11 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
+    [AVOSCloudIM registerForRemoteNotification];
+    // 当用户表示喜欢 Giants，则为其订阅该频道。
+    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+    [currentInstallation addUniqueObject:@"RunTai" forKey:@"channels"];
+    [currentInstallation saveInBackground];
 //    [AVOSCloud setAllLogsEnabled:YES];
     //设置导航条样式
     [self customizeInterface];
@@ -41,7 +47,55 @@
     
     //向微信注册
     [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
+    
+    //推送设置
+    [self pushConfig:launchOptions];
     return YES;
+}
+
+- (void)pushConfig:(NSDictionary *)launchOptions{
+    // Extract the notification data
+    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    // Create a pointer to the Photo object
+    NSString *photoId = [notificationPayload objectForKey:@"p"];
+    AVObject *targetPhoto = [AVObject objectWithoutDataWithClassName:@"Photo"
+                                                            objectId:photoId];
+    
+    // Fetch photo object
+    [targetPhoto fetchIfNeededInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+        // Show photo view controller
+        if (!error && [AVUser currentUser]) {
+            Projects *curPro = [[Projects alloc]init];
+            curPro.type = ProjectsTypeReviewing;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Push" object:curPro];
+        }
+    }];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
+    // Create empty photo object
+    NSString *photoId = [userInfo objectForKey:@"p"];
+    AVObject *targetPhoto = [AVObject objectWithoutDataWithClassName:@"Photo"
+                                                            objectId:photoId];
+    
+    // Fetch photo object
+    [targetPhoto fetchIfNeededInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+        // Show photo view controller
+        if (error) {
+            handler(UIBackgroundFetchResultFailed);
+        } else if ([AVUser currentUser]) {
+//            PhotoVC *viewController = [[PhotoVC alloc] initWithPhoto:object];
+//            [self.navController pushViewController:viewController animated:YES];
+        } else {
+            handler(UIBackgroundFetchResultNoData);
+        }
+    }];
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -127,6 +181,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    int num=(int)application.applicationIconBadgeNumber;
+    if(num!=0){
+        AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+        [currentInstallation setBadge:0];
+        [currentInstallation saveEventually];
+        application.applicationIconBadgeNumber=0;
+    }
+    [application cancelAllLocalNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

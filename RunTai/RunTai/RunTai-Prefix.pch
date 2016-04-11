@@ -17,6 +17,7 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloud/AVObject+Subclass.h>
+#import <AVOSCloudIM/AVOSCloudIM.h>
 #import "BaseNavigationController.h"
 
 #import "UIImage+Common.h"

@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 Copyright 2015 LeanCloud, Inc. See https://leancloud.cn/terms.html
 
+## AVOSCloudIM
+
+Copyright 2015 LeanCloud, Inc. See https://leancloud.cn/terms.html
+
 ## BlocksKit
 
 //

@@ -5,8 +5,6 @@
 //  Created by Joel Chen on 16/3/14.
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
-#define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#define _IPHONE80_ 80000
 
 #import "AppDelegate.h"
 #import "IntroductionViewController.h"
@@ -22,29 +20,17 @@
 
 @implementation AppDelegate
 
-#pragma mark XGPush
-- (void)registerPush{
-    float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if(sysVer < 8){
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-    }else{
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
-        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
-        UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
-                                                                                     categories:[NSSet setWithObject:categorys]];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:userSettings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-#endif
-    }
-}
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [self registerPush];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
+    [AVOSCloudIM registerForRemoteNotification];
+    // 当用户表示喜欢 Giants，则为其订阅该频道。
+    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+    [currentInstallation addUniqueObject:@"RunTai" forKey:@"channels"];
+    [currentInstallation saveInBackground];
     //设置导航条样式
     [self customizeInterface];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
@@ -61,6 +47,10 @@
     //向微信注册
     [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
     return YES;
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

@@ -1,6 +1,8 @@
 PODS:
   - APParallaxHeader (0.1.6)
   - AVOSCloud (3.2.7)
+  - AVOSCloudIM (3.2.7):
+    - AVOSCloud
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
   - BlocksKit/All (2.2.5):
@@ -69,6 +71,7 @@ PODS:
 DEPENDENCIES:
   - APParallaxHeader
   - AVOSCloud
+  - AVOSCloudIM
   - BlocksKit (= 2.2.5)
   - JazzHands (= 2.0.0)
   - Masonry (= 0.5.3)
@@ -89,6 +92,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   APParallaxHeader: 854bc48a2487ca12c702f8a236fec0d89cdac5c3
   AVOSCloud: 957d1508104d7c8ed501df9d9b734d7a98c2e047
+  AVOSCloudIM: ec08eaec4d27d732e3be93eadeb3bcf1355b5dcf
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   JazzHands: 00002e9b1284e7fc1ac6555012e81b8942477242

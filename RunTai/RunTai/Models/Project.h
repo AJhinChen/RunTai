@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger, ProjectType)
 
 @property (readwrite, nonatomic, strong) NSMutableArray *list;
 
+@property (nonatomic , strong) NSMutableArray *buylist;
+
 @property (strong, nonatomic) NSDate *created_at,*updated_at;
 
 @property (assign, nonatomic) ProjectType proType;

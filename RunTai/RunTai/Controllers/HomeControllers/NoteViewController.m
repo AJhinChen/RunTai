@@ -17,6 +17,7 @@
 #import "RunTai_NetAPIManager.h"
 #import "Note.h"
 #import "Login.h"
+#import "BuyListViewController.h"
 
 
 #define ORIGINAL_MAX_WIDTH 640.0f
@@ -125,7 +126,7 @@ const CGFloat BackGroupHeight = 250;
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:0]] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:0.1]] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -345,7 +346,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
             return 1;
             break;
         case 1:
-            return 2;
+            return 1;
             break;
         default:
             return 1;
@@ -365,10 +366,10 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         NSArray *components = [self.curPro.name componentsSeparatedByString:@"/"];
         switch (indexPath.row) {
             case 0:
-                [cell setImageStr:@"list_icon_pre" andTitle:[NSString stringWithFormat:@"报价清单: %@",components[0]]];
+                [cell setImageStr:@"list_icon_end" andTitle:[NSString stringWithFormat:@"购物清单: %@",components[0]]];
                 break;
             case 1:
-                [cell setImageStr:@"list_icon_end" andTitle:@"实际清单: 16.7万"];
+                [cell setImageStr:@"list_icon_pre" andTitle:@"实际清单: 16.7万"];
                 cell.titleLabel.textColor = [UIColor colorWithHexString:@"0xb0271d"];
                 break;
             default:
@@ -441,6 +442,9 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section==1) {
+        return kPaddingLeftWidth;
+    }
     return 0;
 }
 
@@ -452,10 +456,22 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section==0) {
-        StaffInfoViewController *vc = [[StaffInfoViewController alloc]init];
-        vc.responsible = self.curPro.responsible;
-        [self.navigationController pushViewController:vc animated:YES];
+    switch (indexPath.section) {
+        case 0:{
+            StaffInfoViewController *vc = [[StaffInfoViewController alloc]init];
+            vc.responsible = self.curPro.responsible;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        break;
+        case 1:{
+            BuyListViewController *vc = [[BuyListViewController alloc]init];
+            vc.dataList = [self.curPro.buylist mutableCopy];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        break;
+        
+        default:
+        break;
     }
 }
 
@@ -487,7 +503,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         imageBG.frame = rect;
     }
     
-    CGFloat alpha = (yOffset+BackGroupHeight)/(BackGroupHeight-60);
+    CGFloat alpha = (yOffset+BackGroupHeight)/(BackGroupHeight-60)+0.1;
     [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:alpha]] forBarMetrics:UIBarMetricsDefault];
     titleLabel.textColor=[UIColor blackColor];
     if (alpha >= 0.98) {

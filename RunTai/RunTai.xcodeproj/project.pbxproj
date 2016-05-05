@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3299DBB5B39BCE3A2EDDD0E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5190DAAAFACDBD09EF7EBA1 /* libPods.a */; };
+		CE0306831CC9BD5400BEE652 /* Buy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0306821CC9BD5400BEE652 /* Buy.m */; };
 		CE0CCFF51CA395F70015FD0A /* Projects.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF41CA395F70015FD0A /* Projects.m */; };
 		CE0CCFF81CA397340015FD0A /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF71CA397340015FD0A /* Project.m */; };
 		CE13C4CC1C96A01400AFC539 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CB1C96A01400AFC539 /* main.m */; };
@@ -93,6 +94,8 @@
 		CE4F485E1CA227DD00FBB678 /* RunTai_NetAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F485D1CA227DD00FBB678 /* RunTai_NetAPIManager.m */; };
 		CE4F48611CA238EF00FBB678 /* UIButton+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F48601CA238EF00FBB678 /* UIButton+Common.m */; };
 		CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */; };
+		CE91B5851CC080D500DF3CFD /* BuyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE91B5841CC080D500DF3CFD /* BuyListViewController.m */; };
+		CE91B5881CC082DC00DF3CFD /* BuyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE91B5871CC082DC00DF3CFD /* BuyListCell.m */; };
 		CEB573B51CA4DF820020198A /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573B41CA4DF820020198A /* AddressManager.m */; };
 		CEB573B71CA4DF910020198A /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = CEB573B61CA4DF910020198A /* address.json */; };
 		CEB573DC1CA90FA10020198A /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB573DB1CA90FA10020198A /* Note.m */; };
@@ -188,6 +191,8 @@
 /* Begin PBXFileReference section */
 		0F50DDFD1D6D335462731900 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		85E3738CA73D54F0EAC43B1A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CE0306811CC9BD5400BEE652 /* Buy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buy.h; sourceTree = "<group>"; };
+		CE0306821CC9BD5400BEE652 /* Buy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Buy.m; sourceTree = "<group>"; };
 		CE0CCFF31CA395F70015FD0A /* Projects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Projects.h; sourceTree = "<group>"; };
 		CE0CCFF41CA395F70015FD0A /* Projects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Projects.m; sourceTree = "<group>"; };
 		CE0CCFF61CA397340015FD0A /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
@@ -357,6 +362,10 @@
 		CE4F48601CA238EF00FBB678 /* UIButton+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Common.m"; sourceTree = "<group>"; };
 		CE8594D91CA1154D007FEC17 /* StaffInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffInfoViewController.h; sourceTree = "<group>"; };
 		CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffInfoViewController.m; sourceTree = "<group>"; };
+		CE91B5831CC080D500DF3CFD /* BuyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyListViewController.h; sourceTree = "<group>"; };
+		CE91B5841CC080D500DF3CFD /* BuyListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyListViewController.m; sourceTree = "<group>"; };
+		CE91B5861CC082DC00DF3CFD /* BuyListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyListCell.h; sourceTree = "<group>"; };
+		CE91B5871CC082DC00DF3CFD /* BuyListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyListCell.m; sourceTree = "<group>"; };
 		CEB573B31CA4DF820020198A /* AddressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressManager.h; sourceTree = "<group>"; };
 		CEB573B41CA4DF820020198A /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManager.m; sourceTree = "<group>"; };
 		CEB573B61CA4DF910020198A /* address.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
@@ -853,6 +862,8 @@
 				CE4F485A1CA12BCC00FBB678 /* UserInfoIconCell.m */,
 				CEB573FD1CABCF330020198A /* CaseImageCell.h */,
 				CEB573FE1CABCF330020198A /* CaseImageCell.m */,
+				CE91B5861CC082DC00DF3CFD /* BuyListCell.h */,
+				CE91B5871CC082DC00DF3CFD /* BuyListCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -862,6 +873,8 @@
 			children = (
 				CE2AED871C99020E0039CB5A /* NoteViewController.h */,
 				CE2AED881C99020E0039CB5A /* NoteViewController.m */,
+				CE91B5831CC080D500DF3CFD /* BuyListViewController.h */,
+				CE91B5841CC080D500DF3CFD /* BuyListViewController.m */,
 				CEDF67EB1C9D33FF006D6D26 /* OrderViewController.h */,
 				CEDF67EC1C9D33FF006D6D26 /* OrderViewController.m */,
 			);
@@ -936,6 +949,8 @@
 				CEB573DB1CA90FA10020198A /* Note.m */,
 				CEB574001CABD3BF0020198A /* Case.h */,
 				CEB574011CABD3BF0020198A /* Case.m */,
+				CE0306811CC9BD5400BEE652 /* Buy.h */,
+				CE0306821CC9BD5400BEE652 /* Buy.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1416,6 +1431,7 @@
 				CED1CD221C9FC62C007ED5FD /* SDWebImageManager+MJ.m in Sources */,
 				CE13C50C1C96EFB100AFC539 /* IntroductionViewController.m in Sources */,
 				CE2AED311C97AD7C0039CB5A /* BaseViewController.m in Sources */,
+				CE91B5851CC080D500DF3CFD /* BuyListViewController.m in Sources */,
 				CE2AED851C98FE310039CB5A /* Architecture_RootViewController.m in Sources */,
 				CE2AED801C97EA7C0039CB5A /* NotesCell.m in Sources */,
 				CE2AED791C97DB660039CB5A /* UIView+Common.m in Sources */,
@@ -1542,6 +1558,7 @@
 				CE2AED2A1C96F4B50039CB5A /* NSDate+Helper.m in Sources */,
 				CE13C4CF1C96A01400AFC539 /* AppDelegate.m in Sources */,
 				CE13C4D81C96A01400AFC539 /* RunTai.xcdatamodeld in Sources */,
+				CE0306831CC9BD5400BEE652 /* Buy.m in Sources */,
 				CE13C4CC1C96A01400AFC539 /* main.m in Sources */,
 				CEDF67D71C9CFDBD006D6D26 /* AbstractActionSheetPicker.m in Sources */,
 				CE2AED1C1C96F3FB0039CB5A /* EAIntroView.m in Sources */,
@@ -1559,6 +1576,7 @@
 				CEDF67DC1C9CFDBD006D6D26 /* ActionSheetStringPicker.m in Sources */,
 				CE2AED441C97AEC30039CB5A /* Home_RootViewController.m in Sources */,
 				CE2AED5A1C97B2EC0039CB5A /* RDVTabBarItem.m in Sources */,
+				CE91B5881CC082DC00DF3CFD /* BuyListCell.m in Sources */,
 				CEDF67D91C9CFDBD006D6D26 /* ActionSheetDatePicker.m in Sources */,
 				CED1CD261C9FCD80007ED5FD /* GenderButton.m in Sources */,
 				CE4F485E1CA227DD00FBB678 /* RunTai_NetAPIManager.m in Sources */,

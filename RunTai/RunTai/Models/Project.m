@@ -17,6 +17,9 @@
         if (!self.list) {
             self.list = [[NSMutableArray alloc] initWithCapacity:2];
         }
+        if (!self.buylist) {
+            self.buylist=[NSMutableArray arrayWithCapacity:0];
+        }
     }
     return self;
 }

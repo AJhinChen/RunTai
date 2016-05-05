@@ -248,6 +248,20 @@
     [querys findObjectsInBackgroundWithBlock:block];
 }
 
+- (void)request_BuyList_WithArray:(NSArray *)list block:(AVArrayResultBlock)block{
+    NSMutableArray *buylist = [NSMutableArray array];
+    for (AVObject *object in list) {
+        AVObject *obj = [AVQuery getObjectOfClass:@"Buy" objectId:object.objectId];
+        Buy *buy = [[Buy alloc]init];
+        buy.objectId = [obj objectForKey:@"objectId"];
+        buy.title = [obj objectForKey:@"title"];
+        buy.subtitle = [obj objectForKey:@"subtitle"];
+        buy.price = [obj objectForKey:@"price"];
+        [buylist addObject:buy];
+    }
+    block(buylist,nil);
+}
+
 - (void)request_SearchProjectOrUser_WithString:(NSString *)string block:(AVArrayResultBlock)block{
     NSMutableArray *querysArr = [NSMutableArray array];
     AVQuery *query = [AVQuery queryWithClassName:@"_User"];

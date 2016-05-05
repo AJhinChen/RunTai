@@ -9,6 +9,7 @@
 #import "Projects.h"
 #import "Login.h"
 #import "Project.h"
+#import "Buy.h"
 
 @implementation Projects
 
@@ -76,6 +77,7 @@
         project.owner=[Login transfer:[object objectForKey:@"owner"]];
         project.responsible = [Login transfer:[object objectForKey:@"responsible"]];
         project.list = [object objectForKey:@"notes"];
+        project.buylist = [object objectForKey:@"buylist"];
         [pros.list addObject:project];
         [pros.loadedObjectIDs addObject:object.objectId];
     }

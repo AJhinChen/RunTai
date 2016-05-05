@@ -12,6 +12,7 @@
 #import "Project.h"
 #import "Login.h"
 #import "Register.h"
+#import "Buy.h"
 #import "ProjectCount.h"
 
 @interface RunTai_NetAPIManager : NSObject
@@ -55,6 +56,9 @@
 #pragma mark - Arch
 
 - (void)request_LoadStaffs:(NSString *)location :(AVArrayResultBlock)block;
+
+
+- (void)request_BuyList_WithArray:(NSArray *)list block:(AVArrayResultBlock)block;
 
 
 

@@ -51,6 +51,9 @@
 		CE13C5021C96ED9900AFC539 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C5011C96ED9900AFC539 /* SMPageControl.m */; };
 		CE13C50D1C96EFB100AFC539 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C5081C96EFB100AFC539 /* LoginViewController.m */; };
 		CE13C50E1C96EFB100AFC539 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C50A1C96EFB100AFC539 /* RegisterViewController.m */; };
+		CE2643621D224A910071468C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE26435F1D224A910071468C /* Default-568h@2x.png */; };
+		CE2643631D224A910071468C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2643601D224A910071468C /* Default.png */; };
+		CE2643641D224A910071468C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2643611D224A910071468C /* Default@2x.png */; };
 		CE2AED1B1C96F3FB0039CB5A /* EAIntroPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED181C96F3FB0039CB5A /* EAIntroPage.m */; };
 		CE2AED1C1C96F3FB0039CB5A /* EAIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED1A1C96F3FB0039CB5A /* EAIntroView.m */; };
 		CE2AED201C96F4390039CB5A /* EARestrictedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED1F1C96F4390039CB5A /* EARestrictedScrollView.m */; };
@@ -300,6 +303,9 @@
 		CE13C5091C96EFB100AFC539 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		CE13C50A1C96EFB100AFC539 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		CE13C5101C96EFC100AFC539 /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
+		CE26435F1D224A910071468C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		CE2643601D224A910071468C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		CE2643611D224A910071468C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CE2AED171C96F3FB0039CB5A /* EAIntroPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroPage.h; sourceTree = "<group>"; };
 		CE2AED181C96F3FB0039CB5A /* EAIntroPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAIntroPage.m; sourceTree = "<group>"; };
 		CE2AED191C96F3FB0039CB5A /* EAIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroView.h; sourceTree = "<group>"; };
@@ -716,6 +722,9 @@
 		CE13C4BE1C96A01400AFC539 = {
 			isa = PBXGroup;
 			children = (
+				CE26435F1D224A910071468C /* Default-568h@2x.png */,
+				CE2643601D224A910071468C /* Default.png */,
+				CE2643611D224A910071468C /* Default@2x.png */,
 				CE13C4C91C96A01400AFC539 /* RunTai */,
 				CE13C4C81C96A01400AFC539 /* Products */,
 				DB72F3A92A5ABA27E957B171 /* Pods */,
@@ -1492,6 +1501,7 @@
 				TargetAttributes = {
 					CE13C4C61C96A01400AFC539 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 4N9EWGSD26;
 					};
 				};
 			};
@@ -1521,14 +1531,17 @@
 			files = (
 				CE2AED2B1C96F4B50039CB5A /* README.textile in Resources */,
 				CED1CCED1C9FA043007ED5FD /* SVWebViewControllerActivityReport-iPad@2x.png in Resources */,
+				CE2643631D224A910071468C /* Default.png in Resources */,
 				CED1CCE91C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				CED1CCF31C9FA043007ED5FD /* SVWebViewControllerActivitySafari@2x.png in Resources */,
 				CE1183061CB0CE340096ECA1 /* ImagesPicker.xcassets in Resources */,
+				CE2643621D224A910071468C /* Default-568h@2x.png in Resources */,
 				CE13C4DA1C96A01400AFC539 /* Assets.xcassets in Resources */,
 				CE13C4E51C96A14A00AFC539 /* Podfile in Resources */,
 				CE2AED8E1C996F1E0039CB5A /* Launch Screen.storyboard in Resources */,
 				CEB573B71CA4DF910020198A /* address.json in Resources */,
 				CE2AED821C97EF1E0039CB5A /* IMG_NotesDemo.png in Resources */,
+				CE2643641D224A910071468C /* Default@2x.png in Resources */,
 				CED1CD031C9FA4CF007ED5FD /* angle-mask@2x.png in Resources */,
 				CED1CCE51C9FA043007ED5FD /* SVWebViewController.strings in Resources */,
 				CED1CCEA1C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */,
@@ -1897,15 +1910,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunTai/RunTai-Prefix.pch";
 				INFOPLIST_FILE = RunTai/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.mytvgdpushtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.runtai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b538fc4a-52d1-458f-9f97-40cd9a1695c1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1919,15 +1932,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunTai/RunTai-Prefix.pch";
 				INFOPLIST_FILE = RunTai/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/RunTai/Vendor/SDKExport",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tvb.mytvgdpushtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ajhin.runtai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b538fc4a-52d1-458f-9f97-40cd9a1695c1";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

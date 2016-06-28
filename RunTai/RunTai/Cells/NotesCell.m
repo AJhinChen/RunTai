@@ -212,6 +212,7 @@
     [self.backgroundImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(cellWidth, cellHeight));
         make.left.equalTo(self.contentView.mas_left).offset(paddingToLeft);
+        make.top.equalTo(self.contentView.mas_top);
     }];
     
     [self.bgBlurredView mas_makeConstraints:^(MASConstraintMaker *make) {

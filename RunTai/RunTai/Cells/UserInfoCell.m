@@ -77,6 +77,7 @@
     if (!_curUser) {
         [self.contentView addSubview:_loginBtn];
         [_loginBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentView.mas_left);
             make.centerY.equalTo(_proImgView.mas_centerY);
             make.width.mas_equalTo(kScreen_Width);
             make.height.mas_equalTo([UserInfoCell cellHeight]);

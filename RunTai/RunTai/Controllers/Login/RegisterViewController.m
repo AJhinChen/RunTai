@@ -166,7 +166,7 @@
     lineLabel.text = tipStr;
     [lineLabel addLinkToTransitInformation:@{@"actionStr" : @"gotoServiceTermsVC"} withRange:[tipStr rangeOfString:@"《润泰装饰 服务条款》"]];
     CGRect footerBtnFrame = _footerBtn.frame;
-    lineLabel.frame = CGRectMake(CGRectGetMinX(footerBtnFrame), CGRectGetMaxY(footerBtnFrame) +12, CGRectGetWidth(footerBtnFrame), 65);
+    lineLabel.frame = CGRectMake(CGRectGetMinX(footerBtnFrame), CGRectGetMaxY(footerBtnFrame) +12, CGRectGetWidth(footerBtnFrame), 90);
     [footerV addSubview:lineLabel];
     
     return footerV;

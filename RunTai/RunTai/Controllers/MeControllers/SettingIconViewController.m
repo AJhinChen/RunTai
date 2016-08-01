@@ -22,30 +22,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"个人头像";
+    self.navigationTitle = @"个人头像";
     self.view.backgroundColor = GlobleTableViewBackgroundColor;
     
-    _myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -40, kScreen_Width, kScreen_Height)];
+    _myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
     _myImageView.contentMode = UIViewContentModeScaleAspectFit;
     _myImageView.backgroundColor = [UIColor clearColor];
     [_myImageView sd_setImageWithURL:[_curUser.avatar urlImageWithCodePathResizeToView:_myImageView] placeholderImage:kPlaceholderUserIcon];
     [self.view addSubview:_myImageView];
     
-    self.navigationItem.rightBarButtonItem = [self BarButtonItemWithBackgroudImageName:@"navigationbar_more" highBackgroudImageName:@"navigationbar_more_highlighted" target:self action:@selector(changeIconClicked)];
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+    NavBarButtonItem *rightButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_more"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_more_highlighted"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [rightButtonBack addTarget:self
+                       action:@selector(changeIconClicked)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationRightButton = rightButtonBack; //添加导航栏左侧按钮集合
 }
 
-- (UIBarButtonItem *)BarButtonItemWithBackgroudImageName:(NSString *)backgroudImage highBackgroudImageName:(NSString *)highBackgroudImageName target:(id)target action:(SEL)action
-{
-    UIButton *button = [[UIButton alloc] init];
-    [button setBackgroundImage:[UIImage imageWithName:backgroudImage] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageWithName:highBackgroudImageName] forState:UIControlStateHighlighted];
-    
-    // 设置按钮的尺寸为背景图片的尺寸
-    button.size = button.currentBackgroundImage.size;
-    
-    // 监听按钮点击
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    return [[UIBarButtonItem alloc] initWithCustomView:button];
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)changeIconClicked{

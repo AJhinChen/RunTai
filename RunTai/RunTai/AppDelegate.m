@@ -13,6 +13,7 @@
 #import "Login.h"
 #import "NoteViewController.h"
 #import "Home_RootViewController.h"
+#import "BaseNavigationController.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -234,7 +235,10 @@
 - (void)setupTabViewController{
     RootTabViewController *rootVC = [[RootTabViewController alloc] init];
     rootVC.tabBar.translucent = YES;
-    [self.window setRootViewController:rootVC];
+    BaseNavigationController *nav = [[BaseNavigationController alloc]initWithRootViewController:rootVC];
+    //设置手势
+    nav.interactivePopGestureRecognizerType = InteractivePopGestureRecognizerFullScreen; //全屏手势
+    [self.window setRootViewController:nav];
 }
 
 - (void)customizeInterface {

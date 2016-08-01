@@ -20,6 +20,7 @@
 #import "RunTai_NetAPIManager.h"
 #import "AddressManager.h"
 #import "ActionSheetStringPicker.h"
+#import "ServiceTermsViewController.h"
 
 @interface RegisterViewController ()<UITableViewDataSource, UITableViewDelegate,TTTAttributedLabelDelegate>
 
@@ -44,9 +45,24 @@
     // Do any additional setup after loading the view.
     self.phoneCodeCellIdentifier = [Input_OnlyText_Cell randomCellIdentifierOfPhoneCodeType];
     if (_methodType == RegisterMethodLogin) {
-        self.title = @"注册";
+        self.navigationTitle = @"注册";
+        NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                     imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+        
+        [leftButtonBack addTarget:self
+                           action:@selector(buttonBackToLastView)
+                 forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+        
+        self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
     }else{
-        self.title = @"申请免费设计";
+        self.navigationTitle = @"申请免费设计";
+        NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithTitle:@"取消"]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+        
+        [leftButtonBack addTarget:self
+                           action:@selector(dismissSelf)
+                 forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+        
+        self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
     }
     if (!_myRegister) {
         self.myRegister = [Register new];
@@ -71,7 +87,7 @@
     
     //    添加myTableView
     _myTableView = ({
-        TPKeyboardAvoidingTableView *tableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        TPKeyboardAvoidingTableView *tableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
         [tableView registerClass:[Input_OnlyText_Cell class] forCellReuseIdentifier:kCellIdentifier_Input_OnlyText_Cell_Text];
         [tableView registerClass:[Input_OnlyText_Cell class] forCellReuseIdentifier:kCellIdentifier_Input_OnlyText_Cell_Password];
         [tableView registerClass:[Input_OnlyText_Cell class] forCellReuseIdentifier:kCellIdentifier_Input_OnlyText_Cell_Gender];
@@ -81,19 +97,17 @@
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
-    [self setupNav];
     self.myTableView.tableHeaderView = [self customHeaderView];
     self.myTableView.tableFooterView=[self customFooterView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -101,11 +115,10 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - Nav
-- (void)setupNav{
-    if (self.navigationController.childViewControllers.count <= 1) {
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithBtnTitle:@"取消" target:self action:@selector(dismissSelf)];
-    }
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)dismissSelf{
@@ -450,9 +463,12 @@
 
 #pragma mark VC
 - (void)gotoServiceTermsVC{
-    NSString *pathForServiceterms = [[NSBundle mainBundle] pathForResource:@"service_terms" ofType:@"html"];
-    WebViewController *vc = [WebViewController webVCWithUrlStr:pathForServiceterms];
-    [self.navigationController pushViewController:vc animated:YES];
+//    NSString *pathForServiceterms = [[NSBundle mainBundle] pathForResource:@"service_terms" ofType:@"html"];
+//    WebViewController *vc = [WebViewController webVCWithUrlStr:pathForServiceterms];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
+    ServiceTermsViewController *vc = [[ServiceTermsViewController alloc]init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

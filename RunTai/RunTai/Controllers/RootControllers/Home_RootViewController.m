@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationTitle = @"热门笔录";
     
     if (!self.myProjects) {
         self.myProjects = [[Projects alloc]init];
@@ -53,7 +54,7 @@
     
     _searchedArray = [NSMutableArray array];
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -63,9 +64,9 @@
         tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor];
         tableView.sectionIndexColor = [UIColor colorWithHexString:@"0x666666"];
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
     _mySearchBar = ({
@@ -101,24 +102,26 @@
     
     switch (self.myProjects.type) {
         case ProjectsTypeHot:
-        self.title = @"热门笔录";
-        [self setupNavBtn];
+        self.labelTitle.text = @"热门笔录";
+        [self createNavigationBarButtonItem];
         break;
         case ProjectsTypeFresh:
-        self.title = @"新鲜笔录";
-        [self setupNavBtn];
+        self.labelTitle.text = @"新鲜笔录";
+        [self createNavigationBarButtonItem];
         break;
         case ProjectsTypeCreated:
-        self.title = @"我的订单";
+            self.labelTitle.text = @"我的订单";
+            [self createBackButtonItem];
         [self configTableView:4];
         break;
         case ProjectsTypeWatched:
-        self.title = @"我的收藏";
+            self.labelTitle.text = @"我的收藏";
+            [self createBackButtonItem];
         [self configTableView:6];
         break;
         default:
-        self.title = @"热门笔录";
-        [self setupNavBtn];
+        self.labelTitle.text = @"热门笔录";
+        [self createNavigationBarButtonItem];
         break;
     }
     self.tabBarItem.title = @"笔录";
@@ -132,7 +135,7 @@
 - (void)configTableView:(NSInteger)pageIndex{
     switch (pageIndex/2) {
         case ProjectsTypeHot:
-            self.title = @"热门笔录";
+            self.labelTitle.text = @"热门笔录";
             if (!self.myTableView.tableHeaderView) {
                 self.myTableView.tableHeaderView = self.mySearchBar;
             }
@@ -144,7 +147,7 @@
             return;
             break;
         case ProjectsTypeFresh:
-            self.title = @"新鲜笔录";
+            self.labelTitle.text = @"新鲜笔录";
             if (!self.myTableView.tableHeaderView) {
                 self.myTableView.tableHeaderView = self.mySearchBar;
             }
@@ -160,7 +163,7 @@
                 [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
                 return;
             }
-            self.title = @"我的订单";
+            self.labelTitle.text = @"我的订单";
             [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
             self.myTableView.tableHeaderView = nil;
             self.myTableView.mj_header.hidden = YES;
@@ -175,14 +178,14 @@
                 [NSObject showHudTipStr:@"没有相关笔录可以查看!"];
                 return;
             }
-            self.title = @"我的收藏";
+            self.labelTitle.text = @"我的收藏";
             [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
             self.myTableView.tableHeaderView = nil;
             self.myTableView.mj_header.hidden = YES;
             self.myTableView.mj_footer.hidden = YES;
             break;
         default:
-            self.title = @"热门笔录";
+            self.labelTitle.text = @"热门笔录";
             break;
     }
     self.tabBarItem.title = @"笔录";
@@ -214,25 +217,57 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - nav item
-- (void)setupNavBtn{
-    
-    self.navigationItem.leftBarButtonItem = [self BarButtonItemWithBackgroudImageName:@"filtertBtn_normal_Nav" highBackgroudImageName:@"filterBtn_selected_Nav" target:self action:@selector(fliterClicked:)];
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (UIBarButtonItem *)BarButtonItemWithBackgroudImageName:(NSString *)backgroudImage highBackgroudImageName:(NSString *)highBackgroudImageName target:(id)target action:(SEL)action
-{
-    UIButton *button = [[UIButton alloc] init];
-    [button setBackgroundImage:[UIImage imageWithName:backgroudImage] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageWithName:highBackgroudImageName] forState:UIControlStateHighlighted];
+#pragma mark - create BarButtonItem method
+
+- (void)createBackButtonItem{
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
-    // 设置按钮的尺寸为背景图片的尺寸
-    button.size = button.currentBackgroundImage.size;
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     
-    // 监听按钮点击
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    return [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
 }
+
+- (void)createNavigationBarButtonItem{
+    //创建导航栏按钮的方法（左右两侧最多可以各添加两个按钮）
+    NavBarButtonItem *leftButtonFliter = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"filtertBtn_normal_Nav"]
+                                                                 imageSelected:[UIImage imageNamed:@"filterBtn_selected_Nav"]];
+    //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonFliter addTarget:self
+                         action:@selector(fliterClicked:)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonFliter; //添加导航栏左侧按钮集合
+    
+}
+
+//#pragma mark - nav item
+//- (void)setupNavBtn{
+//    
+//    self.navigationItem.leftBarButtonItem = [self BarButtonItemWithBackgroudImageName:@"filtertBtn_normal_Nav" highBackgroudImageName:@"filterBtn_selected_Nav" target:self action:@selector(fliterClicked:)];
+//}
+//
+//- (UIBarButtonItem *)BarButtonItemWithBackgroudImageName:(NSString *)backgroudImage highBackgroudImageName:(NSString *)highBackgroudImageName target:(id)target action:(SEL)action
+//{
+//    UIButton *button = [[UIButton alloc] init];
+//    [button setBackgroundImage:[UIImage imageWithName:backgroudImage] forState:UIControlStateNormal];
+//    [button setBackgroundImage:[UIImage imageWithName:highBackgroudImageName] forState:UIControlStateHighlighted];
+//    
+//    // 设置按钮的尺寸为背景图片的尺寸
+//    button.size = button.currentBackgroundImage.size;
+//    
+//    // 监听按钮点击
+//    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+//    return [[UIBarButtonItem alloc] initWithCustomView:button];
+//}
 
 - (void)setupOrderBtn{
     CGFloat buttonHeight = kScaleFrom_iPhone5_Desgin(45);
@@ -251,7 +286,7 @@
     [_orderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(buttonHeight, buttonHeight));
         make.right.equalTo(self.view.mas_right).offset(-11);
-        make.bottom.equalTo(self.view).offset(-68);
+        make.bottom.equalTo(self.view).offset(-18);
     }];
 }
 
@@ -560,6 +595,19 @@
         __weak typeof(self) weakSelf = self;
         switch (self.myProjects.type) {
             case ProjectsTypeHot:{
+                [[RunTai_NetAPIManager sharedManager] request_SearchProjectOrUser_WithString:string block:^(NSArray *objects, NSError *error) {
+                    if ([objects count]>0) {
+                        weakSelf.myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
+                        weakSelf.searchedArray = weakSelf.myProjects.list;
+                        [weakSelf.myTableView reloadData];
+                    }else{
+                        [weakSelf.searchedArray removeAllObjects];
+                        [weakSelf.myTableView reloadData];
+                    }
+                }];
+            }
+                break;
+            case ProjectsTypeFresh:{
                 [[RunTai_NetAPIManager sharedManager] request_SearchProjectOrUser_WithString:string block:^(NSArray *objects, NSError *error) {
                     if ([objects count]>0) {
                         weakSelf.myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];

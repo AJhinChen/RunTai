@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3299DBB5B39BCE3A2EDDD0E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5190DAAAFACDBD09EF7EBA1 /* libPods.a */; };
 		CE0306831CC9BD5400BEE652 /* Buy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0306821CC9BD5400BEE652 /* Buy.m */; };
+		CE0B4A8A1D2CDCD900164053 /* NoteBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0B4A891D2CDCD900164053 /* NoteBaseViewController.m */; };
 		CE0CCFF51CA395F70015FD0A /* Projects.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF41CA395F70015FD0A /* Projects.m */; };
 		CE0CCFF81CA397340015FD0A /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0CCFF71CA397340015FD0A /* Project.m */; };
 		CE13C4CC1C96A01400AFC539 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13C4CB1C96A01400AFC539 /* main.m */; };
@@ -91,11 +92,16 @@
 		CE2AEE361C9B90740039CB5A /* MenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AEE301C9B90740039CB5A /* MenuButton.m */; };
 		CE2AEE371C9B90740039CB5A /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AEE321C9B90740039CB5A /* MenuItem.m */; };
 		CE2AEE381C9B90740039CB5A /* PopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AEE341C9B90740039CB5A /* PopMenu.m */; };
+		CE4045A41D2B51E7003C5443 /* PushTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4045A11D2B51E7003C5443 /* PushTransitionAnimation.m */; };
+		CE4045A51D2B51E7003C5443 /* PopTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4045A31D2B51E7003C5443 /* PopTransitionAnimation.m */; };
+		CE4045A81D2B54B6003C5443 /* NavBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4045A71D2B54B6003C5443 /* NavBarButtonItem.m */; };
 		CE4F48551CA128BE00FBB678 /* EaseUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F48541CA128BE00FBB678 /* EaseUserHeaderView.m */; };
 		CE4F48581CA12B8300FBB678 /* UserInfoTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F48571CA12B8300FBB678 /* UserInfoTextCell.m */; };
 		CE4F485B1CA12BCC00FBB678 /* UserInfoIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F485A1CA12BCC00FBB678 /* UserInfoIconCell.m */; };
 		CE4F485E1CA227DD00FBB678 /* RunTai_NetAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F485D1CA227DD00FBB678 /* RunTai_NetAPIManager.m */; };
 		CE4F48611CA238EF00FBB678 /* UIButton+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F48601CA238EF00FBB678 /* UIButton+Common.m */; };
+		CE5B14761D4EDBC200468340 /* ServiceTermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B14751D4EDBC200468340 /* ServiceTermsViewController.m */; };
+		CE5B14781D4EDEA400468340 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE5B14771D4EDEA400468340 /* terms.txt */; };
 		CE8594DB1CA1154D007FEC17 /* StaffInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */; };
 		CE91B5851CC080D500DF3CFD /* BuyListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE91B5841CC080D500DF3CFD /* BuyListViewController.m */; };
 		CE91B5881CC082DC00DF3CFD /* BuyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE91B5871CC082DC00DF3CFD /* BuyListCell.m */; };
@@ -196,6 +202,8 @@
 		85E3738CA73D54F0EAC43B1A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CE0306811CC9BD5400BEE652 /* Buy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buy.h; sourceTree = "<group>"; };
 		CE0306821CC9BD5400BEE652 /* Buy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Buy.m; sourceTree = "<group>"; };
+		CE0B4A881D2CDCD900164053 /* NoteBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteBaseViewController.h; sourceTree = "<group>"; };
+		CE0B4A891D2CDCD900164053 /* NoteBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteBaseViewController.m; sourceTree = "<group>"; };
 		CE0CCFF31CA395F70015FD0A /* Projects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Projects.h; sourceTree = "<group>"; };
 		CE0CCFF41CA395F70015FD0A /* Projects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Projects.m; sourceTree = "<group>"; };
 		CE0CCFF61CA397340015FD0A /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
@@ -356,6 +364,12 @@
 		CE2AEE321C9B90740039CB5A /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
 		CE2AEE331C9B90740039CB5A /* PopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopMenu.h; sourceTree = "<group>"; };
 		CE2AEE341C9B90740039CB5A /* PopMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopMenu.m; sourceTree = "<group>"; };
+		CE4045A01D2B51E7003C5443 /* PushTransitionAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushTransitionAnimation.h; sourceTree = "<group>"; };
+		CE4045A11D2B51E7003C5443 /* PushTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushTransitionAnimation.m; sourceTree = "<group>"; };
+		CE4045A21D2B51E7003C5443 /* PopTransitionAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopTransitionAnimation.h; sourceTree = "<group>"; };
+		CE4045A31D2B51E7003C5443 /* PopTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopTransitionAnimation.m; sourceTree = "<group>"; };
+		CE4045A61D2B54B5003C5443 /* NavBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavBarButtonItem.h; sourceTree = "<group>"; };
+		CE4045A71D2B54B6003C5443 /* NavBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavBarButtonItem.m; sourceTree = "<group>"; };
 		CE4F48531CA128BE00FBB678 /* EaseUserHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseUserHeaderView.h; sourceTree = "<group>"; };
 		CE4F48541CA128BE00FBB678 /* EaseUserHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseUserHeaderView.m; sourceTree = "<group>"; };
 		CE4F48561CA12B8300FBB678 /* UserInfoTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTextCell.h; sourceTree = "<group>"; };
@@ -366,6 +380,9 @@
 		CE4F485D1CA227DD00FBB678 /* RunTai_NetAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunTai_NetAPIManager.m; sourceTree = "<group>"; };
 		CE4F485F1CA238EF00FBB678 /* UIButton+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Common.h"; sourceTree = "<group>"; };
 		CE4F48601CA238EF00FBB678 /* UIButton+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Common.m"; sourceTree = "<group>"; };
+		CE5B14741D4EDBC200468340 /* ServiceTermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceTermsViewController.h; sourceTree = "<group>"; };
+		CE5B14751D4EDBC200468340 /* ServiceTermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceTermsViewController.m; sourceTree = "<group>"; };
+		CE5B14771D4EDEA400468340 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terms.txt; sourceTree = "<group>"; };
 		CE8594D91CA1154D007FEC17 /* StaffInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffInfoViewController.h; sourceTree = "<group>"; };
 		CE8594DA1CA1154D007FEC17 /* StaffInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffInfoViewController.m; sourceTree = "<group>"; };
 		CE91B5831CC080D500DF3CFD /* BuyListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyListViewController.h; sourceTree = "<group>"; };
@@ -589,6 +606,7 @@
 				CEB574051CAC3C1D0020198A /* icon.png */,
 				CE2AED811C97EF1E0039CB5A /* IMG_NotesDemo.png */,
 				CEB574071CACB3560020198A /* case.json */,
+				CE5B14771D4EDEA400468340 /* terms.txt */,
 				CE2AEDF81C9A82D80039CB5A /* Models */,
 				CE2AED7D1C97E9460039CB5A /* Cells */,
 				CE2AED6F1C97D9C50039CB5A /* Views */,
@@ -613,6 +631,7 @@
 		CE13C4EB1C96E4EC00AFC539 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				CE40459F1D2B51D8003C5443 /* TransitionAnimation */,
 				CE2AED101C96F3A90039CB5A /* Manager */,
 				CE13C4EC1C96E51D00AFC539 /* OC_Category */,
 				CE2AED4B1C97B21E0039CB5A /* Common */,
@@ -721,6 +740,10 @@
 			children = (
 				CE2AED2F1C97AD7C0039CB5A /* BaseViewController.h */,
 				CE2AED301C97AD7C0039CB5A /* BaseViewController.m */,
+				CE0B4A881D2CDCD900164053 /* NoteBaseViewController.h */,
+				CE0B4A891D2CDCD900164053 /* NoteBaseViewController.m */,
+				CE4045A61D2B54B5003C5443 /* NavBarButtonItem.h */,
+				CE4045A71D2B54B6003C5443 /* NavBarButtonItem.m */,
 				CED1CCC51C9F9FFE007ED5FD /* WebViewController.h */,
 				CED1CCC61C9F9FFE007ED5FD /* WebViewController.m */,
 				CE13C5101C96EFC100AFC539 /* BaseNavigationController.h */,
@@ -735,6 +758,8 @@
 				CEB573FB1CABCBCF0020198A /* Case_RootViewController.m */,
 				CE2AED481C97AEE50039CB5A /* Me_RootViewController.h */,
 				CE2AED491C97AEE50039CB5A /* Me_RootViewController.m */,
+				CE5B14741D4EDBC200468340 /* ServiceTermsViewController.h */,
+				CE5B14751D4EDBC200468340 /* ServiceTermsViewController.m */,
 			);
 			path = RootControllers;
 			sourceTree = "<group>";
@@ -1030,6 +1055,17 @@
 				CE2AEE341C9B90740039CB5A /* PopMenu.m */,
 			);
 			path = PopMenu;
+			sourceTree = "<group>";
+		};
+		CE40459F1D2B51D8003C5443 /* TransitionAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				CE4045A01D2B51E7003C5443 /* PushTransitionAnimation.h */,
+				CE4045A11D2B51E7003C5443 /* PushTransitionAnimation.m */,
+				CE4045A21D2B51E7003C5443 /* PopTransitionAnimation.h */,
+				CE4045A31D2B51E7003C5443 /* PopTransitionAnimation.m */,
+			);
+			path = TransitionAnimation;
 			sourceTree = "<group>";
 		};
 		CE8594D81CA114D2007FEC17 /* ArchitectureControllers */ = {
@@ -1362,6 +1398,7 @@
 				CE13C4DA1C96A01400AFC539 /* Assets.xcassets in Resources */,
 				CE2643681D224EE60071468C /* Default-568h@2x.png in Resources */,
 				CE13C4E51C96A14A00AFC539 /* Podfile in Resources */,
+				CE5B14781D4EDEA400468340 /* terms.txt in Resources */,
 				CE2AED8E1C996F1E0039CB5A /* Launch Screen.storyboard in Resources */,
 				CEB573B71CA4DF910020198A /* address.json in Resources */,
 				CE2AED821C97EF1E0039CB5A /* IMG_NotesDemo.png in Resources */,
@@ -1493,6 +1530,7 @@
 				CED1CCBC1C9F9923007ED5FD /* UITTTAttributedLabel.m in Sources */,
 				CEB574021CABD3BF0020198A /* Case.m in Sources */,
 				CED1CD1B1C9FC62C007ED5FD /* MJPhoto.m in Sources */,
+				CE0B4A8A1D2CDCD900164053 /* NoteBaseViewController.m in Sources */,
 				CED1CD1D1C9FC62C007ED5FD /* MJPhotoBrowser.m in Sources */,
 				CED1CD711C9FEB85007ED5FD /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				CE2AEE011C9A965E0039CB5A /* UserInfoCell.m in Sources */,
@@ -1503,6 +1541,7 @@
 				CE2AEE2B1C9AF9A00039CB5A /* WXMediaMessage+messageConstruct.m in Sources */,
 				CE4F48551CA128BE00FBB678 /* EaseUserHeaderView.m in Sources */,
 				CE2AEE361C9B90740039CB5A /* MenuButton.m in Sources */,
+				CE4045A51D2B51E7003C5443 /* PopTransitionAnimation.m in Sources */,
 				CE2AEE371C9B90740039CB5A /* MenuItem.m in Sources */,
 				CEDF67EA1C9D1C3E006D6D26 /* Helper.m in Sources */,
 				CE2AEE291C9AF9A00039CB5A /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
@@ -1535,12 +1574,15 @@
 				CE2AEDBD1C997F9E0039CB5A /* UIButton+WebCache.m in Sources */,
 				CED1CD701C9FEB85007ED5FD /* AFNetworkActivityIndicatorManager.m in Sources */,
 				CE2AED581C97B2EC0039CB5A /* RDVTabBar.m in Sources */,
+				CE4045A81D2B54B6003C5443 /* NavBarButtonItem.m in Sources */,
 				CED1CD201C9FC62C007ED5FD /* MJPhotoToolbar.m in Sources */,
 				CE0CCFF81CA397340015FD0A /* Project.m in Sources */,
+				CE4045A41D2B51E7003C5443 /* PushTransitionAnimation.m in Sources */,
 				CE2AEDCA1C99803D0039CB5A /* YLImageView.m in Sources */,
 				CE2AEDB91C997F9E0039CB5A /* SDWebImageDownloader.m in Sources */,
 				CE4F48581CA12B8300FBB678 /* UserInfoTextCell.m in Sources */,
 				CE2AEDB51C997F9E0039CB5A /* NSData+ImageContentType.m in Sources */,
+				CE5B14761D4EDBC200468340 /* ServiceTermsViewController.m in Sources */,
 				CE2AEE1E1C9AF9560039CB5A /* WXApiRequestHandler.m in Sources */,
 				CE2AED7C1C97E0BE0039CB5A /* UIView+Frame.m in Sources */,
 				CE2AEDF11C99A37C0039CB5A /* Photo.m in Sources */,

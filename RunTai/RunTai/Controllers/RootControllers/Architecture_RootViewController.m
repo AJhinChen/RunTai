@@ -27,11 +27,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationTitle = @"设计团队";
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
     }
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -41,9 +42,9 @@
         tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor];
         tableView.sectionIndexColor = [UIColor colorWithHexString:@"0x666666"];
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
     [self setNav];
@@ -73,10 +74,10 @@
 }
 
 - (void)loadStaffs{
-    [NSObject showLoadingView:@"加载中.."];
+//    [NSObject showLoadingView:@"加载中.."];
     typeof(self) __weak weakSelf= self;
     [[RunTai_NetAPIManager sharedManager] request_LoadStaffs:_type?@"上海":@"南京" :^(NSArray *objects, NSError *error) {
-        [NSObject hideLoadingView];
+//        [NSObject hideLoadingView];
         if ([objects count]>0) {
             for (AVUser *user in objects) {
                 [weakSelf.dataList addObject:[Login transfer:user]];
@@ -110,7 +111,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DirectorCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Director forIndexPath:indexPath];
     User *curUser = self.dataList[indexPath.section];
-    [cell setTitle:[NSString stringWithFormat:@"监察:%@",curUser.name] subtitle:[NSString stringWithFormat:@"职称:%@",curUser.professional] value:curUser.avatar];
+    [cell setTitle:[NSString stringWithFormat:@"名称:%@",curUser.name] subtitle:[NSString stringWithFormat:@"职称:%@",curUser.professional] value:curUser.avatar];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

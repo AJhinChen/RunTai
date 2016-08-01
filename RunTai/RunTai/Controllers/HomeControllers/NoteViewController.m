@@ -52,7 +52,7 @@ const CGFloat BackGroupHeight = 250;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.automaticallyAdjustsScrollViewInsets=NO;
+//    self.automaticallyAdjustsScrollViewInsets=NO;
     
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
@@ -119,14 +119,10 @@ const CGFloat BackGroupHeight = 250;
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:0.9]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    titleLabel.textColor=[UIColor clearColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:0.1]] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -136,8 +132,6 @@ const CGFloat BackGroupHeight = 250;
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self closeMenu];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"0xffffff"]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:nil];
 }
 
 -(void)setupUI
@@ -153,7 +147,7 @@ const CGFloat BackGroupHeight = 250;
     //
     BGView=[[UIView alloc]init];
     BGView.backgroundColor=[UIColor clearColor];
-    BGView.frame=CGRectMake(0, -BackGroupHeight, kScreen_Width, BackGroupHeight);
+    BGView.frame=CGRectMake(0, -BackGroupHeight-64, kScreen_Width, BackGroupHeight);
     
     [myTableView addSubview:BGView];
     
@@ -204,41 +198,50 @@ const CGFloat BackGroupHeight = 250;
         make.top.equalTo(nameLabel.mas_bottom).offset(paddingToLeft);
     }];
     
-    titleLabel=[[UILabel alloc]init];
-    titleLabel.textColor=[UIColor blackColor];
-    titleLabel.text=self.curPro.owner.name;
-    titleLabel.font=NavigationFont;
-    titleLabel.textAlignment=NSTextAlignmentCenter;
-    CGFloat titleWidth = [titleLabel.text getWidthWithFont:NavigationFont constrainedToSize:CGSizeMake(CGFLOAT_MAX, 25)];
-    titleLabel.frame = CGRectMake(0, 0, titleWidth, 25);
+    self.navigationTitle = self.curPro.owner.name;
+    self.labelTitle.alpha=0;
+//    titleLabel=[[UILabel alloc]init];
+//    titleLabel.textColor=[UIColor blackColor];
+//    titleLabel.text=self.curPro.owner.name;
+//    titleLabel.font=NavigationFont;
+//    titleLabel.textAlignment=NSTextAlignmentCenter;
+//    CGFloat titleWidth = [titleLabel.text getWidthWithFont:NavigationFont constrainedToSize:CGSizeMake(CGFLOAT_MAX, 25)];
+//    titleLabel.frame = CGRectMake(0, 0, titleWidth, 25);
+//    
+//    self.navigationItem.titleView=titleLabel;
+//    titleLabel.alpha=0;
+    //创建导航栏按钮的方法（左右两侧最多可以各添加两个按钮）
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
-    self.navigationItem.titleView=titleLabel;
-    titleLabel.alpha=0;
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     
-    collectBtn = [[UIButton alloc]init];
-    [collectBtn setBackgroundImage:[UIImage imageWithName:@"composer_rating_icon"] forState:UIControlStateNormal];
-    [collectBtn setBackgroundImage:[UIImage imageWithName:@"composer_rating_icon_highlighted"] forState:UIControlStateSelected];
-    [collectBtn addTarget:self action:@selector(collectClicked:) forControlEvents:UIControlEventTouchUpInside];
-    collectBtn.size = collectBtn.currentBackgroundImage.size;
-    UIBarButtonItem *collect = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+    //创建导航栏按钮的方法（左右两侧最多可以各添加两个按钮）
+    NavBarButtonItem *rightButtonCollect = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"composer_rating_icon"]
+                                                                   imageSelected:[UIImage imageNamed:@"composer_rating_icon_highlighted"]];
+    //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
+    [rightButtonCollect addTarget:self
+                         action:@selector(collectClicked:)
+               forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    NavBarButtonItem *rightButtonShare = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"share_Nav"]
+                                                                   imageSelected:[UIImage imageNamed:@"share_Nav"]];
+    //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
+    [rightButtonShare addTarget:self
+                         action:@selector(shareClicked)
+               forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     
-    self.navigationItem.rightBarButtonItems = @[[self BarButtonItemWithBackgroudImageName:@"share_Nav" highBackgroudImageName:@"share_Nav" target:self action:@selector(shareClicked)],collect];
+    self.navigationRightButtons = @[rightButtonCollect,rightButtonShare]; //添加导航栏右侧按钮集合
+    [self.view bringSubviewToFront:self.navigationView];
 }
 
-- (UIBarButtonItem *)BarButtonItemWithBackgroudImageName:(NSString *)backgroudImage highBackgroudImageName:(NSString *)highBackgroudImageName target:(id)target action:(SEL)action
-{
-    UIButton *button = [[UIButton alloc] init];
-    [button setBackgroundImage:[UIImage imageWithName:backgroudImage] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageWithName:highBackgroudImageName] forState:UIControlStateHighlighted];
-    
-    // 设置按钮的尺寸为背景图片的尺寸
-    button.size = button.currentBackgroundImage.size;
-    
-    // 监听按钮点击
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    return [[UIBarButtonItem alloc] initWithCustomView:button];
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -485,7 +488,6 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     //修改myTableView.contentInset的高度
     if (-BackGroupHeight<=yOffset && yOffset<-60) {
         myTableView.contentInset=UIEdgeInsetsMake(-yOffset, 0, 0, 0);
-        titleLabel.alpha=0;
     }else if(yOffset>=-60){
         myTableView.contentInset=UIEdgeInsetsMake(60, 0, 0, 0);
     }else if (yOffset>=0){
@@ -503,15 +505,14 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         imageBG.frame = rect;
     }
     
-    CGFloat alpha = (yOffset+BackGroupHeight)/(BackGroupHeight-60)+0.1;
+    CGFloat alpha = (yOffset+BackGroupHeight)/(BackGroupHeight-60);
+    self.navigationAlpha = alpha;
+    self.labelTitle.alpha=alpha;
     [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[[UIColor colorWithHexString:@"0xffffff"]colorWithAlphaComponent:alpha]] forBarMetrics:UIBarMetricsDefault];
-    titleLabel.textColor=[UIColor blackColor];
     if (alpha >= 0.98) {
         [self.navigationController.navigationBar setShadowImage:nil];
-        titleLabel.alpha=1;
     }else{
         [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-        titleLabel.alpha=0;
     }
     alpha=fabs(alpha);
     alpha=fabs(1-alpha);

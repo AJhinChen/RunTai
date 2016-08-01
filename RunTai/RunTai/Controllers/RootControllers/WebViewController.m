@@ -60,7 +60,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"加载中...";
+    self.navigationTitle = @"润泰装饰官网";
     
     _progressProxy = [[NJKWebViewProgress alloc] init];
     self.delegate = _progressProxy;
@@ -71,18 +71,39 @@
     };
     
     CGFloat progressBarHeight = 2.f;
-    CGRect navigaitonBarBounds = self.navigationController.navigationBar.bounds;
+    CGRect navigaitonBarBounds = self.navigationView.bounds;
     CGRect barFrame = CGRectMake(0, navigaitonBarBounds.size.height - progressBarHeight, navigaitonBarBounds.size.width, progressBarHeight);
     _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
     _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _progressView.progressBarView.backgroundColor = [UIColor colorWithHexString:@"0x3abd79"];
     
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"moreBtn_Nav"] style:UIBarButtonItemStylePlain target:self action:@selector(shareItemClicked)] animated:YES];
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+    NavBarButtonItem *rightButtonShare = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"moreBtn_Nav"]
+                                                                   imageSelected:[UIImage imageNamed:@"moreBtn_Nav"]];
+    //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [rightButtonShare addTarget:self
+                         action:@selector(shareItemClicked)
+               forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationRightButton = rightButtonShare; //添加导航栏右侧按钮集合
+    [self.view bringSubviewToFront:self.navigationView];
 }
 
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar addSubview:_progressView];
+    [self.navigationView addSubview:_progressView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

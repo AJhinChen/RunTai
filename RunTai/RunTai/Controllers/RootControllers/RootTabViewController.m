@@ -58,7 +58,7 @@
     [self addOneChildVc:cases title:@"图库" imageName:@"tabbar_photo" selectedImageName:@"tabbar_photo_selected"];
     
     Architecture_RootViewController *arch = [[Architecture_RootViewController alloc] init];
-    [self addOneChildVc:arch title:@"架构" imageName:@"tabbar_arch" selectedImageName:@"tabbar_arch_selected"];
+    [self addOneChildVc:arch title:@"团队" imageName:@"tabbar_arch" selectedImageName:@"tabbar_arch_selected"];
     
     Me_RootViewController *profile = [[Me_RootViewController alloc] init];
     [self addOneChildVc:profile title:@"我" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
@@ -102,9 +102,11 @@
     }
     childVc.tabBarItem.selectedImage = selectedImage;
     
-    //添加导航控制器
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:childVc];
-    [self addChildViewController:nav];
+//    //添加导航控制器
+//    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:childVc];
+//    //设置手势
+//    nav.interactivePopGestureRecognizerType = InteractivePopGestureRecognizerFullScreen; //全屏手势
+    [self addChildViewController:childVc];
 }
 
 @end

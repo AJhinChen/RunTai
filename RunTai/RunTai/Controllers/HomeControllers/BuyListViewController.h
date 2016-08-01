@@ -6,9 +6,9 @@
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface BuyListViewController : UIViewController
+@interface BuyListViewController : BaseViewController
 
 @property (strong, nonatomic) NSMutableArray *dataList;
 

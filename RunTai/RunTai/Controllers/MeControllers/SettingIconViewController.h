@@ -6,9 +6,9 @@
 //  Copyright © 2016年 AJhin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 @class User;
-@interface SettingIconViewController : UIViewController
+@interface SettingIconViewController : BaseViewController
 
 @property (strong, nonatomic) User *curUser;
 

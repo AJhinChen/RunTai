@@ -29,11 +29,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"个人信息";
+    self.navigationTitle = @"个人信息";
     
     //    添加myTableView
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStyleGrouped];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.dataSource = self;
         tableView.delegate = self;
@@ -42,12 +42,26 @@
         [tableView registerClass:[TitleValueMoreCell class] forCellReuseIdentifier:kCellIdentifier_TitleValue];
         [tableView registerClass:[TitleRImageMoreCell class] forCellReuseIdentifier:kCellIdentifier_TitleRImageMore];
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
     _myTableView.tableFooterView = [self tableFooterView];
+    [self.view bringSubviewToFront:self.navigationView];
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+}
+
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark TableM

@@ -46,6 +46,7 @@ CAShapeLayer *closedMenuShape;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationTitle = @"全部案例";
     shouldDisplayDropShape = YES;
     fadeAlpha = 0.5f;
     trianglePlacement = 0.87f;
@@ -65,7 +66,7 @@ CAShapeLayer *closedMenuShape;
 }
 - (void)initContentTableView
 {
-    self.contentTable1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width/2, kScreen_Height - 109)];
+    self.contentTable1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kScreen_Width/2, kScreen_Height - 89)];
     self.contentTable1.delegate =self;
     self.contentTable1.dataSource = self;
     self.contentTable1.backgroundColor = GlobleTableViewBackgroundColor;
@@ -75,7 +76,7 @@ CAShapeLayer *closedMenuShape;
     [self.contentTable1 registerClass:[CaseImageCell class] forCellReuseIdentifier:kCellIdentifier_CaseImageCell];
     [self.view addSubview:self.contentTable1];
     
-    self.contentTable2 = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width/2, 0, kScreen_Width/2, kScreen_Height - 109)];
+    self.contentTable2 = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width/2, 64, kScreen_Width/2, kScreen_Height - 109)];
     self.contentTable2.delegate = self;
     self.contentTable2.dataSource = self;
     self.contentTable2.backgroundColor = GlobleTableViewBackgroundColor;
@@ -104,16 +105,16 @@ CAShapeLayer *closedMenuShape;
 - (void)loadDataWithType:(int)type{
     switch (type) {
         case 0:
-            self.title = @"全部案例";
+            self.labelTitle.text = @"全部案例";
             break;
         case 1:
-            self.title = @"复式案例";
+            self.labelTitle.text = @"复式案例";
             break;
         case 2:
-            self.title = @"别墅案例";
+            self.labelTitle.text = @"别墅案例";
             break;
         case 3:
-            self.title = @"公寓案例";
+            self.labelTitle.text = @"公寓案例";
             break;
             
         default:
@@ -198,14 +199,17 @@ CAShapeLayer *closedMenuShape;
         }
         [self.menu addSubview:btn];
     }
+    //创建导航栏按钮的方法（左右两侧最多可以各添加两个按钮）
+    NavBarButtonItem *rightButtonMenu = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navicon"]
+                                                                   imageSelected:[UIImage imageNamed:@"navicon"]];
+    //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
-    self.menuButton = [[UIButton alloc]init];
-    [self.menuButton setBackgroundImage:[UIImage imageNamed:@"navicon"] forState:UIControlStateNormal];
-    [self.menuButton addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
-    self.menuButton.size = self.menuButton.currentBackgroundImage.size;
-    UIBarButtonItem *collect = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
+    [rightButtonMenu addTarget:self
+                         action:@selector(toggleMenu)
+               forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     
-    self.navigationItem.rightBarButtonItem = collect;
+    self.navigationRightButton = rightButtonMenu; //添加导航栏左侧按钮集合
+    [self.view bringSubviewToFront:self.navigationView];
 }
 
 - (void)containerOnTap{
@@ -393,7 +397,7 @@ CAShapeLayer *closedMenuShape;
     
     // Set new origin of menu
     CGRect menuFrame = self.menu.frame;
-    menuFrame.origin.y = -self.offset;
+    menuFrame.origin.y = 64-self.offset;
     
     // Set new alpha of Container View (to get fade effect)
     float containerAlpha = fadeAlpha;
@@ -429,7 +433,7 @@ CAShapeLayer *closedMenuShape;
     
     // Set new origin of menu
     CGRect menuFrame = self.menu.frame;
-    menuFrame.origin.y = -menuFrame.size.height;
+    menuFrame.origin.y = 64-menuFrame.size.height;
     
     // Set new alpha of Container View (to get fade effect)
     float containerAlpha = 1.0f;

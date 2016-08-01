@@ -68,13 +68,13 @@
             return @"油漆中";
             break;
         case 6:
-            return @"竣工中";
-            break;
-        case 7:
             return @"软装中";
             break;
+        case 7:
+            return @"已竣工";
+            break;
         case 8:
-            return @"入住中";
+            return @"已入住";
             break;
         default:
             return @"上门服务";

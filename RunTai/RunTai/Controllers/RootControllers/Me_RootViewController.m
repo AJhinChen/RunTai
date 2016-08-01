@@ -21,6 +21,7 @@
 #import "PopMenu.h"
 #import "WebViewController.h"
 #import "RunTai_NetAPIManager.h"
+#import "ServiceTermsViewController.h"
 
 @interface Me_RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -36,14 +37,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我";
+    self.navigationTitle = @"我";
     self.pCount = [[ProjectCount alloc]init];
 
     // Do any additional setup after loading the view.
 //    self.automaticallyAdjustsScrollViewInsets=NO;
     //    添加myTableView
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
         tableView.backgroundColor = kColorTableSectionBg;
         tableView.dataSource = self;
         tableView.delegate = self;
@@ -53,9 +54,9 @@
         [tableView registerClass:[UserInfoCell class] forCellReuseIdentifier:kCellIdentifier_UserInfoCell];
         [tableView registerClass:[UserDescriptionCell class] forCellReuseIdentifier:kCellIdentifier_UserDescriptionCell];
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
     //初始化弹出菜单
@@ -192,10 +193,12 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 //data
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger row = 0;
-    if (section == 0 || section == 2) {
+    if (section == 0) {
         row = 2;
     }else if (section == 1){
         row = 4;
+    }else{
+        row = 1;
     }
     return row;
 }
@@ -309,7 +312,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
             }
                 break;
             case 3:{
-                WebViewController *vc = [WebViewController webVCWithUrlStr:@"http://www.runtaizs.com"];
+                WebViewController *vc = [WebViewController webVCWithUrlStr:@"http://www.njruntai.com"];
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
@@ -318,7 +321,8 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 break;
         }
     }else{
-        
+        ServiceTermsViewController *vc = [[ServiceTermsViewController alloc]init];
+        [self presentViewController:vc animated:YES completion:nil];
     }
 }
 

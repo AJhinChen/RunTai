@@ -23,13 +23,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"购物清单";
+    self.navigationTitle = @"购物清单";
     if (!_list) {
         _list = [[NSMutableArray alloc] initWithCapacity:2];
     }
     // Do any additional setup after loading the view.
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -39,11 +39,24 @@
         tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor];
         tableView.sectionIndexColor = [UIColor colorWithHexString:@"0x666666"];
         [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
         tableView;
     });
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+}
+
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

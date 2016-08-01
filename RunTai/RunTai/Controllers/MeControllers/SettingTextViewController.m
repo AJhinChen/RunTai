@@ -17,7 +17,7 @@
 @implementation SettingTextViewController
 + (instancetype)settingTextVCWithTitle:(NSString *)title textValue:(NSString *)textValue doneBlock:(void(^)(NSString *textValue))block{
     SettingTextViewController *vc = [[SettingTextViewController alloc] init];
-    vc.title = title;
+    vc.navTitle = title;
     vc.textValue = textValue? textValue : @"";
     vc.doneBlock = block;
     vc.settingType = SettingTypeOnlyText;
@@ -28,10 +28,42 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _myTextValue = [_textValue mutableCopy];
+    self.navigationTitle = self.navTitle;
     
-    [self.navigationItem setRightBarButtonItem:[UIBarButtonItem itemWithBtnTitle:@"完成" target:self action:@selector(doneBtnClicked:)] animated:YES];
+    
+    //    添加myTableView
+    _myTableView = ({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStyleGrouped];
+        tableView.backgroundColor = kColorTableSectionBg;
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [tableView registerClass:[SettingTextCell class] forCellReuseIdentifier:kCellIdentifier_SettingText];
+        [self.view addSubview:tableView];
+//        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
+        tableView;
+    });
+    
+    NavBarButtonItem *leftButtonBack = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"navigationbar_back_withtext"]
+                                                                 imageSelected:[UIImage imageNamed:@"navigationbar_back_withtext"]]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [leftButtonBack addTarget:self
+                       action:@selector(buttonBackToLastView)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+    
+    NavBarButtonItem *rightButton = [NavBarButtonItem buttonWithTitle:@"完成"]; //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
+    
+    [rightButton addTarget:self
+                    action:@selector(doneBtnClicked:)
+             forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
+    
+    self.navigationRightButton = rightButton; //添加导航栏左侧按钮集合
     @weakify(self);
-    RAC(self.navigationItem.rightBarButtonItem, enabled) =
+    RAC(self.navigationRightButton, enabled) =
     [RACSignal combineLatest:@[RACObserve(self, myTextValue)] reduce:^id (NSString *newTextValue){
         @strongify(self);
         if ([self.textValue isEqualToString:newTextValue]) {
@@ -42,22 +74,12 @@
         return @(YES);
     }];
     
-    //    添加myTableView
-    _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        tableView.backgroundColor = kColorTableSectionBg;
-        tableView.dataSource = self;
-        tableView.delegate = self;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [tableView registerClass:[SettingTextCell class] forCellReuseIdentifier:kCellIdentifier_SettingText];
-        [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-        tableView;
-    });
 }
 
+#pragma mark - BarButtonItem method
+- (void)buttonBackToLastView{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

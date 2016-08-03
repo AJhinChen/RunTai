@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) UITapImageView *userIconView, *userSexIconView;
 @property (strong, nonatomic) UILabel *userLabel;
-@property (strong, nonatomic) UIButton *fansCountBtn, *followsCountBtn;
+@property (strong, nonatomic) UIButton *fansCountBtn, *followsCountBtn, *callBtn;
 @property (strong, nonatomic) UIView *splitLine, *coverView;
 @property (assign, nonatomic) CGFloat userIconViewWith;
 @end
@@ -66,6 +66,21 @@
     [self setFrame:CGRectMake(0, 0, kScreen_Width, viewHeight)];
     __weak typeof(self) weakSelf = self;
     
+    if (!_callBtn) {
+        _callBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _callBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        _callBtn.backgroundColor = [UIColor colorWithHexString:@"0x3bbc79"];
+        [_callBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _callBtn.layer.masksToBounds = YES;
+        _callBtn.layer.cornerRadius = 15;
+        [_callBtn bk_addEventHandler:^(id sender) {
+            if (weakSelf.callBtnClicked) {
+                weakSelf.callBtnClicked();
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_callBtn];
+    }
+    
     if (!_fansCountBtn) {
         _fansCountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _fansCountBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -90,7 +105,7 @@
     
     if (!_splitLine) {
         _splitLine = [[UIView alloc] init];
-        _splitLine.backgroundColor = [UIColor colorWithHexString:@"0xcacaca"];
+//        _splitLine.backgroundColor = [UIColor colorWithHexString:@"0xcacaca"];
         [self addSubview:_splitLine];
     }
     
@@ -145,6 +160,12 @@
         make.size.mas_equalTo(CGSizeMake(0.5, 15));
     }];
     
+    [_callBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(@[_fansCountBtn, _followsCountBtn]);
+        make.size.mas_equalTo(CGSizeMake(100, 30));
+    }];
+    
     [_userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_fansCountBtn.mas_top).offset(kScaleFrom_iPhone5_Desgin(-20));
         make.height.mas_equalTo(kScaleFrom_iPhone5_Desgin(20));
@@ -194,6 +215,14 @@
     return  attrString;
 }
 
+- (NSMutableAttributedString*)getStringWithTitle:(NSString *)title{
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", title]];
+    [attrString addAttributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:17],
+                                NSForegroundColorAttributeName : [UIColor whiteColor]}
+                        range:NSMakeRange(0, title.length)];
+    return  attrString;
+}
+
 - (void)updateData{
     if (!_userIconView) {
         return;
@@ -214,7 +243,7 @@
     }
     _userLabel.text = _curUser.name;
     [_userLabel sizeToFit];
-    
+    [_callBtn setAttributedTitle:[self getStringWithTitle:@"联系Ta"] forState:UIControlStateNormal];
 //    [_fansCountBtn setAttributedTitle:[self getStringWithTitle:@"粉丝" andValue:@""] forState:UIControlStateNormal];
 //    [_followsCountBtn setAttributedTitle:[self getStringWithTitle:@"关注" andValue:@""] forState:UIControlStateNormal];
 }

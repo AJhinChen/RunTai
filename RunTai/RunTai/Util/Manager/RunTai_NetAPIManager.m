@@ -349,8 +349,9 @@
 
 - (void)request_LoadStaffs:(NSString *)location :(AVArrayResultBlock)block{
     AVQuery *query = [AVQuery queryWithClassName:@"_User"];
-    [query whereKey:@"authority" equalTo:@"1"];
+    [query whereKey:@"authority" notEqualTo:@"0"];
     [query whereKey:@"location" containsString:location];
+    [query orderByDescending:@"createdAt"];
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query findObjectsInBackgroundWithBlock:block];
 }

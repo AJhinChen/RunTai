@@ -63,11 +63,8 @@
     _headerView.userIconClicked = ^(){
         [weakSelf userIconClicked];
     };
-    _headerView.fansCountBtnClicked = ^(){
-        [weakSelf fansCountBtnClicked];
-    };
-    _headerView.followsCountBtnClicked = ^(){
-        [weakSelf followsCountBtnClicked];
+    _headerView.callBtnClicked = ^(){
+        [weakSelf callBtnClicked];
     };
     [_myTableView addParallaxWithView:_headerView andHeight:CGRectGetHeight(_headerView.frame)];
     
@@ -241,11 +238,8 @@
 }
 
 #pragma mark Btn Clicked
-- (void)fansCountBtnClicked{
-    
-}
-- (void)followsCountBtnClicked{
-    
+- (void)callBtnClicked{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",[self.responsible.phone stringByReplacingOccurrencesOfString:@" " withString:@""]]]];
 }
 
 - (void)userIconClicked{

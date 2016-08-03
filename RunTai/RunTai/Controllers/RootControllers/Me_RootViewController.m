@@ -139,7 +139,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 - (void)sendAppContent {
     
     UIImage *thumbImage = [UIImage imageNamed:@"icon"];
-    [WXApiRequestHandler sendLinkURL:kAppContnetExURL TagName:@"[润泰装饰]" Title:@"[润泰装饰]官方APP" Description:@"润泰装饰设计，完美家居生活" ThumbImage:thumbImage InScene:_currentScene];
+    [WXApiRequestHandler sendLinkURL:AppDownloadLink TagName:@"[润泰装饰]" Title:@"[润泰装饰]官方APP下载" Description:@"润泰装饰设计，完美家居生活" ThumbImage:thumbImage InScene:_currentScene];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

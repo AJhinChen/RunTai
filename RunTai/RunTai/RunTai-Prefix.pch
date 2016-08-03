@@ -62,6 +62,9 @@
 #define kSocial_EN_Secret @""
 #define kSocial_Sina_RedirectURL @""
 #define kSocial_Sina_OfficailAccount @""
+//获取AppDownload地址
+#define AppDownloadLink [[NSUserDefaults standardUserDefaults] objectForKey:@"AppDownload"]
+
 
 //LeanCloud appkey
 #define ApplicationID @"DAnhL7gnMRhoEifbTM4xII29-gzGzoHsz"

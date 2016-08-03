@@ -47,6 +47,31 @@
     
     //向微信注册
     [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
+    //获取AppDownload地址
+    
+    NSURL *url = [NSURL URLWithString:@""];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
+    request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if (!connectionError && data) {
+            NSError *error;
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+            NSLog(@"NSJSONSerializationError:%@",error);
+            if (dict) {
+                NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+                [defs setObject:dict[@"download"] forKey:@"AppDownload"];
+                [defs synchronize];
+            }else{
+                NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+                [defs setObject:@"http://fir.im/runtai" forKey:@"AppDownload"];
+                [defs synchronize];
+            }
+        }else{
+            NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+            [defs setObject:@"http://fir.im/runtai" forKey:@"AppDownload"];
+            [defs synchronize];
+        }
+    }];
     return YES;
 }
 

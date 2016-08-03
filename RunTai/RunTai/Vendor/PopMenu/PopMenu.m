@@ -90,7 +90,7 @@
     _realTimeBlur.hasTapGestureEnable = YES;
     
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(0, 64, kScreen_Width, 20)];
-    title.text = @"分享笔录";
+    title.text = @"微信分享";
     title.font = [UIFont boldSystemFontOfSize:17];
     title.textAlignment = NSTextAlignmentCenter;
     

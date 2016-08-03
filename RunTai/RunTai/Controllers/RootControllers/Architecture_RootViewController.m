@@ -127,7 +127,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DirectorCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_Director forIndexPath:indexPath];
     User *curUser = self.dataList[indexPath.section];
-    [cell setTitle:[NSString stringWithFormat:@"监察:%@",curUser.name] subtitle:[NSString stringWithFormat:@"职称:%@",curUser.professional] value:curUser.avatar];
+    [cell setTitle:[NSString stringWithFormat:@"姓名:%@",curUser.name] subtitle:[NSString stringWithFormat:@"职称:%@",curUser.professional] value:curUser.avatar];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

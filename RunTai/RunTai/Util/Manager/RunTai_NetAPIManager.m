@@ -351,7 +351,7 @@
     AVQuery *query = [AVQuery queryWithClassName:@"_User"];
     [query whereKey:@"authority" notEqualTo:@"0"];
     [query whereKey:@"location" containsString:location];
-    [query orderByDescending:@"createdAt"];
+    [query orderByAscending:@"createdAt"];
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query findObjectsInBackgroundWithBlock:block];
 }

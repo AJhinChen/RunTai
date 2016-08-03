@@ -44,7 +44,7 @@
 //    self.automaticallyAdjustsScrollViewInsets=NO;
     //    添加myTableView
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64-49) style:UITableViewStylePlain];
         tableView.backgroundColor = kColorTableSectionBg;
         tableView.dataSource = self;
         tableView.delegate = self;

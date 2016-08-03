@@ -27,12 +27,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationTitle = @"设计团队";
+    self.navigationTitle = @"公司团队";
     if (!_dataList) {
         _dataList = [[NSMutableArray alloc] initWithCapacity:2];
     }
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64-49) style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.delegate = self;
         tableView.dataSource = self;

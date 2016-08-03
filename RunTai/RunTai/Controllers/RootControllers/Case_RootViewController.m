@@ -66,7 +66,7 @@ CAShapeLayer *closedMenuShape;
 }
 - (void)initContentTableView
 {
-    self.contentTable1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kScreen_Width/2, kScreen_Height - 89)];
+    self.contentTable1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width/2, kScreen_Height - 109)];
     self.contentTable1.delegate =self;
     self.contentTable1.dataSource = self;
     self.contentTable1.backgroundColor = GlobleTableViewBackgroundColor;

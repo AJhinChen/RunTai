@@ -313,7 +313,8 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 break;
             case 3:{
                 WebViewController *vc = [WebViewController webVCWithUrlStr:@"http://www.njruntai.com"];
-                [self.navigationController pushViewController:vc animated:YES];
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+                [self presentViewController:nav animated:YES completion:nil];
             }
                 break;
                 
@@ -329,7 +330,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
 - (void)loginBtnClicked:(UIButton *)btn{
     LoginViewController *vc = [[LoginViewController alloc] init];
     vc.showDismissButton = YES;
-    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

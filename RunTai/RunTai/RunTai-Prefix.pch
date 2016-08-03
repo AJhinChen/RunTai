@@ -17,7 +17,7 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVOSCloudIM/AVOSCloudIM.h>
-#import "BaseNavigationController.h"
+#import "StackNavigationController.h"
 
 #import "UIImage+Common.h"
 #import "UIColor+expanded.h"

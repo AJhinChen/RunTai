@@ -362,7 +362,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     if (indexPath.section == 0) {
         DirectorCell *cell = [DirectorCell cellWithTableView:tableView];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setTitle:[NSString stringWithFormat:@"监察:%@",self.curPro.responsible.name] subtitle:[NSString stringWithFormat:@"职称:%@",self.curPro.responsible.professional] value:@"avatar_default_big"];
+        [cell setTitle:[NSString stringWithFormat:@"负责人:%@",self.curPro.responsible.name] subtitle:[NSString stringWithFormat:@"职称:%@",self.curPro.responsible.professional] value:@"avatar_default_big"];
         return cell;
     }else if (indexPath.section == 1){
         ListsCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_ListsCell forIndexPath:indexPath];

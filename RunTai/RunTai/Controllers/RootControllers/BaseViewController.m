@@ -153,44 +153,44 @@
 - (void)forceChangeToOrientation:(UIInterfaceOrientation)interfaceOrientation{
     [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:interfaceOrientation] forKey:@"orientation"];
 }
-
-+ (UIViewController *)presentingVC{
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    if (window.windowLevel != UIWindowLevelNormal)
-    {
-        NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows)
-        {
-            if (tmpWin.windowLevel == UIWindowLevelNormal)
-            {
-                window = tmpWin;
-                break;
-            }
-        }
-    }
-    UIViewController *result = window.rootViewController;
-    while (result.presentedViewController) {
-        result = result.presentedViewController;
-    }
-    if ([result isKindOfClass:[RootTabViewController class]]) {
-        result = [(RootTabViewController *)result selectedViewController];
-    }
-    if ([result isKindOfClass:[BaseNavigationController class]]) {
-        result = [(BaseNavigationController *)result topViewController];
-    }
-    return result;
-}
-
-+ (void)presentVC:(UIViewController *)viewController{
-    if (!viewController) {
-        return;
-    }
-    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:viewController];
-    if (!viewController.navigationItem.leftBarButtonItem) {
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:viewController action:@selector(dismissModalViewControllerAnimated:)];
-    }
-    [[self presentingVC] presentViewController:nav animated:YES completion:nil];
-}
+//
+//+ (UIViewController *)presentingVC{
+//    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+//    if (window.windowLevel != UIWindowLevelNormal)
+//    {
+//        NSArray *windows = [[UIApplication sharedApplication] windows];
+//        for(UIWindow * tmpWin in windows)
+//        {
+//            if (tmpWin.windowLevel == UIWindowLevelNormal)
+//            {
+//                window = tmpWin;
+//                break;
+//            }
+//        }
+//    }
+//    UIViewController *result = window.rootViewController;
+//    while (result.presentedViewController) {
+//        result = result.presentedViewController;
+//    }
+//    if ([result isKindOfClass:[RootTabViewController class]]) {
+//        result = [(RootTabViewController *)result selectedViewController];
+//    }
+//    if ([result isKindOfClass:[BaseNavigationController class]]) {
+//        result = [(BaseNavigationController *)result topViewController];
+//    }
+//    return result;
+//}
+//
+//+ (void)presentVC:(UIViewController *)viewController{
+//    if (!viewController) {
+//        return;
+//    }
+//    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:viewController];
+//    if (!viewController.navigationItem.leftBarButtonItem) {
+//        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:viewController action:@selector(dismissModalViewControllerAnimated:)];
+//    }
+//    [[self presentingVC] presentViewController:nav animated:YES completion:nil];
+//}
 
 #pragma mark Login
 - (void)loginOutToLoginVC{

@@ -27,7 +27,7 @@
 - (instancetype)init
 {
     if ((self = [super init])) {
-        self.numberOfPages = 6;
+        self.numberOfPages = 4;
         
         
         _iconsDict = [@{
@@ -35,16 +35,12 @@
                         @"1_image" : @"intro_icon_1",
                         @"2_image" : @"intro_icon_2",
                         @"3_image" : @"intro_icon_3",
-                        @"4_image" : @"intro_icon_4",
-                        @"5_image" : @"intro_icon_5",
                         } mutableCopy];
         _tipsDict = [@{
                        @"0_image" : @"intro_tip_0",
                        @"1_image" : @"intro_tip_1",
                        @"2_image" : @"intro_tip_2",
                        @"3_image" : @"intro_tip_3",
-                       @"4_image" : @"intro_tip_4",
-                       @"5_image" : @"intro_tip_5",
                        } mutableCopy];
         
 //        _iconsDict = [NSMutableDictionary new];
@@ -302,14 +298,13 @@
 - (void)registerBtnClicked{
     RegisterViewController *vc = [[RegisterViewController alloc]init];
     vc.methodType = RegisterMethodLogin;
-    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)loginBtnClicked{
     LoginViewController *vc = [[LoginViewController alloc] init];
     vc.showDismissButton = YES;
-    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

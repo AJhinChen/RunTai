@@ -14,6 +14,7 @@
 #import "NoteViewController.h"
 #import "Home_RootViewController.h"
 #import "BaseNavigationController.h"
+#import "StackNavigationController.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -48,30 +49,18 @@
     //向微信注册
     [WXApi registerApp:kSocial_WX_ID withDescription:@"RunTaiDecoration"];
     //获取AppDownload地址
-    
-    NSURL *url = [NSURL URLWithString:@""];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-    request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-        if (!connectionError && data) {
-            NSError *error;
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-            NSLog(@"NSJSONSerializationError:%@",error);
-            if (dict) {
-                NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-                [defs setObject:dict[@"download"] forKey:@"AppDownload"];
-                [defs synchronize];
-            }else{
-                NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-                [defs setObject:@"http://fir.im/runtai" forKey:@"AppDownload"];
-                [defs synchronize];
-            }
-        }else{
-            NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-            [defs setObject:@"http://fir.im/runtai" forKey:@"AppDownload"];
-            [defs synchronize];
-        }
-    }];
+    NSError *error;
+    NSString *downloadUrl = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://www.njruntai.com/download.txt"] encoding:NSUTF8StringEncoding error:&error];
+    if (error == nil) {
+        NSLog(@"AppDownload：%@",downloadUrl);
+        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+        [defs setObject:downloadUrl forKey:@"AppDownload"];
+        [defs synchronize];
+    }else{
+        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+        [defs setObject:@"http://fir.im/runtai" forKey:@"AppDownload"];
+        [defs synchronize];
+    }
     return YES;
 }
 
@@ -260,9 +249,9 @@
 - (void)setupTabViewController{
     RootTabViewController *rootVC = [[RootTabViewController alloc] init];
     rootVC.tabBar.translucent = YES;
-    BaseNavigationController *nav = [[BaseNavigationController alloc]initWithRootViewController:rootVC];
-    //设置手势
-    nav.interactivePopGestureRecognizerType = InteractivePopGestureRecognizerFullScreen; //全屏手势
+    SNBaseNavigationController *nav = [SNBaseNavigationController navigationWithRootController:rootVC
+                                                                                      navigationTransitionStyle:SNBaseNavigationTransitionStyleStack];
+    nav.navigationBarHidden = YES;
     [self.window setRootViewController:nav];
 }
 

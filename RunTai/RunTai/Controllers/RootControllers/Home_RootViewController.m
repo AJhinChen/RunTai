@@ -352,8 +352,8 @@
 -(void)orderClicked{
     RegisterViewController *vc = [[RegisterViewController alloc]init];
     vc.methodType = RegisterMethodOrder;
-    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
+//    UINavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)fliterClicked:(id)sender{

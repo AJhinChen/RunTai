@@ -6,9 +6,9 @@
 //
 //  https://github.com/samvermette/SVWebViewController
 
-#import "BaseViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface SVWebViewController : BaseViewController
+@interface SVWebViewController : UIViewController
 @property (nonatomic, strong, readonly) UIWebView *webView;
 @property (nonatomic, strong, readonly) NSURLRequest *request;
 

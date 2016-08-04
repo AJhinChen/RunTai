@@ -369,7 +369,8 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
         NSArray *components = [self.curPro.name componentsSeparatedByString:@"/"];
         switch (indexPath.row) {
             case 0:
-                [cell setImageStr:@"list_icon_end" andTitle:[NSString stringWithFormat:@"购物清单: %@",components[0]]];
+//                [cell setImageStr:@"list_icon_end" andTitle:[NSString stringWithFormat:@"购物清单: %@",components[0]]];
+                [cell setImageStr:@"list_icon_end" andTitle:@"购物清单"];
                 break;
             case 1:
                 [cell setImageStr:@"list_icon_pre" andTitle:@"实际清单: 16.7万"];

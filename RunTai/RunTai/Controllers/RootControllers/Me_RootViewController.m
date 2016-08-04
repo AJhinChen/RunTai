@@ -288,6 +288,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 curPro.type = ProjectsTypeCreated;
                 vc.myProjects = curPro;
                 vc.pCount = self.pCount;
+                vc.tableHeight = 49;
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
@@ -304,6 +305,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
                 curPro.type = ProjectsTypeWatched;
                 vc.myProjects = curPro;
                 vc.pCount = self.pCount;
+                vc.tableHeight = 49;
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;

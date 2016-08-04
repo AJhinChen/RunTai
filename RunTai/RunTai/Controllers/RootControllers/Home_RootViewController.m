@@ -54,7 +54,7 @@
     
     _searchedArray = [NSMutableArray array];
     _myTableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64-49+self.tableHeight) style:UITableViewStylePlain];
         tableView.backgroundColor = GlobleTableViewBackgroundColor;
         tableView.delegate = self;
         tableView.dataSource = self;

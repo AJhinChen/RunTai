@@ -48,7 +48,7 @@
     _photo = photo;
     
     // 1.下载图片
-    [self sd_setImageWithURL:[NSURL URLWithString:photo] placeholderImage:[UIImage imageWithName:@"IMG_NotesDemo"]];
+    [self sd_setImageWithURL:[NSURL URLWithString:photo] placeholderImage:[UIImage imageWithName:@"logo"]];
     
     // 2.添加gif图标显示
     NSString *extension = photo.pathExtension.lowercaseString;

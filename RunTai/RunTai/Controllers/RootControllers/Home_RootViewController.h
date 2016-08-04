@@ -15,4 +15,6 @@
 
 @property (strong, nonatomic) ProjectCount *pCount;
 
+@property (assign, nonatomic) int tableHeight;
+
 @end

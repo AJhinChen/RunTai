@@ -128,7 +128,7 @@
 
 - (void)setTitle:(NSString *)title subtitle:(NSArray *)subtitle value:(NSString *)value{
     self.nameLabel.text = title;
-    self.introLabel.text = [subtitle componentsJoinedByString:@" "];
+    self.introLabel.text = [NSString stringWithFormat:@"品牌：%@",[subtitle componentsJoinedByString:@" "]];
     self.valueLabel.text = value;
 }
 

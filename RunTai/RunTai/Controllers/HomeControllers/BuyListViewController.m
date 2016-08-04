@@ -39,6 +39,9 @@
         tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor];
         tableView.sectionIndexColor = [UIColor colorWithHexString:@"0x666666"];
         [self.view addSubview:tableView];
+        UIView *footer = [[UIView alloc]init];
+        footer.backgroundColor = [UIColor clearColor];
+        [tableView setTableFooterView:footer];
 //        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
 //            make.edges.equalTo(self.view);
 //        }];
@@ -52,6 +55,7 @@
              forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     
     self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
+    [self loadData];
 }
 
 #pragma mark - BarButtonItem method
@@ -61,7 +65,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self loadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -130,7 +133,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     BuyListCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_BuyList forIndexPath:indexPath];
     Buy *buy = self.list[indexPath.row];
-    [cell setTitle:buy.title subtitle:buy.subtitle value:[NSString stringWithFormat:@"$%@",buy.price]];
+    NSString *value = @"";
+    if (buy.price && ![buy.price isEqualToString:@""]) {
+        value = [NSString stringWithFormat:@"¥%@",buy.price];
+    }
+    [cell setTitle:[NSString stringWithFormat:@"名称：%@",buy.title] subtitle:buy.subtitle value:value];
     return cell;
 }
 

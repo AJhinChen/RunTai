@@ -47,7 +47,6 @@
 		CE2AED791C97DB660039CB5A /* UIView+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED781C97DB660039CB5A /* UIView+Common.m */; };
 		CE2AED7C1C97E0BE0039CB5A /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED7B1C97E0BE0039CB5A /* UIView+Frame.m */; };
 		CE2AED801C97EA7C0039CB5A /* NotesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED7F1C97EA7C0039CB5A /* NotesCell.m */; };
-		CE2AED821C97EF1E0039CB5A /* IMG_NotesDemo.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2AED811C97EF1E0039CB5A /* IMG_NotesDemo.png */; };
 		CE2AED851C98FE310039CB5A /* Architecture_RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED841C98FE310039CB5A /* Architecture_RootViewController.m */; };
 		CE2AED891C99020E0039CB5A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED881C99020E0039CB5A /* NoteViewController.m */; };
 		CE2AED8C1C9922580039CB5A /* DirectorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2AED8B1C9922580039CB5A /* DirectorCell.m */; };
@@ -279,7 +278,6 @@
 		CE2AED7B1C97E0BE0039CB5A /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		CE2AED7E1C97EA7C0039CB5A /* NotesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesCell.h; sourceTree = "<group>"; };
 		CE2AED7F1C97EA7C0039CB5A /* NotesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesCell.m; sourceTree = "<group>"; };
-		CE2AED811C97EF1E0039CB5A /* IMG_NotesDemo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_NotesDemo.png; sourceTree = "<group>"; };
 		CE2AED831C98FE310039CB5A /* Architecture_RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Architecture_RootViewController.h; sourceTree = "<group>"; };
 		CE2AED841C98FE310039CB5A /* Architecture_RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Architecture_RootViewController.m; sourceTree = "<group>"; };
 		CE2AED871C99020E0039CB5A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
@@ -623,7 +621,6 @@
 				CE13C4D61C96A01400AFC539 /* RunTai.xcdatamodeld */,
 				CE13C4EA1C96E22900AFC539 /* RunTai-Prefix.pch */,
 				CEB574051CAC3C1D0020198A /* icon.png */,
-				CE2AED811C97EF1E0039CB5A /* IMG_NotesDemo.png */,
 				CEB574071CACB3560020198A /* case.json */,
 				CE5B14771D4EDEA400468340 /* terms.txt */,
 				CE2AEDF81C9A82D80039CB5A /* Models */,
@@ -1441,7 +1438,6 @@
 				CE5B14781D4EDEA400468340 /* terms.txt in Resources */,
 				CE2AED8E1C996F1E0039CB5A /* Launch Screen.storyboard in Resources */,
 				CEB573B71CA4DF910020198A /* address.json in Resources */,
-				CE2AED821C97EF1E0039CB5A /* IMG_NotesDemo.png in Resources */,
 				CED1CD031C9FA4CF007ED5FD /* angle-mask@2x.png in Resources */,
 				CED1CCE51C9FA043007ED5FD /* SVWebViewController.strings in Resources */,
 				CED1CCEA1C9FA043007ED5FD /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */,

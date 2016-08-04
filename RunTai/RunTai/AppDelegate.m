@@ -81,7 +81,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken];
+    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken constructingInstallationWithBlock:^(AVInstallation *currentInstallation) {
+        currentInstallation.deviceProfile = @"client_push_certificate";
+    }];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

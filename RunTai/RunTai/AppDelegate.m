@@ -29,10 +29,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [AVOSCloud setApplicationId:ApplicationID clientKey:ClientKey];
     [AVOSCloudIM registerForRemoteNotification];
-    // 当用户表示喜欢 Giants，则为其订阅该频道。
-    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
-    [currentInstallation addUniqueObject:@"RunTai" forKey:@"channels"];
-    [currentInstallation saveInBackground];
+//    // 当用户表示喜欢 Giants，则为其订阅该频道。
+//    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+//    [currentInstallation addUniqueObject:@"RunTai" forKey:@"channels"];
+//    [currentInstallation saveInBackground];
     //设置导航条样式
     [self customizeInterface];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
@@ -65,9 +65,7 @@
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken constructingInstallationWithBlock:^(AVInstallation *currentInstallation) {
-        currentInstallation.deviceProfile = @"master_push_certificate";
-    }];
+    [AVOSCloudIM handleRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

@@ -41,7 +41,7 @@
     
     barButtonItem.frame = CGRectMake(0, 0, 33, 33);
     [barButtonItem setImage:imageNormal forState:UIControlStateNormal];
-    [barButtonItem setImage:imageSelected forState:UIControlStateHighlighted];
+    [barButtonItem setImage:imageSelected forState:UIControlStateSelected];
     
     return barButtonItem;
 }

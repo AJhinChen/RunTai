@@ -35,7 +35,7 @@ const CGFloat BackGroupHeight = 250;
     UILabel *titleLabel;
     
     UILabel *introLabel;
-    UIButton *collectBtn;
+    NavBarButtonItem *rightButtonCollect;
 }
 @property (nonatomic) enum WXScene currentScene;
 @property (nonatomic, strong) PopMenu *myPopMenu;
@@ -220,12 +220,12 @@ const CGFloat BackGroupHeight = 250;
     
     self.navigationLeftButton = leftButtonBack; //添加导航栏左侧按钮集合
     //创建导航栏按钮的方法（左右两侧最多可以各添加两个按钮）
-    NavBarButtonItem *rightButtonCollect = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"composer_rating_icon"]
+    rightButtonCollect = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"composer_rating_icon"]
                                                                    imageSelected:[UIImage imageNamed:@"composer_rating_icon_highlighted"]];
     //添加图标按钮（分别添加图标未点击和点击状态的两张图片）
     
     [rightButtonCollect addTarget:self
-                         action:@selector(collectClicked:)
+                         action:@selector(collectClicked)
                forControlEvents:UIControlEventTouchUpInside]; //按钮添加点击事件
     NavBarButtonItem *rightButtonShare = [NavBarButtonItem buttonWithImageNormal:[UIImage imageNamed:@"share_Nav"]
                                                                    imageSelected:[UIImage imageNamed:@"share_Nav"]];
@@ -257,13 +257,12 @@ const CGFloat BackGroupHeight = 250;
     }
 }
 
--(void)collectClicked:(UIButton *)btn
-{
+-(void)collectClicked{
     if (![Login isLogin]) {
         [NSObject showHudTipStr:@"登录后才能收藏哦!"];
     }else{
-        btn.selected = !btn.selected;
-        if (btn.selected) {
+        rightButtonCollect.selected = !rightButtonCollect.selected;
+        if (rightButtonCollect.selected) {
             [NSObject showLoadingView:@"收藏中.."];
         }else{
             [NSObject showLoadingView:@"取消收藏中.."];
@@ -271,18 +270,18 @@ const CGFloat BackGroupHeight = 250;
         [[RunTai_NetAPIManager sharedManager]request_CollectNote_WithProject:_curPro.objectId block:^(BOOL succeeded, NSError *error) {
             [NSObject hideLoadingView];
             if (succeeded) {
-                if (btn.selected) {
+                if (rightButtonCollect.selected) {
                     [NSObject showHudTipStr:@"收藏成功"];
                 }else{
                     [NSObject showHudTipStr:@"取消收藏成功"];
                 }
             }else{
-                if (btn.selected) {
+                if (rightButtonCollect.selected) {
                     [NSObject showHudTipStr:@"收藏失败"];
                 }else{
                     [NSObject showHudTipStr:@"取消收藏失败"];
                 }
-                btn.selected = !btn.selected;
+                rightButtonCollect.selected = !rightButtonCollect.selected;
             }
         }];
     }
@@ -604,7 +603,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     if ([Login isLogin]) {
         User *curUser = [Login curLoginUser];
         if ([curUser.watched containsObject:[AVQuery getObjectOfClass:@"Project" objectId:_curPro.objectId]]) {
-            collectBtn.selected = YES;
+            rightButtonCollect.selected = YES;
         }
     }
     
@@ -651,7 +650,7 @@ static NSString *kAppMessageAction = @"http://fir.im/runtai";
     nameLabel = nil;
     titleLabel = nil;
     introLabel = nil;
-    collectBtn = nil;
+    rightButtonCollect = nil;
 }
 
 /*

@@ -362,14 +362,14 @@
                 [push expireAfterTimeInterval:interval];
                 [push setChannels:[NSArray arrayWithObjects:@"RunTai", nil]];
                 [push setData:data];
-                [push sendPushInBackground];
-//                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//                    if (succeeded) {
-//                        [NSObject showHudTipStr:@"推送成功"];
-//                    }else{
-//                        [NSObject showHudTipStr:@"推送失败"];
-//                    }
-//                }];
+//                [push sendPushInBackground];
+                [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [NSObject showHudTipStr:@"推送成功"];
+                    }else{
+                        [NSObject showHudTipStr:@"推送失败"];
+                    }
+                }];
             }else{
                 NSString * errorCode = error.userInfo[@"code"];
                 switch (errorCode.intValue) {

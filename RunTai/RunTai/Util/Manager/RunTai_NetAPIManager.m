@@ -108,6 +108,7 @@
     AVQuery *query = [AVQuery queryWithClassName:@"Project"];
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query whereKey:@"watch_count" greaterThanOrEqualTo:@100];
+    [query orderByDescending:@"watch_count"];
     [query includeKey:@"owner"];
     [query includeKey:@"responsible"];
     query.limit = 10;
@@ -333,7 +334,11 @@
         [user removeObject:object forKey:@"watched"];
         
     }else{
-        [user addObject:object forKey:@"watched"];
+        if ([digPros count]>0) {
+            [user addObject:object forKey:@"watched"];
+        }else{
+            [user setObject:@[object] forKey:@"watched"];
+        }
     }
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
         if (succeeded) {

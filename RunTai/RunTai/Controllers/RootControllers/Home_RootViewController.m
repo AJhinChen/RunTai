@@ -83,7 +83,7 @@
     __weak typeof(self) weakSelf = self;
     _myFliterMenu.clickBlock = ^(NSInteger pageIndex){
         [weakSelf fliterBtnClose:TRUE];
-        if (pageIndex%2 != 0 || pageIndex == weakSelf.selectNum) {
+        if (pageIndex%2 != 0) {
             return;
         }else{
             [weakSelf configTableView:pageIndex];

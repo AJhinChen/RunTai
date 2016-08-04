@@ -17,6 +17,7 @@
 @interface EditProInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UITableView *myTableView;
+@property (strong, nonatomic) UIImage *bgImge;
 
 @end
 
@@ -62,7 +63,7 @@
 - (void)savePro{
     [self.view endEditing:YES];
     [NSObject showLoadingView:@"数据保存中.."];
-    [[RunTai_NetAPIManager sharedManager]request_UpdateProInfo_WithParam:_curPro.objectId value:_curPro block:^(BOOL succeeded, NSError *error) {
+    [[RunTai_NetAPIManager sharedManager]request_UpdateProInfo_WithParam:_curPro.objectId value:_curPro image:self.bgImge block:^(BOOL succeeded, NSError *error) {
         [NSObject hideLoadingView];
         if (succeeded) {
             [self dismissViewControllerAnimated:YES completion:^{
@@ -121,7 +122,7 @@
         }
             break;
         case 1:{
-            [cell setTitleStr:@"背景图片" valueStr:@""];
+            [cell setTitleStr:@"背景图片" valueStr:@"请选择"];
         }
             break;
         default:
@@ -242,9 +243,8 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         UIImage *editedImage, *originalImage;
         editedImage = [info objectForKey:UIImagePickerControllerEditedImage];
-        AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(editedImage)];
-        _curPro.background = photoFile.url;
-        [self.myTableView reloadData];
+        self.bgImge = editedImage;
+        _myTableView.tableFooterView = [self tableFooterView:editedImage];
         // 保存原图片到相册中
         if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -261,6 +261,13 @@
     UIImageView *footerV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, (kScreen_Height - 64 - 49 - kPaddingLeftWidth*3)/3 - 6)];
     footerV.contentMode = UIViewContentModeScaleAspectFit;
     [footerV sd_setImageWithURL:[_curPro.background urlImageWithCodePathResizeToView:footerV] placeholderImage:kPlaceholderBackground];
+    return footerV;
+}
+
+- (UIView*)tableFooterView:(UIImage *)img{
+    UIImageView *footerV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, (kScreen_Height - 64 - 49 - kPaddingLeftWidth*3)/3 - 6)];
+    footerV.contentMode = UIViewContentModeScaleAspectFit;
+    footerV.image = img;
     return footerV;
 }
 

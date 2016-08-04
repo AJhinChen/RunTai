@@ -33,12 +33,12 @@
     }];
 }
 
-- (void)request_UpdateProInfo_WithParam:(NSString *)param value:(Project *)value block:(AVBooleanResultBlock)block{
+- (void)request_UpdateProInfo_WithParam:(NSString *)param value:(Project *)value image:(UIImage *)image block:(AVBooleanResultBlock)block{
     AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:param];
     NSString *background = [object objectForKey:@"background"];
     [object setObject:value.full_name forKey:@"full_name"];
     [object setObject:value.name forKey:@"name"];
-    AVFile* photoFile=[AVFile fileWithURL:value.background];
+    AVFile* photoFile=[AVFile fileWithData:UIImagePNGRepresentation(image)];
     [object setObject:value.processing forKey:@"processing"];
     [object setObject:photoFile forKey:@"background"];
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
@@ -50,17 +50,19 @@
 }
 
 - (void)request_DeleteOriginalFile_WithUrl:(NSString *)url{
-    AVQuery *query = [AVQuery queryWithClassName:@"_File"];
-    [query setCachePolicy:kAVCachePolicyNetworkOnly];
-    [query whereKey:@"url" equalTo:url];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-        if (!error) {
-            AVFile *originalFile = [objects firstObject];
-            if (originalFile) {
-                [originalFile deleteInBackground];
+    if (url) {
+        AVQuery *query = [AVQuery queryWithClassName:@"_File"];
+        [query setCachePolicy:kAVCachePolicyNetworkOnly];
+        [query whereKey:@"url" equalTo:url];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
+            if (!error) {
+                AVFile *originalFile = [objects firstObject];
+                if (originalFile) {
+                    [originalFile deleteInBackground];
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 - (void)request_DeleteProject_WithProject:(NSString *)projectId block:(AVBooleanResultBlock)block{
@@ -347,7 +349,12 @@
     [note saveInBackgroundWithBlock:^(BOOL succeeded , NSError *error){
         if (succeeded) {
             AVObject *object = [AVQuery getObjectOfClass:@"Project" objectId:projectId];
-            [object addObject:note forKey:@"notes"];
+            NSArray *array = [object objectForKey:@"notes"];
+            if ([array count]>0) {
+                [object addObject:note forKey:@"notes"];
+            }else{
+                [object setObject:@[note] forKey:@"notes"];
+            }
             AVUser *avuser = [AVUser currentUser];
             [object setObject:avuser forKey:@"responsible"];
             [object setObject:type forKey:@"processing"];

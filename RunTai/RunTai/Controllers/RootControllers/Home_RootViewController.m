@@ -336,7 +336,7 @@
     self.myTableView.mj_header = header;
     
     // 5.添加上拉加载更多控件
-    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreProjects)];
+    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreProjects)];
     // 设置文字
     [footer setTitle:@"加载中 ..." forState:MJRefreshStateRefreshing];
     [footer setTitle:@"全部加载完毕" forState:MJRefreshStateNoMoreData];

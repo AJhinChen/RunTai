@@ -10,7 +10,7 @@
 #import "MCVelocityProxy.h"
 #import "MCBeginTime.h"
 
-#import <POP.h>
+#import "POP.h"
 
 @interface MCAnimationProxy : MCProxy
 

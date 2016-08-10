@@ -8,7 +8,7 @@
 
 #import "MCStopProxy.h"
 
-#import <POP.h>
+#import "POP.h"
 #import <objc/runtime.h>
 
 static char kStopAnimationProxyKey;

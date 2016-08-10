@@ -10,7 +10,7 @@
 #import "NJKWebViewProgress.h"
 #import "NJKWebViewProgressView.h"
 #import "RootTabViewController.h"
-#import <RegexKitLite-NoWarning/RegexKitLite.h>
+#import "RegexKitLite.h"
 
 
 @interface WebViewController ()<UIWebViewDelegate>

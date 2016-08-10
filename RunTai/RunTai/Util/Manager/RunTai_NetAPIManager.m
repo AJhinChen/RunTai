@@ -100,7 +100,6 @@
     [query setCachePolicy:kAVCachePolicyNetworkElseCache];
     [query includeKey:@"owner"];
     [query includeKey:@"responsible"];
-    query.limit = 10;
     [query findObjectsInBackgroundWithBlock:block];
 }
 

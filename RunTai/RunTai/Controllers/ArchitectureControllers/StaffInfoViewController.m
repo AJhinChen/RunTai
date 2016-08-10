@@ -263,6 +263,8 @@
             // 将新数据插入到旧数据的最后边
             [self.dataList addObjectsFromArray:_myProjects.list];
             [self.loadedObjects addObjectsFromArray:_myProjects.loadedObjectIDs];
+            // 变为没有更多数据的状态
+            [self.myTableView.mj_footer endRefreshingWithNoMoreData];
             [weakSelf.myTableView reloadData];
         }else{
             // 变为没有更多数据的状态

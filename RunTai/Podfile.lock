@@ -1,7 +1,7 @@
 PODS:
   - APParallaxHeader (0.1.6)
-  - AVOSCloud (3.2.7)
-  - AVOSCloudIM (3.2.7):
+  - AVOSCloud (3.3.5)
+  - AVOSCloudIM (3.3.5):
     - AVOSCloud
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
@@ -22,7 +22,7 @@ PODS:
   - JazzHands (2.0.0)
   - Masonry (0.5.3)
   - MBProgressHUD (0.9)
-  - MJRefresh (3.1.0)
+  - MJRefresh (3.1.12)
   - NYXImagesKit (2.3)
   - pop (1.0.9)
   - POP+MCAnimate (2.0.1):
@@ -91,14 +91,14 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   APParallaxHeader: 854bc48a2487ca12c702f8a236fec0d89cdac5c3
-  AVOSCloud: 957d1508104d7c8ed501df9d9b734d7a98c2e047
-  AVOSCloudIM: ec08eaec4d27d732e3be93eadeb3bcf1355b5dcf
+  AVOSCloud: 1fe170768bee7e05bc3ea86e38d5bddb105cb957
+  AVOSCloudIM: dc307c48e951fcd861f4ae6db6d807e7b40639c8
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   JazzHands: 00002e9b1284e7fc1ac6555012e81b8942477242
   Masonry: 9f515466afe48632562342a40a1c224071a1a022
   MBProgressHUD: d8e7ea388dc1549a42e0d219067cf5f2c898fb66
-  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   POP+MCAnimate: a99e209148c602512de487f1160a44bf78572024
@@ -114,4 +114,6 @@ SPEC CHECKSUMS:
   UMengAnalytics: 092c24aef47b6ac3c76ad51543f91156a8d7b645
   UMengSocial: 85882abe5b20aa38ad558ece71360e16b5d50909
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: ddb5a9969cbc9aaf3c72bd0a77cb65219cb21d5c
+
+COCOAPODS: 1.0.1

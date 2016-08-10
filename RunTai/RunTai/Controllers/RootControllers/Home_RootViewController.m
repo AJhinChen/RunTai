@@ -403,7 +403,7 @@
                     [weakSelf.dataList removeAllObjects];
                     [weakSelf.loadedObjects removeAllObjects];
                     //UITableView开始滚动到的位置（这样一开始headerView是不显示的）
-                    [self.myTableView setContentOffset:CGPointMake(0.0, 38.0) animated:YES];
+//                    [self.myTableView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
                     _myProjects = [weakSelf.myProjects configWithObjects:objects type:self.myProjects.type];
                     // 将新数据插入到旧数据的最后边
                     [self.dataList addObjectsFromArray:_myProjects.list];
@@ -602,6 +602,7 @@
                         [weakSelf.myTableView reloadData];
                     }else{
                         [weakSelf.searchedArray removeAllObjects];
+                        [weakSelf.dataList removeAllObjects];
                         [weakSelf.myTableView reloadData];
                     }
                 }];
@@ -615,6 +616,7 @@
                         [weakSelf.myTableView reloadData];
                     }else{
                         [weakSelf.searchedArray removeAllObjects];
+                        [weakSelf.dataList removeAllObjects];
                         [weakSelf.myTableView reloadData];
                     }
                 }];
@@ -629,6 +631,7 @@
                     [weakSelf.myTableView reloadData];
                 }else{
                     [weakSelf.searchedArray removeAllObjects];
+                    [weakSelf.dataList removeAllObjects];
                     [weakSelf.myTableView reloadData];
                 }
             }
@@ -639,6 +642,7 @@
         }
     }else{
         [_searchedArray removeAllObjects];
+        [self.dataList addObjectsFromArray:_myProjects.list];
         [_myTableView reloadData];
     }
     

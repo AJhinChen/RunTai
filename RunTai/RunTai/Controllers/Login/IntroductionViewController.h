@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Coding. All rights reserved.
 //
 
-#import <IFTTTJazzHands.h>
+#import "IFTTTJazzHands.h"
 
 @interface IntroductionViewController : IFTTTAnimatedPagingScrollViewController
 

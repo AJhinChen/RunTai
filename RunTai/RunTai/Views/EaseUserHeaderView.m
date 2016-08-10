@@ -10,7 +10,7 @@
 
 
 #import "EaseUserHeaderView.h"
-#import <UIImage+BlurredFrame/UIImage+BlurredFrame.h>
+#import "UIImage+BlurredFrame.h"
 
 @interface EaseUserHeaderView ()
 
